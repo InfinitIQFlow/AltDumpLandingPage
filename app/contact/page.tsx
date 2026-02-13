@@ -30,10 +30,10 @@ export default function ContactPage() {
                 we can.
               </p>
               <a
-                href="mailto:support@altdump.app"
+                href="mailto:infinitiqflow@gmail.com"
                 className="text-foreground font-medium underline hover:no-underline"
               >
-                support@altdump.app
+                infinitiqflow@gmail.com
               </a>
             </div>
 
