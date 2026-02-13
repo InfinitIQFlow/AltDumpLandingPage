@@ -1,10 +1,13 @@
 'use client'
 
 import Link from 'next/link'
+import { useCheckout } from '@/hooks/use-checkout'
 
 export default function Header() {
+  const { createCheckout, isLoading } = useCheckout()
+
   const handleBuyClick = () => {
-    window.location.href = 'https://dodopayments.com/checkout?product=altdump-earlyaccess'
+    createCheckout()
   }
 
   return (
@@ -29,8 +32,12 @@ export default function Header() {
           </a>
         </nav>
         
-        <button onClick={handleBuyClick} className="px-6 py-2 bg-accent text-accent-foreground rounded-lg text-sm font-medium hover:bg-accent/90 transition-colors">
-          Buy Early Access
+        <button 
+          onClick={handleBuyClick} 
+          disabled={isLoading}
+          className="px-6 py-2 bg-accent text-accent-foreground rounded-lg text-sm font-medium hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isLoading ? 'Loading...' : 'Buy Early Access'}
         </button>
       </div>
     </header>

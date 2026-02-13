@@ -2,9 +2,11 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import { useCheckout } from '@/hooks/use-checkout'
 
 export default function HeroSection() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const { createCheckout, isLoading } = useCheckout()
 
   const demoImages = [
     {
@@ -28,7 +30,7 @@ export default function HeroSection() {
   }
 
   const handleBuyClick = () => {
-    window.location.href = 'https://dodopayments.com/checkout?product=altdump-earlyaccess'
+    createCheckout()
   }
 
   return (
@@ -45,8 +47,12 @@ export default function HeroSection() {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-          <button onClick={handleBuyClick} className="px-8 py-3 bg-accent text-accent-foreground rounded-lg font-medium hover:bg-accent/90 transition-colors">
-            Buy Early Access — $15
+          <button 
+            onClick={handleBuyClick} 
+            disabled={isLoading}
+            className="px-8 py-3 bg-accent text-accent-foreground rounded-lg font-medium hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoading ? 'Loading...' : 'Buy Early Access — $15'}
           </button>
           <button className="px-8 py-3 border border-secondary bg-secondary/50 rounded-lg font-medium hover:bg-secondary transition-colors">
             Learn More

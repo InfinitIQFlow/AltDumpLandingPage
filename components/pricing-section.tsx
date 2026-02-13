@@ -1,8 +1,12 @@
 'use client'
 
+import { useCheckout } from '@/hooks/use-checkout'
+
 export default function PricingSection() {
+  const { createCheckout, isLoading } = useCheckout()
+
   const handleBuyClick = () => {
-    window.location.href = 'https://dodopayments.com/checkout?product=altdump-earlyaccess'
+    createCheckout()
   }
 
   return (
@@ -52,8 +56,12 @@ export default function PricingSection() {
       </div>
 
       <div className="text-center mb-12">
-        <button onClick={handleBuyClick} className="px-8 py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:bg-accent/90 transition-colors mb-4 inline-block">
-          Buy Now — $15
+        <button 
+          onClick={handleBuyClick} 
+          disabled={isLoading}
+          className="px-8 py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:bg-accent/90 transition-colors mb-4 inline-block disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isLoading ? 'Loading...' : 'Buy Now — $15'}
         </button>
         <p className="text-sm text-muted-foreground">One-time payment. Yours forever.</p>
       </div>

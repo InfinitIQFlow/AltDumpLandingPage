@@ -1,8 +1,12 @@
 'use client'
 
+import { useCheckout } from '@/hooks/use-checkout'
+
 export default function FinalCTA() {
+  const { createCheckout, isLoading } = useCheckout()
+
   const handleBuyClick = () => {
-    window.location.href = 'https://dodopayments.com/checkout?product=altdump-earlyaccess'
+    createCheckout()
   }
 
   return (
@@ -12,8 +16,12 @@ export default function FinalCTA() {
           Stop Re-Searching Your Own Brain.
         </h2>
         
-        <button onClick={handleBuyClick} className="px-10 py-4 bg-accent text-accent-foreground rounded-lg font-semibold hover:bg-accent/90 transition-colors mb-6 text-lg">
-          Get Alt Dump — $15 Lifetime
+        <button 
+          onClick={handleBuyClick} 
+          disabled={isLoading}
+          className="px-10 py-4 bg-accent text-accent-foreground rounded-lg font-semibold hover:bg-accent/90 transition-colors mb-6 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isLoading ? 'Loading...' : 'Get Alt Dump — $15 Lifetime'}
         </button>
         
         <p className="text-muted-foreground">
