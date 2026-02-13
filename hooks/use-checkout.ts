@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { DODO_CHECKOUT_BASE_URL } from '@/lib/dodo-payments'
 
 interface UseCheckoutOptions {
   product_id?: string
@@ -10,6 +9,11 @@ interface UseCheckoutOptions {
   customer_name?: string
 }
 
+/**
+ * Checkout must go through the API. The direct URL
+ * (live.dodopayments.com/checkout?product=...) returns 401 Unauthorized —
+ * a valid checkout_url is only returned when creating a session with your API key.
+ */
 export function useCheckout() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -38,7 +42,6 @@ export function useCheckout() {
         throw new Error(data.error || 'Failed to create checkout session')
       }
 
-      // Redirect to checkout URL
       if (data.checkout_url) {
         window.location.href = data.checkout_url
       } else {
@@ -48,11 +51,7 @@ export function useCheckout() {
       const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred'
       setError(errorMessage)
       console.error('Checkout error:', err)
-      
-      // Fallback to direct URL if API fails (must use live subdomain)
-      const fallbackUrl = `${DODO_CHECKOUT_BASE_URL}/checkout?product=${options.product_id || 'altdump-earlyaccess'}`
-      console.warn('Falling back to direct checkout URL:', fallbackUrl)
-      window.location.href = fallbackUrl
+      // Do not redirect to direct URL — it returns 401; checkout requires API-created session.
     } finally {
       setIsLoading(false)
     }

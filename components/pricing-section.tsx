@@ -3,7 +3,7 @@
 import { useCheckout } from '@/hooks/use-checkout'
 
 export default function PricingSection() {
-  const { createCheckout, isLoading } = useCheckout()
+  const { createCheckout, isLoading, error } = useCheckout()
 
   const handleBuyClick = () => {
     createCheckout()
@@ -63,6 +63,11 @@ export default function PricingSection() {
         >
           {isLoading ? 'Loading...' : 'Buy Now — $15'}
         </button>
+        {error && (
+          <p className="text-sm text-red-500 mb-2" role="alert">
+            {error}. Check that DODO_PAYMENTS_API_KEY and DODO_PRODUCT_ID are set in .env.local.
+          </p>
+        )}
         <p className="text-sm text-muted-foreground">One-time payment. Yours forever.</p>
       </div>
 

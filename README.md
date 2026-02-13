@@ -39,7 +39,8 @@ This project uses Dodo Payments for processing payments. Follow these steps to s
 
 ### 3. Important Notes
 
-- **Product ID**: Make sure the `DODO_PRODUCT_ID` matches the product ID from your Dodo Payments dashboard
+- **API key required**: Checkout does **not** work with a direct link. You must set `DODO_PAYMENTS_API_KEY` in `.env.local`. Without it, the API cannot create a session and the direct URL returns 401 Unauthorized.
+- **Product ID**: Make sure the `DODO_PRODUCT_ID` matches the product ID from your Dodo Payments dashboard (e.g. `prod_xxxxx`).
 - **API Base URL**: 
   - Use `https://live.dodopayments.com` for production
   - Use `https://test.dodopayments.com` for testing
