@@ -9,11 +9,11 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex flex-col items-center md:items-start gap-2">
             <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <div className="w-6 h-6 rounded-lg bg-primary flex items-center justify-center text-primary-foreground">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
+              <img 
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/android-chrome-512x512-Aq3NsCwi10DW2kAHDltlutLLBU0GF5.png"
+                alt="AltDump logo"
+                className="w-6 h-6"
+              />
               <span className="font-semibold text-foreground">AltDump</span>
             </Link>
             <p className="text-sm text-muted-foreground text-center md:text-left">
