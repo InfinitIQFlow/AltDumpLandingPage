@@ -100,7 +100,7 @@ export default function ValueProposition() {
           {/* Arrow flow visual with video demo */}
           <div className="relative py-8">
             <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-border to-transparent -translate-y-1/2"></div>
-            <div className="relative flex items-center gap-6 md:gap-8 px-4">
+            <div className="relative flex items-center gap-8 md:gap-12 px-4">
               {/* Video Demo */}
               <div className="flex-shrink-0">
                 <video
@@ -108,12 +108,12 @@ export default function ValueProposition() {
                   autoPlay
                   loop
                   muted
-                  className="w-40 md:w-56 border border-border rounded-lg object-contain"
+                  className="w-56 md:w-80 border border-border rounded-lg object-contain"
                 />
               </div>
 
               {/* Text and flow */}
-              <div className="flex-1 flex items-center justify-start gap-3 md:gap-6 pl-4 md:pl-8">
+              <div className="flex-1 flex items-center justify-start gap-4 md:gap-8 pl-8 md:pl-16">
                 <div className="text-center text-muted-foreground text-xs md:text-sm whitespace-nowrap">
                   <span className="inline-block px-2 md:px-3 py-2 bg-background">All items funneled</span>
                 </div>
