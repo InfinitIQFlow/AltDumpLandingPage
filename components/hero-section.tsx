@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import { useCheckout } from '@/hooks/use-checkout'
 
 export default function HeroSection() {
@@ -11,13 +10,11 @@ export default function HeroSection() {
   const demoImages = [
     {
       url: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-14%20004833-2rzrF5rKbd6oWd8wudHP9eeNdrmMKF.png',
-      alt: 'Alt Dump vault showing organized items by category with thumbnails',
-      title: 'Everything Organized'
+      alt: 'Alt Dump vault showing organized items',
     },
     {
       url: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-14%20004849-sU7smkhAYpWB9CVduYjc8jTF1wWJQj.png',
-      alt: 'Alt Dump search interface showing results for my major project',
-      title: 'Powerful Search'
+      alt: 'Alt Dump search interface',
     }
   ]
 
@@ -34,77 +31,83 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="text-center max-w-3xl mx-auto">
-        <h1 className="text-5xl sm:text-6xl font-bold text-balance mb-6 leading-tight">
-          Dump Anything. Find It Instantly.
-        </h1>
-        
-        <p className="text-xl text-muted-foreground text-balance mb-12 leading-relaxed">
-          A fully offline AI-powered memory vault for Windows.
-          <br />
-          No cloud. No subscription. One-time payment.
-        </p>
-        
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-          <button 
-            onClick={handleBuyClick} 
-            disabled={isLoading}
-            className="px-8 py-3 bg-accent text-accent-foreground rounded-lg font-medium hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading ? 'Loading...' : 'Buy Early Access — $12'}
-          </button>
-          <button className="px-8 py-3 border border-secondary bg-secondary/50 rounded-lg font-medium hover:bg-secondary transition-colors">
-            Learn More
-          </button>
-        </div>
+    <section className="w-full py-24 md:py-40 bg-background border-b border-border overflow-hidden">
+      <div className="container px-4 md:px-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left: Content */}
+          <div className="flex flex-col justify-center space-y-8">
+            <div className="space-y-4">
+              <h1 className="text-6xl md:text-7xl font-bold text-foreground leading-tight text-balance">
+                Dump Anything.
+                <br />
+                Find It Instantly.
+              </h1>
+              <p className="text-lg text-muted-foreground max-w-md leading-relaxed">
+                Your intelligent personal vault for everything you capture.
+              </p>
+            </div>
 
-        <div className="mb-8">
-          <div className="relative bg-secondary rounded-lg overflow-hidden border border-secondary/50 aspect-video">
-            <img 
-              src={demoImages[currentImageIndex].url}
-              alt={demoImages[currentImageIndex].alt}
-              className="w-full h-full object-cover"
-            />
-            
-            {demoImages.length > 1 && (
-              <>
-                <button
-                  onClick={prevImage}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/80 hover:bg-background rounded-full flex items-center justify-center transition-colors"
-                  aria-label="Previous image"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-
-                <button
-                  onClick={nextImage}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/80 hover:bg-background rounded-full flex items-center justify-center transition-colors"
-                  aria-label="Next image"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                  {demoImages.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentImageIndex(index)}
-                      className={`w-2 h-2 rounded-full transition-colors ${
-                        index === currentImageIndex ? 'bg-accent' : 'bg-secondary'
-                      }`}
-                      aria-label={`Go to image ${index + 1}`}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
+            <div className="flex flex-col sm:flex-row gap-3 pt-4">
+              <button 
+                onClick={handleBuyClick} 
+                disabled={isLoading}
+                className="px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all hover:shadow-lg disabled:opacity-50"
+              >
+                {isLoading ? 'Loading...' : 'Buy Early Access'}
+              </button>
+              <button className="px-8 py-3 border border-border text-foreground rounded-lg font-semibold hover:bg-secondary transition-all flex items-center justify-center gap-2">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
+                </svg>
+                Watch Demo
+              </button>
+            </div>
           </div>
-          <p className="text-sm text-muted-foreground mt-3 text-center">{demoImages[currentImageIndex].title}</p>
+
+          {/* Right: Visual mockup */}
+          <div className="relative">
+            <div className="relative bg-secondary rounded-xl overflow-hidden border border-border aspect-video flex items-center justify-center shadow-2xl">
+              <img 
+                src={demoImages[currentImageIndex].url}
+                alt={demoImages[currentImageIndex].alt}
+                className="w-full h-full object-cover"
+              />
+              
+              {/* Navigation controls */}
+              <button
+                onClick={prevImage}
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/70 hover:bg-background rounded-full flex items-center justify-center transition-colors z-10"
+                aria-label="Previous image"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              <button
+                onClick={nextImage}
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/70 hover:bg-background rounded-full flex items-center justify-center transition-colors z-10"
+                aria-label="Next image"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                {demoImages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImageIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-colors ${
+                      index === currentImageIndex ? 'bg-accent' : 'bg-muted'
+                    }`}
+                    aria-label={`Go to image ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -1,87 +1,75 @@
 export default function FeaturesSection() {
-  const categories = [
+  const features = [
     {
-      title: 'Capture',
-      features: [
-        'Global shortcut capture',
-        'Save anything instantly',
-        'Context capture (window title, app source)',
-        'Invisible overlay workflow',
-      ],
+      icon: '📦',
+      title: 'Multi-type dumping',
+      description: 'Capture text, images, PDFs, videos & more'
     },
     {
-      title: 'Smart Search',
-      features: [
-        'Intent-based local AI search',
-        'Time filters (today, yesterday, last week)',
-        'Type filters (image, pdf, note, video)',
-        'Fuzzy search + semantic ranking',
-        'Exact phrase boosting',
-        'Keyboard-first navigation',
-        'Zero mouse dependency',
-      ],
+      icon: '⚡',
+      title: 'Instant local search',
+      description: 'Sub-millisecond results, no network needed'
     },
     {
-      title: 'Intelligence (Fully Local)',
-      features: [
-        'Precomputed embeddings',
-        'Hybrid ranking (semantic + recency + type relevance)',
-        'Strict similarity thresholding',
-        'Filter-only mode for time queries',
-        'Semantic mode for natural language queries',
-        'Related items surfaced automatically',
-        'Context linking between saved items',
-      ],
+      icon: '🔒',
+      title: 'Offline & private',
+      description: 'Your data never leaves your computer'
     },
     {
-      title: 'Organization Without Effort',
-      features: [
-        'Automatic content extraction pipeline',
-        'Deep document-aware indexing',
-        'Timeline view (browse by time instead of folders)',
-        'Frequently used item detection',
-        'Pin / favorites',
-        'Recent dumps view',
-        'Simple tags',
-        'Bulk tagging from search results',
-      ],
+      icon: '🧠',
+      title: 'Smart indexing',
+      description: 'AI-powered semantic search locally'
     },
     {
-      title: 'Safety & Trust',
-      features: [
-        'Version history for items',
-        'Deduplication & auto-grouping',
-        'Backup & export',
-        'Optional local encryption',
-        'Fully offline database',
-        'No telemetry',
-      ],
+      icon: '👁️',
+      title: 'OCR for images',
+      description: 'Text extraction from screenshots & documents'
     },
+    {
+      icon: '🎬',
+      title: 'Video metadata',
+      description: 'Extract & index video information'
+    },
+    {
+      icon: '🔗',
+      title: 'Auto-linking',
+      description: 'Related items surface automatically'
+    },
+    {
+      icon: '🏷️',
+      title: 'Smart tagging',
+      description: 'Organize without manual effort'
+    }
   ]
 
   return (
-    <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <h2 className="text-3xl sm:text-4xl font-bold text-center mb-16">
-        Built for People Who Think Fast
-      </h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {categories.map((category, index) => (
-          <div
-            key={index}
-            className="bg-secondary/30 border border-secondary rounded-lg p-8 hover:border-secondary/80 transition-colors"
-          >
-            <h3 className="text-xl font-semibold mb-6 text-accent">{category.title}</h3>
-            <ul className="space-y-3">
-              {category.features.map((feature, featureIndex) => (
-                <li key={featureIndex} className="flex items-start gap-3 text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent/60 mt-2 flex-shrink-0" />
-                  <span className="leading-relaxed">{feature}</span>
-                </li>
-              ))}
-            </ul>
+    <section id="features" className="w-full py-20 md:py-28 bg-background border-b border-border">
+      <div className="container px-4 md:px-6 max-w-6xl mx-auto">
+        <div className="space-y-16">
+          {/* Section heading */}
+          <div className="text-center space-y-3">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground text-balance">
+              What You Can Do
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              All your data stays local. No cloud, no subscription.
+            </p>
           </div>
-        ))}
+
+          {/* Feature grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature, index) => (
+              <div 
+                key={index} 
+                className="bg-secondary border border-border rounded-lg p-6 flex flex-col items-center text-center space-y-3 hover:border-accent/50 hover:bg-secondary/80 transition-all"
+              >
+                <div className="text-4xl">{feature.icon}</div>
+                <h3 className="font-semibold text-foreground">{feature.title}</h3>
+                <p className="text-sm text-muted-foreground">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )
