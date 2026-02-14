@@ -4,30 +4,19 @@ import { useState } from 'react'
 import { useCheckout } from '@/hooks/use-checkout'
 
 export default function HeroSection() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { createCheckout, isLoading } = useCheckout()
-
-  const demoImages = [
-    {
-      url: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-14%20004833-2rzrF5rKbd6oWd8wudHP9eeNdrmMKF.png',
-      alt: 'Alt Dump vault showing organized items',
-    },
-    {
-      url: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-14%20004849-sU7smkhAYpWB9CVduYjc8jTF1wWJQj.png',
-      alt: 'Alt Dump search interface',
-    }
-  ]
-
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % demoImages.length)
-  }
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + demoImages.length) % demoImages.length)
-  }
 
   const handleBuyClick = () => {
     createCheckout()
+  }
+
+  const openDemo = () => {
+    setIsModalOpen(true)
+  }
+
+  const closeDemo = () => {
+    setIsModalOpen(false)
   }
 
   return (
@@ -55,7 +44,10 @@ export default function HeroSection() {
               >
                 {isLoading ? 'Loading...' : 'Buy Early Access'}
               </button>
-              <button className="px-8 py-3 border border-border text-foreground rounded-lg font-semibold hover:bg-secondary transition-all flex items-center justify-center gap-2">
+              <button 
+                onClick={openDemo}
+                className="px-8 py-3 border border-border text-foreground rounded-lg font-semibold hover:bg-secondary transition-all flex items-center justify-center gap-2"
+              >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
                 </svg>
@@ -64,52 +56,65 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right: Visual mockup */}
+          {/* Right: Video Demo */}
           <div className="relative">
-            <div className="relative bg-secondary rounded-xl overflow-hidden border border-border aspect-video flex items-center justify-center shadow-2xl">
-              <img 
-                src={demoImages[currentImageIndex].url}
-                alt={demoImages[currentImageIndex].alt}
+            <div 
+              className="relative bg-secondary rounded-xl overflow-hidden border border-border aspect-video flex items-center justify-center shadow-2xl cursor-pointer group"
+              onClick={openDemo}
+            >
+              <video 
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/demo-H4Ioas48gzXsT1VTlCInTaUjnF2gCg.mp4"
                 className="w-full h-full object-cover"
+                poster="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-14%20004833-2rzrF5rKbd6oWd8wudHP9eeNdrmMKF.png"
               />
               
-              {/* Navigation controls */}
-              <button
-                onClick={prevImage}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/70 hover:bg-background rounded-full flex items-center justify-center transition-colors z-10"
-                aria-label="Previous image"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-
-              <button
-                onClick={nextImage}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/70 hover:bg-background rounded-full flex items-center justify-center transition-colors z-10"
-                aria-label="Next image"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                {demoImages.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentImageIndex(index)}
-                    className={`w-2 h-2 rounded-full transition-colors ${
-                      index === currentImageIndex ? 'bg-accent' : 'bg-muted'
-                    }`}
-                    aria-label={`Go to image ${index + 1}`}
-                  />
-                ))}
+              {/* Play button overlay */}
+              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                <button
+                  className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center hover:bg-primary/90 transition-all transform group-hover:scale-110"
+                  aria-label="Play demo video"
+                >
+                  <svg className="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Video Modal */}
+      {isModalOpen && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+          onClick={closeDemo}
+        >
+          <div 
+            className="relative w-full max-w-4xl bg-background rounded-xl overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={closeDemo}
+              className="absolute top-4 right-4 z-10 w-10 h-10 bg-background/80 hover:bg-background rounded-full flex items-center justify-center transition-colors"
+              aria-label="Close video"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Video player */}
+            <video 
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/demo-H4Ioas48gzXsT1VTlCInTaUjnF2gCg.mp4"
+              controls
+              autoPlay
+              className="w-full h-auto max-h-96 md:max-h-screen object-contain"
+            />
+          </div>
+        </div>
+      )}
     </section>
   )
 }
