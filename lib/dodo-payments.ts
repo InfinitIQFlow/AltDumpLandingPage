@@ -10,7 +10,7 @@
 const DEFAULT_DODO_BASE = 'https://live.dodopayments.com';
 
 export const DODO_CONFIG = {
-  /** Product ID for the $15 Early Access product (from Dodo dashboard) */
+  /** Product ID for the $12 Early Access product (from Dodo dashboard) */
   PRODUCT_ID: process.env.DODO_PRODUCT_ID || 'altdump-earlyaccess',
   /** Success path after payment */
   SUCCESS_PATH: '/payment/success',

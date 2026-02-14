@@ -21,7 +21,7 @@ export default function FinalCTA() {
           disabled={isLoading}
           className="px-10 py-4 bg-accent text-accent-foreground rounded-lg font-semibold hover:bg-accent/90 transition-colors mb-6 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isLoading ? 'Loading...' : 'Get Alt Dump — $15 Lifetime'}
+          {isLoading ? 'Loading...' : 'Get Alt Dump — $12 Lifetime'}
         </button>
         
         <p className="text-muted-foreground">

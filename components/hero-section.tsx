@@ -52,7 +52,7 @@ export default function HeroSection() {
             disabled={isLoading}
             className="px-8 py-3 bg-accent text-accent-foreground rounded-lg font-medium hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? 'Loading...' : 'Buy Early Access — $15'}
+            {isLoading ? 'Loading...' : 'Buy Early Access — $12'}
           </button>
           <button className="px-8 py-3 border border-secondary bg-secondary/50 rounded-lg font-medium hover:bg-secondary transition-colors">
             Learn More

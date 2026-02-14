@@ -11,7 +11,7 @@ This project uses Dodo Payments for processing payments. Follow these steps to s
 1. Sign up for a Dodo Payments account at [https://app.dodopayments.com/](https://app.dodopayments.com/)
 2. Create a product in your dashboard:
    - Go to Products → Create Product
-   - Set the price to $15
+   - Set the price to $12
    - Note down the Product ID (format: `prod_xxxxx`)
 3. Generate your API key:
    - Go to Developer → API

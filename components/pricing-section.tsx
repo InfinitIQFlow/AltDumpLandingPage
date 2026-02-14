@@ -49,8 +49,8 @@ export default function PricingSection() {
         <div className="bg-accent/10 border border-accent/30 rounded-lg p-6 flex flex-col justify-center">
           <div className="mb-6">
             <p className="text-sm text-muted-foreground mb-2">Early Access Price</p>
-            <p className="text-4xl font-bold">$15</p>
-            <p className="text-sm text-muted-foreground mt-2">Future Price: $39</p>
+            <p className="text-4xl font-bold">$12</p>
+            <p className="text-sm text-muted-foreground mt-2">Future Price: $29</p>
           </div>
         </div>
       </div>
@@ -61,7 +61,7 @@ export default function PricingSection() {
           disabled={isLoading}
           className="px-8 py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:bg-accent/90 transition-colors mb-4 inline-block disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isLoading ? 'Loading...' : 'Buy Now — $15'}
+          {isLoading ? 'Loading...' : 'Buy Now — $12'}
         </button>
         {error && (
           <p className="text-sm text-red-500 mb-2" role="alert">

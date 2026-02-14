@@ -39,7 +39,7 @@ export default function RoadmapSection() {
 
         <div className="text-center border-t border-secondary pt-8">
           <p className="text-muted-foreground mb-4">All future updates are free for Early Access buyers.</p>
-          <p className="text-sm text-muted-foreground italic">After these planned updates launch, the regular price will increase to $39.</p>
+          <p className="text-sm text-muted-foreground italic">After these planned updates launch, the regular price will increase to $29.</p>
         </div>
       </div>
     </section>
