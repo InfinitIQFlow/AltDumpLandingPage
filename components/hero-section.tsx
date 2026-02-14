@@ -65,7 +65,7 @@ export default function HeroSection() {
               <video 
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Untitled%20design-0mDceozWtUKUAT6qsMSGLVZyq9CRXm.mp4"
                 className="w-full h-full object-cover"
-                poster="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-14%20004833-2rzrF5rKbd6oWd8wudHP9eeNdrmMKF.png"
+                poster="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-14%20141929-y3uH8BTEoRqW7rUNJnyfpaOKNz9NTE.png"
               />
               
               {/* Play button overlay */}
