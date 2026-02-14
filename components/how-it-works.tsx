@@ -188,6 +188,42 @@ export default function HowItWorks() {
                     <p className="text-xs text-muted-foreground">Linked content fully searchable</p>
                   </div>
                 </div>
+
+                {/* Text / Notes / Code Demo */}
+                <div className="bg-background border border-border rounded-xl overflow-hidden hover:border-accent/50 transition-colors">
+                  <div className="bg-secondary border-b border-border p-4 flex items-center gap-3">
+                    <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span className="text-sm font-semibold text-foreground">Text / Notes / Code</span>
+                  </div>
+                  <div className="p-4 space-y-3">
+                    <div className="bg-secondary rounded p-3 text-xs text-muted-foreground font-mono">
+                      <p>function search() {'{}'}</p>
+                      <p>  return vault.find()</p>
+                      <p>{'}'};</p>
+                    </div>
+                    <p className="text-xs text-muted-foreground">Store full raw content with formatting markers preserved</p>
+                  </div>
+                </div>
+
+                {/* Other Files Demo */}
+                <div className="bg-background border border-border rounded-xl overflow-hidden hover:border-accent/50 transition-colors">
+                  <div className="bg-secondary border-b border-border p-4 flex items-center gap-3">
+                    <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4v2m0 4v2M6 9h12a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V11a2 2 0 012-2z" />
+                    </svg>
+                    <span className="text-sm font-semibold text-foreground">Other File Types</span>
+                  </div>
+                  <div className="p-4 space-y-3">
+                    <div className="space-y-2 text-xs">
+                      <p><span className="text-muted-foreground">Supported:</span> <span className="text-foreground">Archive, images, audio</span></p>
+                      <p><span className="text-muted-foreground">Indexed:</span> <span className="text-foreground">Metadata & properties</span></p>
+                      <p><span className="text-muted-foreground">Unsupported:</span> <span className="text-foreground">Won't be indexed</span></p>
+                    </div>
+                    <p className="text-xs text-muted-foreground">Only compatible file types processed</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
