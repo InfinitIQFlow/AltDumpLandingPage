@@ -31,11 +31,9 @@ export default function Page() {
         <FAQSection />
         <FinalCTA />
         {/* FoundrList badge */}
-        <div className="w-full flex justify-center items-center py-10">
-          <a href="https://foundrlist.com/product/altdump" target="_blank" rel="noopener noreferrer">
-            <img src="https://foundrlist.com/api/badge/altdump" alt="Live on FoundrList" width="180" height="72" />
-          </a>
-        </div>
+        <a href="https://foundrlist.com/product/altdump-2" target="_blank" rel="noopener noreferrer">
+  <img src="https://foundrlist.com/api/badge/altdump-2" alt="Live on FoundrList" width="180" height="72" />
+</a>
       </main>
       <Footer />
     </div>
