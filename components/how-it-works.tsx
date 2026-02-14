@@ -135,7 +135,7 @@ export default function HowItWorks() {
                   </div>
                 </div>
 
-                {/* Metadata Demo */}
+                {/* Video Metadata Demo */}
                 <div className="bg-background border border-border rounded-xl overflow-hidden hover:border-accent/50 transition-colors">
                   <div className="bg-secondary border-b border-border p-4 flex items-center gap-3">
                     <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -153,24 +153,39 @@ export default function HowItWorks() {
                   </div>
                 </div>
 
-                {/* Auto-Linking Demo */}
+                {/* PDFs, Word Docs & Excel Sheets Demo */}
+                <div className="bg-background border border-border rounded-xl overflow-hidden hover:border-accent/50 transition-colors">
+                  <div className="bg-secondary border-b border-border p-4 flex items-center gap-3">
+                    <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                    <span className="text-sm font-semibold text-foreground">Document Extraction</span>
+                  </div>
+                  <div className="p-4 space-y-3">
+                    <div className="space-y-2 text-xs">
+                      <p><span className="text-muted-foreground">PDFs:</span> <span className="text-foreground">Full text from ALL pages</span></p>
+                      <p><span className="text-muted-foreground">Word Docs:</span> <span className="text-foreground">Complete content extraction</span></p>
+                      <p><span className="text-muted-foreground">Excel:</span> <span className="text-foreground">All cells indexed</span></p>
+                    </div>
+                    <p className="text-xs text-muted-foreground">No page skipped, every word included</p>
+                  </div>
+                </div>
+
+                {/* Links Demo */}
                 <div className="bg-background border border-border rounded-xl overflow-hidden hover:border-accent/50 transition-colors">
                   <div className="bg-secondary border-b border-border p-4 flex items-center gap-3">
                     <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.658 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                     </svg>
-                    <span className="text-sm font-semibold text-foreground">Auto-Linking</span>
+                    <span className="text-sm font-semibold text-foreground">Link Extraction</span>
                   </div>
                   <div className="p-4 space-y-3">
-                    <div className="space-y-2">
-                      <p className="text-xs text-muted-foreground">Related to 3 items:</p>
-                      <div className="flex flex-col gap-2">
-                        <div className="text-xs px-2 py-1 bg-secondary rounded border border-border text-foreground truncate">Design mockup v2</div>
-                        <div className="text-xs px-2 py-1 bg-secondary rounded border border-border text-foreground truncate">API reference docs</div>
-                        <div className="text-xs px-2 py-1 bg-secondary rounded border border-border text-foreground truncate">Error stack trace</div>
-                      </div>
+                    <div className="space-y-2 text-xs">
+                      <p><span className="text-muted-foreground">Page title</span> <span className="text-foreground">captured</span></p>
+                      <p><span className="text-muted-foreground">Meta description</span> <span className="text-foreground">extracted</span></p>
+                      <p><span className="text-muted-foreground">URL metadata</span> <span className="text-foreground">indexed</span></p>
                     </div>
-                    <p className="text-xs text-muted-foreground">Automatically discover connections</p>
+                    <p className="text-xs text-muted-foreground">Linked content fully searchable</p>
                   </div>
                 </div>
               </div>

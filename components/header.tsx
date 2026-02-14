@@ -22,7 +22,7 @@ export default function Header() {
           <span className="font-bold text-lg text-foreground">AltDump</span>
         </Link>
         
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="flex items-center gap-8">
           <Link href="/#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Features
           </Link>
@@ -33,14 +33,6 @@ export default function Header() {
             FAQ
           </Link>
         </nav>
-        
-        <button 
-          onClick={handleBuyClick} 
-          disabled={isLoading}
-          className="px-6 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50"
-        >
-          {isLoading ? 'Loading...' : 'Get Started'}
-        </button>
       </div>
     </header>
   )
