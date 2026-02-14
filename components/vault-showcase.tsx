@@ -38,7 +38,7 @@ export default function VaultShowcase() {
           {/* Vault Interface - Real App Screenshot */}
           <div className="border border-border rounded-xl overflow-hidden shadow-2xl">
             <img 
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-14%20004833-m4amaUbFcRlLB92X7RNDAEeVA27pOC.png"
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-14%20141929-bQxOA5L9znCvMBemhAO7KUmXHFlb6a.png"
               alt="AltDump vault interface showing organized items in grid layout"
               className="w-full h-auto"
             />
