@@ -63,7 +63,7 @@ export default function HeroSection() {
               onClick={openDemo}
             >
               <video 
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/demo-H4Ioas48gzXsT1VTlCInTaUjnF2gCg.mp4"
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Untitled%20design-0mDceozWtUKUAT6qsMSGLVZyq9CRXm.mp4"
                 className="w-full h-full object-cover"
                 poster="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-14%20004833-2rzrF5rKbd6oWd8wudHP9eeNdrmMKF.png"
               />
@@ -107,7 +107,7 @@ export default function HeroSection() {
 
             {/* Video player */}
             <video 
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/demo-H4Ioas48gzXsT1VTlCInTaUjnF2gCg.mp4"
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Untitled%20design-0mDceozWtUKUAT6qsMSGLVZyq9CRXm.mp4"
               controls
               autoPlay
               className="w-full h-auto max-h-96 md:max-h-screen object-contain"
