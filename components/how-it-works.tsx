@@ -95,7 +95,7 @@ export default function HowItWorks() {
               {/* Video demo */}
               <div className="bg-background border border-border rounded-xl overflow-hidden">
                 <video
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/appdemo-QXDPjpaBwgNxApFvIhNqyo1VSe0JB4.mp4"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/appdemo%20%28online-video-cutter.com%29-96HStSenpgC78t3iERvsKxm7FqxYiw.mp4"
                   autoPlay
                   loop
                   muted
