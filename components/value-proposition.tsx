@@ -97,20 +97,34 @@ export default function ValueProposition() {
             ))}
           </div>
 
-          {/* Arrow flow visual */}
+          {/* Arrow flow visual with video demo */}
           <div className="relative py-8">
             <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-border to-transparent -translate-y-1/2"></div>
-            <div className="relative flex justify-between items-center px-4">
-              <div className="text-center text-muted-foreground text-sm flex-1">
-                <span className="inline-block px-3 py-2 bg-background">All items funneled</span>
+            <div className="relative flex items-center justify-between gap-4 px-4">
+              {/* Video Demo */}
+              <div className="flex-shrink-0">
+                <video
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/dragdemo-YuAN34LWTZdtslw7mVuqE0mjMi5sOK.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  className="w-24 h-24 md:w-32 md:h-32 border border-border rounded-lg object-cover"
+                />
               </div>
-              <div className="hidden md:block text-muted-foreground">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-              <div className="text-center text-muted-foreground text-sm flex-1">
-                <span className="inline-block px-3 py-2 bg-background">Into your vault</span>
+
+              {/* Text and flow */}
+              <div className="flex-1 flex items-center justify-between gap-2 md:gap-4">
+                <div className="text-center text-muted-foreground text-xs md:text-sm">
+                  <span className="inline-block px-2 md:px-3 py-2 bg-background">All items funneled</span>
+                </div>
+                <div className="hidden md:block text-muted-foreground flex-shrink-0">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+                <div className="text-center text-muted-foreground text-xs md:text-sm">
+                  <span className="inline-block px-2 md:px-3 py-2 bg-background">Into your vault</span>
+                </div>
               </div>
             </div>
           </div>
