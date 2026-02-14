@@ -30,10 +30,6 @@ export default function Page() {
         <PerformanceSection />
         <FAQSection />
         <FinalCTA />
-        {/* FoundrList badge */}
-        <a href="https://foundrlist.com/product/altdump-2" target="_blank" rel="noopener noreferrer">
-  <img src="https://foundrlist.com/api/badge/altdump-2" alt="Live on FoundrList" width="180" height="72" />
-</a>
       </main>
       <Footer />
     </div>
