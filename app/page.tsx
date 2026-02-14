@@ -5,6 +5,7 @@ import HeroSection from '@/components/hero-section'
 import ValueProposition from '@/components/value-proposition'
 import HowItWorks from '@/components/how-it-works'
 import FeaturesSection from '@/components/features-section'
+import VaultShowcase from '@/components/vault-showcase'
 import PricingSection from '@/components/pricing-section'
 import RoadmapSection from '@/components/roadmap-section'
 import FAQSection from '@/components/faq-section'
@@ -19,6 +20,7 @@ export default function Page() {
         <ValueProposition />
         <HowItWorks />
         <FeaturesSection />
+        <VaultShowcase />
         <PricingSection />
         <RoadmapSection />
         <FAQSection />
