@@ -21,15 +21,6 @@ const SearchIcon = () => (
 )
 
 export default function HowItWorks() {
-  const [isSearching, setIsSearching] = useState(false)
-  const [searchInput, setSearchInput] = useState('')
-  const [selectedDemo, setSelectedDemo] = useState(0)
-
-  const handleSearch = () => {
-    setIsSearching(true)
-    setTimeout(() => setIsSearching(false), 2000)
-  }
-
   const steps = [
     {
       title: 'Capture',
@@ -49,12 +40,6 @@ export default function HowItWorks() {
       description: 'Natural language results',
       detail: 'Find with conversational queries'
     },
-  ]
-
-  const demoResults = [
-    { type: 'Screenshot', title: 'Error Stack Trace', tags: ['debug', 'code'] },
-    { type: 'Screenshot', title: 'UI Design Mockup', tags: ['design', 'figma'] },
-    { type: 'Document', title: 'API Documentation', tags: ['reference', 'pdf'] },
   ]
 
   return (
@@ -103,74 +88,19 @@ export default function HowItWorks() {
                   Semantic Search in Action
                 </h3>
                 <p className="text-muted-foreground">
-                  Find anything by typing like you talk.
+                  See real-time search and semantic indexing in action.
                 </p>
               </div>
 
-              {/* Search demo */}
-              <div className="bg-background border border-border rounded-xl p-8 space-y-6">
-                <div className="flex gap-3">
-                  <input
-                    type="text"
-                    placeholder="try: error from last week"
-                    value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)}
-                    className="flex-1 bg-secondary border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
-                  />
-                  <button
-                    onClick={handleSearch}
-                    className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all"
-                  >
-                    Search
-                  </button>
-                </div>
-
-                {/* Results display */}
-                <div className="min-h-32 bg-secondary rounded-lg p-4 border border-border">
-                  {isSearching ? (
-                    <div className="flex flex-col items-center justify-center gap-3 h-full">
-                      <div className="flex gap-1">
-                        <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-                        <div className="w-2 h-2 bg-accent rounded-full animate-pulse" style={{animationDelay: '0.1s'}} />
-                        <div className="w-2 h-2 bg-accent rounded-full animate-pulse" style={{animationDelay: '0.2s'}} />
-                      </div>
-                      <span className="text-sm text-muted-foreground">Searching vault…</span>
-                    </div>
-                  ) : searchInput ? (
-                    <div className="space-y-3">
-                      <p className="text-xs text-muted-foreground font-semibold">3 Results Found</p>
-                      {demoResults.map((result, i) => (
-                        <div key={i} className="flex gap-4 p-3 bg-background rounded-lg border border-border hover:border-accent/50 transition-colors">
-                          <div className="w-12 h-12 bg-secondary border border-border rounded flex items-center justify-center flex-shrink-0 text-xs text-muted-foreground">
-                            {result.type === 'Screenshot' ? (
-                              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                              </svg>
-                            ) : (
-                              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                              </svg>
-                            )}
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-foreground truncate">{result.title}</p>
-                            <div className="flex gap-2 mt-2">
-                              {result.tags.map((tag, j) => (
-                                <span key={j} className="text-xs px-2 py-1 bg-secondary border border-border rounded text-muted-foreground">
-                                  {tag}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-center h-full text-center text-sm text-muted-foreground">
-                      Try a natural language query
-                    </div>
-                  )}
-                </div>
+              {/* Video demo */}
+              <div className="bg-background border border-border rounded-xl overflow-hidden">
+                <video
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/appdemo-QXDPjpaBwgNxApFvIhNqyo1VSe0JB4.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  className="w-full h-auto"
+                />
               </div>
             </div>
           </div>
