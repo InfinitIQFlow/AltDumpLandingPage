@@ -19,13 +19,14 @@ export default function BeforeAfterSection() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {/* LEFT: Without AltDump */}
             <div className="flex flex-col gap-6">
-              <div className="flex-1 bg-secondary border border-border rounded-xl overflow-hidden flex items-center justify-center min-h-96">
-                <div className="w-full h-full flex items-center justify-center p-8 bg-gradient-to-br from-secondary to-secondary/50">
-                  <div className="space-y-4 text-center">
-                    <p className="text-sm text-muted-foreground">Scattered files</p>
-                    <p className="text-xs text-muted-foreground/60">No organization</p>
-                  </div>
-                </div>
+              <div className="flex-1 bg-secondary border border-border rounded-xl overflow-hidden min-h-96">
+                <video 
+                  autoPlay
+                  muted
+                  loop
+                  className="w-full h-full object-cover"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/beforeshort-YOiZCaFBR728cqaaKNFqHo9HryOwcX.mp4"
+                />
               </div>
               <div className="text-center">
                 <h3 className="text-xl font-semibold text-foreground">Without AltDump</h3>
