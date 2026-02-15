@@ -37,10 +37,12 @@ export default function BeforeAfterSection() {
             {/* RIGHT: With AltDump */}
             <div className="flex flex-col gap-6">
               <div className="flex-1 bg-secondary border border-border rounded-xl overflow-hidden min-h-96">
-                <img 
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-14%20141929-5EKht4cJMykREXsRqTuYvs2kfHkCoD.png"
-                  alt="AltDump vault interface showing organized files with instant search"
+                <video 
+                  autoPlay
+                  muted
+                  loop
                   className="w-full h-full object-cover"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/after-SzQSsxAiXAf4mZBJmNRxUoWDmQoJUD.mp4"
                 />
               </div>
               <div className="text-center">
