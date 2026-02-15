@@ -2,10 +2,10 @@
 
 import Header from '@/components/header'
 import HeroSection from '@/components/hero-section'
-import ValueProposition from '@/components/value-proposition'
-import HowItWorks from '@/components/how-it-works'
-import FeaturesSection from '@/components/features-section'
-import VaultShowcase from '@/components/vault-showcase'
+import BeforeAfterSection from '@/components/before-after-section'
+import StoryDemoSection from '@/components/story-demo-section'
+import PersonaCardsSection from '@/components/persona-cards-section'
+import FeatureFlowSection from '@/components/feature-flow-section'
 import PricingSection from '@/components/pricing-section'
 import RoadmapSection from '@/components/roadmap-section'
 import FAQSection from '@/components/faq-section'
@@ -17,10 +17,10 @@ export default function Page() {
       <Header />
       <main>
         <HeroSection />
-        <ValueProposition />
-        <HowItWorks />
-        <FeaturesSection />
-        <VaultShowcase />
+        <BeforeAfterSection />
+        <StoryDemoSection />
+        <PersonaCardsSection />
+        <FeatureFlowSection />
         <PricingSection />
         <RoadmapSection />
         <FAQSection />

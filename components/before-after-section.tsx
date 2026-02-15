@@ -1,0 +1,65 @@
+'use client'
+
+export default function BeforeAfterSection() {
+  return (
+    <section id="before-after-section" className="w-full py-20 md:py-28 bg-background border-b border-border">
+      <div className="container px-4 md:px-6 max-w-6xl mx-auto">
+        <div className="space-y-12">
+          {/* Section heading */}
+          <div className="text-center space-y-3">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground text-balance">
+              The Difference
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              See how AltDump transforms the search experience
+            </p>
+          </div>
+
+          {/* Before/After Comparison */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            {/* LEFT: Without AltDump */}
+            <div className="flex flex-col gap-6">
+              <div className="flex-1 bg-secondary border border-border rounded-xl overflow-hidden min-h-96">
+                <video 
+                  autoPlay
+                  muted
+                  loop
+                  className="w-full h-full object-cover"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/beforeshort-YOiZCaFBR728cqaaKNFqHo9HryOwcX.mp4"
+                />
+              </div>
+              <div className="text-center">
+                <h3 className="text-xl font-semibold text-foreground">Without AltDump</h3>
+                <p className="text-sm text-muted-foreground mt-1">Manual searching</p>
+              </div>
+            </div>
+
+            {/* RIGHT: With AltDump */}
+            <div className="flex flex-col gap-6">
+              <div className="flex-1 bg-secondary border border-border rounded-xl overflow-hidden min-h-96">
+                <video 
+                  autoPlay
+                  muted
+                  loop
+                  className="w-full h-full object-cover"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/after-SzQSsxAiXAf4mZBJmNRxUoWDmQoJUD.mp4"
+                />
+              </div>
+              <div className="text-center">
+                <h3 className="text-xl font-semibold text-accent">Found.</h3>
+                <p className="text-sm text-muted-foreground mt-1">With AltDump</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Key insight */}
+          <div className="bg-accent/5 border border-accent/20 rounded-lg p-8 text-center">
+            <p className="text-lg text-foreground">
+              <span className="font-semibold text-accent">Instant results.</span> No clicking through folders. No file searching. Just search what you remember.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

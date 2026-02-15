@@ -24,7 +24,15 @@ export default function PricingSection() {
           </div>
 
           {/* Pricing card */}
-          <div className="bg-secondary border border-border rounded-xl p-12 text-center space-y-8">
+          <div className="relative">
+            {/* Early Access Badge */}
+            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+              <div className="bg-accent text-accent-foreground px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wide">
+                Early Access
+              </div>
+            </div>
+            
+            <div className="bg-secondary border border-accent/40 rounded-xl p-12 text-center space-y-8 hover:border-accent/60 transition-colors shadow-lg hover:shadow-xl">
             <div className="space-y-2">
               <p className="text-muted-foreground text-sm uppercase tracking-wide">Current Price</p>
               <div className="flex items-baseline justify-center gap-1">
@@ -88,6 +96,7 @@ export default function PricingSection() {
                 {error}. Check environment variables.
               </p>
             )}
+            </div>
           </div>
 
           {/* Benefits callout */}

@@ -19,6 +19,13 @@ export default function HeroSection() {
     setIsModalOpen(false)
   }
 
+  const scrollToBeforeAfter = () => {
+    const element = document.getElementById('before-after-section')
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
     <section className="w-full py-24 md:py-40 bg-background border-b border-border overflow-hidden">
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
@@ -27,12 +34,12 @@ export default function HeroSection() {
           <div className="flex flex-col justify-center space-y-8">
             <div className="space-y-4">
               <h1 className="text-6xl md:text-7xl font-bold text-foreground leading-tight text-balance">
-                Dump Anything.
+                Remember a sentence…
                 <br />
-                Find It Instantly.
+                but not where you saved it?
               </h1>
               <p className="text-lg text-muted-foreground max-w-md leading-relaxed">
-                Your intelligent personal vault for everything you capture.
+                Stop opening 12 files just to find one line. Search what you remember — instantly.
               </p>
             </div>
 
@@ -42,22 +49,22 @@ export default function HeroSection() {
                 disabled={isLoading}
                 className="px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all hover:shadow-lg disabled:opacity-50"
               >
-                {isLoading ? 'Loading...' : 'Buy Early Access'}
+                {isLoading ? 'Loading...' : 'Try Early Access'}
               </button>
               <button 
-                onClick={openDemo}
+                onClick={scrollToBeforeAfter}
                 className="px-8 py-3 border border-border text-foreground rounded-lg font-semibold hover:bg-secondary transition-all flex items-center justify-center gap-2"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
                 </svg>
-                Watch Demo
+                See It In Action
               </button>
             </div>
           </div>
 
           {/* Right: Video Demo */}
-          <div className="relative">
+          <div className="relative flex flex-col gap-4">
             <div 
               className="relative bg-secondary rounded-xl overflow-hidden border border-border aspect-video flex items-center justify-center shadow-2xl cursor-pointer group"
               onClick={openDemo}
@@ -80,6 +87,7 @@ export default function HeroSection() {
                 </button>
               </div>
             </div>
+            <p className="text-center text-sm text-muted-foreground">Watch a video explanation</p>
           </div>
         </div>
       </div>
