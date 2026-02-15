@@ -19,6 +19,13 @@ export default function HeroSection() {
     setIsModalOpen(false)
   }
 
+  const scrollToBeforeAfter = () => {
+    const element = document.getElementById('before-after-section')
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
     <section className="w-full py-24 md:py-40 bg-background border-b border-border overflow-hidden">
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
@@ -45,7 +52,7 @@ export default function HeroSection() {
                 {isLoading ? 'Loading...' : 'Try Early Access'}
               </button>
               <button 
-                onClick={openDemo}
+                onClick={scrollToBeforeAfter}
                 className="px-8 py-3 border border-border text-foreground rounded-lg font-semibold hover:bg-secondary transition-all flex items-center justify-center gap-2"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -57,7 +64,7 @@ export default function HeroSection() {
           </div>
 
           {/* Right: Video Demo */}
-          <div className="relative">
+          <div className="relative flex flex-col gap-4">
             <div 
               className="relative bg-secondary rounded-xl overflow-hidden border border-border aspect-video flex items-center justify-center shadow-2xl cursor-pointer group"
               onClick={openDemo}
@@ -80,6 +87,7 @@ export default function HeroSection() {
                 </button>
               </div>
             </div>
+            <p className="text-center text-sm text-muted-foreground">Watch a video explanation</p>
           </div>
         </div>
       </div>

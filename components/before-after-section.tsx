@@ -2,7 +2,7 @@
 
 export default function BeforeAfterSection() {
   return (
-    <section className="w-full py-20 md:py-28 bg-background border-b border-border">
+    <section id="before-after-section" className="w-full py-20 md:py-28 bg-background border-b border-border">
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
         <div className="space-y-12">
           {/* Section heading */}
