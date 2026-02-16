@@ -15,11 +15,31 @@ export default function BeforeAfterSection() {
             </p>
           </div>
 
+          {/* Trying to Remember Visual */}
+          <div className="text-center mb-6">
+            <div className="flex justify-center gap-1.5 mb-4">
+              <div className="w-2 h-2 rounded-full bg-muted-foreground/40 animate-bounce" style={{ animationDelay: '0s' }}></div>
+              <div className="w-2 h-2 rounded-full bg-muted-foreground/40 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+              <div className="w-2 h-2 rounded-full bg-muted-foreground/40 animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+            </div>
+            <p className="text-sm text-muted-foreground/60">Trying to remember...</p>
+          </div>
+
+          {/* User Question */}
+          <div className="text-center mb-8">
+            <p className="text-lg text-muted-foreground italic">
+              "Where was the arithmetic operators section?"
+            </p>
+          </div>
+
           {/* Before/After Comparison */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {/* LEFT: Without AltDump */}
             <div className="flex flex-col gap-6">
-              <div className="flex-1 bg-secondary border border-border rounded-xl overflow-hidden min-h-96">
+              <div className="bg-yellow-100 dark:bg-yellow-900/20 border border-yellow-300 dark:border-yellow-800 rounded-t-lg px-4 py-2">
+                <p className="text-sm font-medium text-yellow-900 dark:text-yellow-200">Manual Searching Through Files</p>
+              </div>
+              <div className="flex-1 bg-secondary border border-border rounded-b-xl overflow-hidden aspect-video">
                 <video 
                   autoPlay
                   muted
@@ -36,13 +56,16 @@ export default function BeforeAfterSection() {
 
             {/* RIGHT: With AltDump */}
             <div className="flex flex-col gap-6">
-              <div className="flex-1 bg-secondary border border-border rounded-xl overflow-hidden min-h-96">
+              <div className="bg-green-100 dark:bg-green-900/20 border border-green-300 dark:border-green-800 rounded-t-lg px-4 py-2">
+                <p className="text-sm font-medium text-green-900 dark:text-green-200">Instant Search With AltDump</p>
+              </div>
+              <div className="flex-1 bg-secondary border border-border rounded-b-xl overflow-hidden aspect-video">
                 <video 
                   autoPlay
                   muted
                   loop
                   className="w-full h-full object-cover"
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/after-SzQSsxAiXAf4mZBJmNRxUoWDmQoJUD.mp4"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/afterwithzoom-DPchvx7ktSgDxig2y2TsHAI7dJr7K3.mp4"
                 />
               </div>
               <div className="text-center">
@@ -53,9 +76,10 @@ export default function BeforeAfterSection() {
           </div>
 
           {/* Key insight */}
-          <div className="bg-accent/5 border border-accent/20 rounded-lg p-8 text-center">
-            <p className="text-lg text-foreground">
-              <span className="font-semibold text-accent">Instant results.</span> No clicking through folders. No file searching. Just search what you remember.
+          <div className="bg-gradient-to-r from-accent/10 via-accent/5 to-accent/10 border-2 border-accent/40 rounded-lg p-8 md:p-12 text-center">
+            <p className="text-lg md:text-2xl text-foreground space-y-4">
+              <span className="font-bold text-accent block text-3xl md:text-4xl">This isn't filename search.</span>
+              <span className="font-bold text-foreground block text-2xl md:text-3xl leading-relaxed">Search any sentence from any file — and find it instantly.</span>
             </p>
           </div>
         </div>

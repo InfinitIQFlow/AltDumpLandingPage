@@ -115,7 +115,7 @@ export default function HeroSection() {
 
             {/* Video player */}
             <video 
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Untitled%20design-0mDceozWtUKUAT6qsMSGLVZyq9CRXm.mp4"
+              src="/demovideo.mp4"
               controls
               autoPlay
               className="w-full h-auto max-h-96 md:max-h-screen object-contain"

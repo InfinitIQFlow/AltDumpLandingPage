@@ -33,11 +33,20 @@ export default function PricingSection() {
             </div>
             
             <div className="bg-secondary border border-accent/40 rounded-xl p-12 text-center space-y-8 hover:border-accent/60 transition-colors shadow-lg hover:shadow-xl">
-            <div className="space-y-2">
+            <div className="space-y-4">
               <p className="text-muted-foreground text-sm uppercase tracking-wide">Current Price</p>
               <div className="flex items-baseline justify-center gap-1">
                 <span className="text-6xl md:text-7xl font-bold text-foreground">$12</span>
                 <span className="text-muted-foreground">/lifetime</span>
+              </div>
+              
+              {/* One Time Payment, Lifetime Access */}
+              <div className="pt-2">
+                <div className="inline-block px-6 py-3 rounded-lg bg-gradient-to-r from-accent/20 via-accent/10 to-accent/20 border border-accent/40 shadow-[0_0_20px_rgba(var(--color-accent),0.15)]">
+                  <p className="text-lg md:text-xl font-bold text-accent">
+                    One Time Payment, Lifetime Access
+                  </p>
+                </div>
               </div>
             </div>
 
