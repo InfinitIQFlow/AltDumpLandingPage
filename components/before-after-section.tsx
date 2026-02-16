@@ -15,11 +15,21 @@ export default function BeforeAfterSection() {
             </p>
           </div>
 
+          {/* User Question */}
+          <div className="text-center mb-8">
+            <p className="text-lg text-muted-foreground italic">
+              "Where was the arithmetic operators section?"
+            </p>
+          </div>
+
           {/* Before/After Comparison */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {/* LEFT: Without AltDump */}
             <div className="flex flex-col gap-6">
-              <div className="flex-1 bg-secondary border border-border rounded-xl overflow-hidden min-h-96">
+              <div className="bg-yellow-100 dark:bg-yellow-900/20 border border-yellow-300 dark:border-yellow-800 rounded-t-lg px-4 py-2">
+                <p className="text-sm font-medium text-yellow-900 dark:text-yellow-200">Manual Searching Through Files</p>
+              </div>
+              <div className="flex-1 bg-secondary border border-border rounded-b-xl overflow-hidden aspect-video">
                 <video 
                   autoPlay
                   muted
@@ -36,7 +46,10 @@ export default function BeforeAfterSection() {
 
             {/* RIGHT: With AltDump */}
             <div className="flex flex-col gap-6">
-              <div className="flex-1 bg-secondary border border-border rounded-xl overflow-hidden min-h-96">
+              <div className="bg-green-100 dark:bg-green-900/20 border border-green-300 dark:border-green-800 rounded-t-lg px-4 py-2">
+                <p className="text-sm font-medium text-green-900 dark:text-green-200">Instant Search With AltDump</p>
+              </div>
+              <div className="flex-1 bg-secondary border border-border rounded-b-xl overflow-hidden aspect-video">
                 <video 
                   autoPlay
                   muted
@@ -54,8 +67,9 @@ export default function BeforeAfterSection() {
 
           {/* Key insight */}
           <div className="bg-accent/5 border border-accent/20 rounded-lg p-8 text-center">
-            <p className="text-lg text-foreground">
-              <span className="font-semibold text-accent">Instant results.</span> No clicking through folders. No file searching. Just search what you remember.
+            <p className="text-lg md:text-xl text-foreground">
+              <span className="font-bold text-accent block mb-2 text-2xl md:text-3xl">This isn't filename search.</span>
+              <span className="font-bold text-foreground">Search any sentence from any file — and find it instantly.</span>
             </p>
           </div>
         </div>
