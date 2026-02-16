@@ -19,7 +19,7 @@ export default function StoryDemoSection() {
           <div className="flex flex-col gap-8 items-center">
             <div className="relative w-full max-w-4xl bg-secondary rounded-xl overflow-hidden border border-border aspect-video flex items-center justify-center shadow-2xl">
               <video
-                src="/demovideo.mp4"
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/appdemomain-1LFTm5Gxhyvt0SC8EW4UgVperGZsoc.mp4"
                 className="w-full h-full object-cover"
                 autoPlay
                 loop
