@@ -55,7 +55,7 @@ export default function BeforeAfterSection() {
                   muted
                   loop
                   className="w-full h-full object-cover"
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/after-SzQSsxAiXAf4mZBJmNRxUoWDmQoJUD.mp4"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/afterwithzoom-DPchvx7ktSgDxig2y2TsHAI7dJr7K3.mp4"
                 />
               </div>
               <div className="text-center">
@@ -66,10 +66,10 @@ export default function BeforeAfterSection() {
           </div>
 
           {/* Key insight */}
-          <div className="bg-accent/5 border border-accent/20 rounded-lg p-8 text-center">
-            <p className="text-lg md:text-xl text-foreground">
-              <span className="font-bold text-accent block mb-2 text-2xl md:text-3xl">This isn't filename search.</span>
-              <span className="font-bold text-foreground">Search any sentence from any file — and find it instantly.</span>
+          <div className="bg-gradient-to-r from-accent/10 via-accent/5 to-accent/10 border-2 border-accent/40 rounded-lg p-8 md:p-12 text-center">
+            <p className="text-lg md:text-2xl text-foreground space-y-4">
+              <span className="font-bold text-accent block text-3xl md:text-4xl">This isn't filename search.</span>
+              <span className="font-bold text-foreground block text-2xl md:text-3xl leading-relaxed">Search any sentence from any file — and find it instantly.</span>
             </p>
           </div>
         </div>
