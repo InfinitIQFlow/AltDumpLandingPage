@@ -15,6 +15,16 @@ export default function BeforeAfterSection() {
             </p>
           </div>
 
+          {/* Trying to Remember Visual */}
+          <div className="text-center mb-6">
+            <div className="flex justify-center gap-1.5 mb-4">
+              <div className="w-2 h-2 rounded-full bg-muted-foreground/40 animate-bounce" style={{ animationDelay: '0s' }}></div>
+              <div className="w-2 h-2 rounded-full bg-muted-foreground/40 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+              <div className="w-2 h-2 rounded-full bg-muted-foreground/40 animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+            </div>
+            <p className="text-sm text-muted-foreground/60">Trying to remember...</p>
+          </div>
+
           {/* User Question */}
           <div className="text-center mb-8">
             <p className="text-lg text-muted-foreground italic">
