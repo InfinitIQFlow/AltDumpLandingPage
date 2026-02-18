@@ -1,6 +1,10 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import {
+  Dialog,
+  DialogContent,
+} from '@/components/ui/dialog'
 
 interface VideoBlockProps {
   videoSrc: string
@@ -12,13 +16,15 @@ interface VideoBlockProps {
 function VideoBlock({ videoSrc, heading, text, ariaLabel }: VideoBlockProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const modalVideoRef = useRef<HTMLVideoElement>(null)
   const [isInView, setIsInView] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsInView(entry.isIntersecting)
-        if (entry.isIntersecting && videoRef.current) {
+        if (entry.isIntersecting && videoRef.current && !isModalOpen) {
           videoRef.current.play()
         } else if (!entry.isIntersecting && videoRef.current) {
           videoRef.current.pause()
@@ -37,30 +43,87 @@ function VideoBlock({ videoSrc, heading, text, ariaLabel }: VideoBlockProps) {
         observer.unobserve(containerRef.current)
       }
     }
-  }, [])
+  }, [isModalOpen])
+
+  useEffect(() => {
+    if (isModalOpen && modalVideoRef.current) {
+      modalVideoRef.current.play()
+    }
+  }, [isModalOpen])
+
+  const handleOpenModal = () => {
+    if (videoRef.current) {
+      videoRef.current.pause()
+    }
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    if (modalVideoRef.current) {
+      modalVideoRef.current.pause()
+    }
+    setIsModalOpen(false)
+  }
 
   return (
-    <div ref={containerRef} className="flex flex-col gap-4">
-      <div className="relative w-full bg-secondary rounded-xl overflow-hidden border border-border aspect-video flex items-center justify-center shadow-lg">
-        <video
-          ref={videoRef}
-          src={videoSrc}
-          className="w-full h-full object-cover"
-          loop
-          muted
-          playsInline
-          aria-label={ariaLabel}
-        />
+    <>
+      <div ref={containerRef} className="flex flex-col gap-4">
+        <button
+          onClick={handleOpenModal}
+          className="relative w-full bg-secondary rounded-xl overflow-hidden border border-border aspect-video flex items-center justify-center shadow-lg cursor-pointer group transition-all duration-300 hover:shadow-xl hover:border-foreground/30 p-0"
+          aria-label={`Open ${ariaLabel}`}
+        >
+          <video
+            ref={videoRef}
+            src={videoSrc}
+            className="w-full h-full object-cover"
+            loop
+            muted
+            playsInline
+            aria-label={ariaLabel}
+          />
+          {/* Hover overlay hint */}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center pointer-events-none">
+            <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <svg
+                className="w-16 h-16"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+          </div>
+        </button>
+        <div className="space-y-2">
+          <h3 className="text-xl font-semibold text-foreground">
+            {heading}
+          </h3>
+          <p className="text-base text-muted-foreground">
+            {text}
+          </p>
+        </div>
       </div>
-      <div className="space-y-2">
-        <h3 className="text-xl font-semibold text-foreground">
-          {heading}
-        </h3>
-        <p className="text-base text-muted-foreground">
-          {text}
-        </p>
-      </div>
-    </div>
+
+      {/* Modal for expanded video view */}
+      <Dialog open={isModalOpen} onOpenChange={handleCloseModal}>
+        <DialogContent className="max-w-4xl w-full p-0 border-0 bg-black/95 backdrop-blur">
+          <div className="relative w-full bg-black rounded-lg overflow-hidden aspect-video flex items-center justify-center">
+            <video
+              ref={modalVideoRef}
+              src={videoSrc}
+              className="w-full h-full object-cover"
+              autoPlay
+              loop
+              muted
+              playsInline
+              controls
+              aria-label={ariaLabel}
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }
 
