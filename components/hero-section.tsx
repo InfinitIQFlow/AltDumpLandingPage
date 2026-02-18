@@ -20,7 +20,7 @@ export default function HeroSection() {
   }
 
   const scrollToBeforeAfter = () => {
-    const element = document.getElementById('before-after-section')
+    const element = document.getElementById('watch-how-it-works')
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
     }
