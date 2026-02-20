@@ -175,10 +175,7 @@ export default function DemoUI() {
         <div className="space-y-8">
           {/* Section Header */}
           <div className="text-center space-y-3">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground text-balance">
-              See It In Action
-            </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg md:text-xl font-semibold text-primary glow-text">
               Search naturally. Find instantly. No file names needed.
             </p>
           </div>
