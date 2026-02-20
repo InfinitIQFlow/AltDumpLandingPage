@@ -10,6 +10,32 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
+  @keyframes glow-pulse {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 60px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  @keyframes text-glow {
+    0%, 100% {
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .glow-box {
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+
+  .glow-text {
+    animation: text-glow 3s ease-in-out infinite;
+  }
 }
 
 @layer base {
