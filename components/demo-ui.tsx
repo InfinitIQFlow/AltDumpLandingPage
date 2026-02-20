@@ -101,45 +101,70 @@ export default function DemoUI() {
       return
     }
 
-    const interval = setInterval(() => {
-      setStep((prev) => {
-        const next = (prev + 1) % 16
-        
-        // First search query - typing animation
-        if (next >= 0 && next < 4) {
-          setCurrentQuery(0)
-          setShowResults(false)
-          const text = searchQueries[0]
-          setSearchText(text.substring(0, Math.ceil((next + 1) * 4)))
-        } 
-        // Show first results
-        else if (next >= 4 && next < 7) {
-          setCurrentQuery(0)
-          setSearchText(searchQueries[0])
-          setShowResults(true)
-        } 
-        // Clear between searches
-        else if (next >= 7 && next < 9) {
-          setShowResults(false)
-          setSearchText('')
-        } 
-        // Second search query - typing animation
-        else if (next >= 9 && next < 13) {
-          setCurrentQuery(1)
-          setShowResults(false)
-          const text = searchQueries[1]
-          setSearchText(text.substring(0, Math.ceil((next - 9 + 1) * 4)))
-        } 
-        // Show second results
-        else if (next >= 13 && next < 16) {
-          setCurrentQuery(1)
-          setSearchText(searchQueries[1])
-          setShowResults(true)
-        }
+    let charIndex = 0
+    let phaseIndex = 0
 
-        return next
-      })
-    }, 1000)
+    const interval = setInterval(() => {
+      const query0 = searchQueries[0]
+      const query1 = searchQueries[1]
+
+      // Phase 0-1: Type first query (one char at a time)
+      if (phaseIndex === 0) {
+        if (charIndex <= query0.length) {
+          setCurrentQuery(0)
+          setShowResults(false)
+          setSearchText(query0.substring(0, charIndex))
+          charIndex++
+        } else {
+          phaseIndex = 1
+          charIndex = 0
+        }
+      }
+      // Phase 1: Show first results (hold for 2.5s = 25 intervals)
+      else if (phaseIndex === 1) {
+        setCurrentQuery(0)
+        setSearchText(query0)
+        setShowResults(true)
+        charIndex++
+        if (charIndex > 25) {
+          phaseIndex = 2
+          charIndex = 0
+        }
+      }
+      // Phase 2: Clear search (0.5s = 5 intervals)
+      else if (phaseIndex === 2) {
+        setShowResults(false)
+        setSearchText('')
+        charIndex++
+        if (charIndex > 5) {
+          phaseIndex = 3
+          charIndex = 0
+        }
+      }
+      // Phase 3: Type second query (one char at a time)
+      else if (phaseIndex === 3) {
+        if (charIndex <= query1.length) {
+          setCurrentQuery(1)
+          setShowResults(false)
+          setSearchText(query1.substring(0, charIndex))
+          charIndex++
+        } else {
+          phaseIndex = 4
+          charIndex = 0
+        }
+      }
+      // Phase 4: Show second results (hold for 2.5s = 25 intervals)
+      else if (phaseIndex === 4) {
+        setCurrentQuery(1)
+        setSearchText(query1)
+        setShowResults(true)
+        charIndex++
+        if (charIndex > 25) {
+          phaseIndex = 0
+          charIndex = 0
+        }
+      }
+    }, 80)
 
     return () => clearInterval(interval)
   }, [isInView])
