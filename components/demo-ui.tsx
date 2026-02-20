@@ -2,21 +2,51 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+interface SearchResult {
+  id: number
+  source: string
+  text: string
+  highlight: string
+}
+
 export default function DemoUI() {
-  const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [isInView, setIsInView] = useState(false)
+  const [searchText, setSearchText] = useState('')
+  const [showResults, setShowResults] = useState(false)
+  const [step, setStep] = useState(0)
+
+  const searchQueries = [
+    'dashboard design',
+    'blue color scheme',
+    'ui mockup',
+  ]
+
+  const results: SearchResult[] = [
+    {
+      id: 1,
+      source: 'project-notes.txt',
+      text: 'The new dashboard design uses a ',
+      highlight: 'blue color scheme',
+    },
+    {
+      id: 2,
+      source: 'screenshot-ui.png',
+      text: 'Image match: ',
+      highlight: '94% similarity',
+    },
+    {
+      id: 3,
+      source: 'meeting-notes.md',
+      text: 'Discussed the ',
+      highlight: 'dashboard design',
+    },
+  ]
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsInView(entry.isIntersecting)
-        if (entry.isIntersecting && videoRef.current) {
-          videoRef.current.play()
-        } else if (!entry.isIntersecting && videoRef.current) {
-          videoRef.current.pause()
-          videoRef.current.currentTime = 0
-        }
       },
       { threshold: 0.5 }
     )
@@ -32,6 +62,40 @@ export default function DemoUI() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!isInView) {
+      setStep(0)
+      setSearchText('')
+      setShowResults(false)
+      return
+    }
+
+    const interval = setInterval(() => {
+      setStep((prev) => {
+        const next = (prev + 1) % 12
+        
+        if (next >= 0 && next < 3) {
+          setShowResults(false)
+          setSearchText(searchQueries[next].substring(0, (next + 1) * 6))
+        } else if (next >= 3 && next < 6) {
+          const queryIndex = next - 3
+          setSearchText(searchQueries[queryIndex])
+          setShowResults(true)
+        } else if (next >= 6 && next < 9) {
+          setShowResults(false)
+          setSearchText('')
+        } else {
+          setShowResults(false)
+          setSearchText('')
+        }
+
+        return next
+      })
+    }, 1200)
+
+    return () => clearInterval(interval)
+  }, [isInView])
+
   return (
     <section className="w-full py-20 md:py-28 bg-secondary/30 border-b border-border">
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
@@ -46,15 +110,13 @@ export default function DemoUI() {
             </p>
           </div>
 
-          {/* Demo Video - Clean Window Style */}
+          {/* Demo App - Windows Style */}
           <div ref={containerRef} className="flex justify-center">
             <div className="w-full max-w-4xl">
               <div className="bg-background rounded-xl border border-border shadow-2xl overflow-hidden">
                 {/* Windows Title Bar */}
                 <div className="bg-secondary border-b border-border px-4 py-3 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="text-sm font-medium text-foreground">AltDump</div>
-                  </div>
+                  <div className="text-sm font-medium text-foreground">AltDump - Your Second Brain</div>
                   <div className="flex items-center gap-2">
                     <button className="hover:bg-secondary/80 p-1 rounded transition-colors">
                       <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -63,7 +125,7 @@ export default function DemoUI() {
                     </button>
                     <button className="hover:bg-secondary/80 p-1 rounded transition-colors">
                       <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4" />
                       </svg>
                     </button>
                     <button className="hover:bg-red-500/20 text-foreground hover:text-red-500 p-1 rounded transition-colors">
@@ -74,17 +136,60 @@ export default function DemoUI() {
                   </div>
                 </div>
 
-                {/* Video Content */}
-                <div className="relative w-full bg-black">
-                  <video
-                    ref={videoRef}
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2026-02-21%2001-58-42-rmx8ARd3VY0apjLHCD2nIrhfXp1ia0.mp4"
-                    className="w-full h-auto aspect-video object-cover"
-                    loop
-                    muted
-                    playsInline
-                    aria-label="AltDump demo walkthrough"
-                  />
+                {/* App Content */}
+                <div className="bg-background p-6 min-h-96 flex flex-col gap-6">
+                  {/* Search Bar */}
+                  <div className="relative">
+                    <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input
+                      type="text"
+                      value={searchText}
+                      readOnly
+                      placeholder="Search what you remember..."
+                      className="w-full pl-10 pr-4 py-3 rounded-lg border border-border bg-secondary/30 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    />
+                  </div>
+
+                  {/* Results */}
+                  {showResults && (
+                    <div className="space-y-3 animate-fadeIn">
+                      <p className="text-sm font-semibold text-muted-foreground">Search Results</p>
+                      <div className="space-y-2 max-h-64 overflow-y-auto">
+                        {results.map((result) => (
+                          <div
+                            key={result.id}
+                            className="p-4 bg-secondary/50 border border-border rounded-lg hover:border-primary/50 transition-all"
+                          >
+                            <p className="text-xs text-muted-foreground mb-2">From: {result.source}</p>
+                            <p className="text-sm text-foreground">
+                              {result.text}
+                              <span className="bg-primary/30 text-primary font-semibold rounded px-1">
+                                {result.highlight}
+                              </span>
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Empty State */}
+                  {!showResults && !searchText && (
+                    <div className="flex-1 flex items-center justify-center">
+                      <div className="text-center space-y-4">
+                        <div className="w-16 h-16 rounded-full bg-secondary/50 flex items-center justify-center mx-auto">
+                          <svg className="w-8 h-8 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                          </svg>
+                        </div>
+                        <p className="text-muted-foreground">
+                          Type to search across all your files
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -123,6 +228,21 @@ export default function DemoUI() {
           </div>
         </div>
       </div>
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out;
+        }
+      `}</style>
     </section>
   )
 }
