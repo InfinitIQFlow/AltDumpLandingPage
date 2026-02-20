@@ -25,8 +25,8 @@ export default function PrivacyPage() {
           <p className="text-muted-foreground mb-4">Last updated: February 2025</p>
 
           <p className="text-muted-foreground mb-12 leading-relaxed">
-            Alt Dump ("we", "our", or "us") is operated by <strong>YOUR LEGAL NAME OR COMPANY NAME</strong>,
-            located in <strong>Your Country</strong>. This Privacy Policy explains how Alt Dump handles
+            Alt Dump ("we", "our", or "us") is operated by <strong>InfinitIQ Flow</strong>,
+            located in <strong>India</strong>. This Privacy Policy explains how Alt Dump handles
             your information.
           </p>
 
@@ -75,13 +75,13 @@ export default function PrivacyPage() {
                 3. Payments and Licensing
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                If you purchase Alt Dump, payment processing is handled by Dodo Payments,
-                a third-party payment processor.
+                If you purchase Alt Dump through the Microsoft Store, all payment
+                processing and billing information is handled directly by Microsoft.
               </p>
               <p className="text-muted-foreground leading-relaxed mt-4">
-                We may receive limited information necessary to deliver your license,
-                such as your email address and transaction confirmation details.
-                We do not sell or share this information for advertising purposes.
+                We do not receive or store your payment details such as credit card
+                information. Any transaction data is managed according to Microsoft’s
+                privacy policies.
               </p>
             </div>
 
