@@ -1,19 +1,36 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function DemoUI() {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [selectedFile, setSelectedFile] = useState<string | null>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [isInView, setIsInView] = useState(false)
 
-  const demoFiles = [
-    { id: 1, name: 'project-notes.txt', type: 'Document', date: 'Feb 20', icon: '📄' },
-    { id: 2, name: 'screenshot-ui.png', type: 'Image', date: 'Feb 19', icon: '🖼️' },
-    { id: 3, name: 'code-snippet.js', type: 'Code', date: 'Feb 18', icon: '💻' },
-    { id: 4, name: 'meeting-notes.md', type: 'Document', date: 'Feb 17', icon: '📝' },
-    { id: 5, name: 'idea-brainstorm.txt', type: 'Notes', date: 'Feb 16', icon: '💡' },
-    { id: 6, name: 'demo-video.mp4', type: 'Video', date: 'Feb 15', icon: '🎥' },
-  ]
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting)
+        if (entry.isIntersecting && videoRef.current) {
+          videoRef.current.play()
+        } else if (!entry.isIntersecting && videoRef.current) {
+          videoRef.current.pause()
+          videoRef.current.currentTime = 0
+        }
+      },
+      { threshold: 0.5 }
+    )
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current)
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current)
+      }
+    }
+  }, [])
 
   return (
     <section className="w-full py-20 md:py-28 bg-secondary/30 border-b border-border">
@@ -29,115 +46,52 @@ export default function DemoUI() {
             </p>
           </div>
 
-          {/* Demo Window */}
-          <div className="bg-background rounded-2xl border border-border shadow-2xl overflow-hidden">
-            {/* Top Bar */}
-            <div className="bg-secondary border-b border-border px-6 py-4 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-red-400" />
-                <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                <div className="w-3 h-3 rounded-full bg-green-400" />
-              </div>
-              <h3 className="text-foreground font-semibold">AltDump - Your Second Brain</h3>
-              <div className="w-12" />
-            </div>
-
-            {/* Main Content */}
-            <div className="flex h-96 md:h-[500px]">
-              {/* Left Sidebar */}
-              <div className="w-1/3 border-r border-border bg-secondary/50 p-4 overflow-y-auto">
-                <h4 className="text-foreground font-semibold text-sm mb-4">Recent Files</h4>
-                <div className="space-y-2">
-                  {demoFiles.map((file) => (
-                    <button
-                      key={file.id}
-                      onClick={() => setSelectedFile(file.id.toString())}
-                      className={`w-full text-left p-3 rounded-lg transition-all ${
-                        selectedFile === file.id.toString()
-                          ? 'bg-primary text-primary-foreground'
-                          : 'hover:bg-secondary text-foreground'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="text-lg">{file.icon}</span>
-                        <div className="min-w-0 flex-1">
-                          <p className="text-sm font-medium truncate">{file.name}</p>
-                          <p className="text-xs opacity-70">{file.date}</p>
-                        </div>
-                      </div>
+          {/* Demo Video - Clean Window Style */}
+          <div ref={containerRef} className="flex justify-center">
+            <div className="w-full max-w-4xl">
+              <div className="bg-background rounded-xl border border-border shadow-2xl overflow-hidden">
+                {/* Windows Title Bar */}
+                <div className="bg-secondary border-b border-border px-4 py-3 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="text-sm font-medium text-foreground">AltDump</div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button className="hover:bg-secondary/80 p-1 rounded transition-colors">
+                      <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                      </svg>
                     </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Right Content Area */}
-              <div className="flex-1 p-6 flex flex-col">
-                {/* Search Bar */}
-                <div className="mb-6">
-                  <div className="relative">
-                    <input
-                      type="text"
-                      placeholder="Search what you remember... e.g., 'blue dashboard design'"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                    />
-                    <svg
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
+                    <button className="hover:bg-secondary/80 p-1 rounded transition-colors">
+                      <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                      </svg>
+                    </button>
+                    <button className="hover:bg-red-500/20 text-foreground hover:text-red-500 p-1 rounded transition-colors">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
                   </div>
                 </div>
 
-                {/* Results Preview */}
-                {selectedFile ? (
-                  <div className="space-y-4">
-                    <h4 className="text-foreground font-semibold text-sm">Search Results</h4>
-                    <div className="bg-secondary/50 rounded-lg p-4 space-y-3 max-h-64 overflow-y-auto">
-                      <div className="p-3 bg-background rounded border border-border hover:border-primary/50 transition-all cursor-pointer">
-                        <p className="text-sm text-muted-foreground mb-2">From: project-notes.txt</p>
-                        <p className="text-foreground text-sm">
-                          "The dashboard design uses a <span className="bg-primary/20 text-primary font-semibold">blue color scheme</span> with modern typography..."
-                        </p>
-                      </div>
-                      <div className="p-3 bg-background rounded border border-border hover:border-primary/50 transition-all cursor-pointer">
-                        <p className="text-sm text-muted-foreground mb-2">From: screenshot-ui.png</p>
-                        <p className="text-foreground text-sm">
-                          Image contains matching content - <span className="bg-primary/20 text-primary font-semibold">visual similarity: 94%</span>
-                        </p>
-                      </div>
-                      <div className="p-3 bg-background rounded border border-border hover:border-primary/50 transition-all cursor-pointer">
-                        <p className="text-sm text-muted-foreground mb-2">From: meeting-notes.md</p>
-                        <p className="text-foreground text-sm">
-                          "Discussed the new <span className="bg-primary/20 text-primary font-semibold">dashboard design</span> implementation..."
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center flex-1 text-center">
-                    <div className="space-y-4">
-                      <div className="w-16 h-16 rounded-full bg-secondary/50 flex items-center justify-center mx-auto">
-                        <svg className="w-8 h-8 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                      </div>
-                      <p className="text-muted-foreground">
-                        Select a file or type to search
-                      </p>
-                    </div>
-                  </div>
-                )}
+                {/* Video Content */}
+                <div className="relative w-full bg-black">
+                  <video
+                    ref={videoRef}
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2026-02-21%2001-58-42-rmx8ARd3VY0apjLHCD2nIrhfXp1ia0.mp4"
+                    className="w-full h-auto aspect-video object-cover"
+                    loop
+                    muted
+                    playsInline
+                    aria-label="AltDump demo walkthrough"
+                  />
+                </div>
               </div>
             </div>
           </div>
 
           {/* Features Highlight */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
             <div className="text-center space-y-2">
               <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto">
                 <svg className="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
