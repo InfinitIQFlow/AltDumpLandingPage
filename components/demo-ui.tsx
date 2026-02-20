@@ -2,11 +2,13 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-interface SearchResult {
+interface FileResult {
   id: number
-  source: string
-  text: string
-  highlight: string
+  name: string
+  type: string
+  date: string
+  badgeColor: string
+  bgColor: string
 }
 
 export default function DemoUI() {
@@ -15,33 +17,61 @@ export default function DemoUI() {
   const [searchText, setSearchText] = useState('')
   const [showResults, setShowResults] = useState(false)
   const [step, setStep] = useState(0)
+  const [currentQuery, setCurrentQuery] = useState(0)
 
   const searchQueries = [
-    'dashboard design',
-    'blue color scheme',
-    'ui mockup',
+    'college project',
+    'javascript error from yesterday',
   ]
 
-  const results: SearchResult[] = [
-    {
-      id: 1,
-      source: 'project-notes.txt',
-      text: 'The new dashboard design uses a ',
-      highlight: 'blue color scheme',
-    },
-    {
-      id: 2,
-      source: 'screenshot-ui.png',
-      text: 'Image match: ',
-      highlight: '94% similarity',
-    },
-    {
-      id: 3,
-      source: 'meeting-notes.md',
-      text: 'Discussed the ',
-      highlight: 'dashboard design',
-    },
-  ]
+  const resultsMap = {
+    0: [ // college project results
+      {
+        id: 1,
+        name: 'VisionMateThesis.pdf',
+        type: 'PDF',
+        date: 'Feb 14',
+        badgeColor: 'bg-red-500',
+        bgColor: 'bg-red-900/20',
+      },
+      {
+        id: 2,
+        name: 'major_project_report.pdf',
+        type: 'PDF',
+        date: 'Feb 13',
+        badgeColor: 'bg-red-500',
+        bgColor: 'bg-red-900/20',
+      },
+      {
+        id: 3,
+        name: 'VisionMate.pptx',
+        type: 'PPT',
+        date: 'Feb 13',
+        badgeColor: 'bg-amber-500',
+        bgColor: 'bg-amber-900/20',
+      },
+    ],
+    1: [ // javascript error results
+      {
+        id: 4,
+        name: 'A JavaScript error occurred in the main process',
+        type: 'Error Log',
+        date: 'Feb 10',
+        badgeColor: 'bg-red-600',
+        bgColor: 'bg-red-900/30',
+      },
+      {
+        id: 5,
+        name: 'Screenshot 2026-02-10 234755.png',
+        type: 'IMAGE',
+        date: 'Feb 10',
+        badgeColor: 'bg-blue-600',
+        bgColor: 'bg-blue-900/20',
+      },
+    ],
+  }
+
+  const results = resultsMap[currentQuery as keyof typeof resultsMap] || []
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -67,31 +97,49 @@ export default function DemoUI() {
       setStep(0)
       setSearchText('')
       setShowResults(false)
+      setCurrentQuery(0)
       return
     }
 
     const interval = setInterval(() => {
       setStep((prev) => {
-        const next = (prev + 1) % 12
+        const next = (prev + 1) % 16
         
-        if (next >= 0 && next < 3) {
+        // First search query - typing animation
+        if (next >= 0 && next < 4) {
+          setCurrentQuery(0)
           setShowResults(false)
-          setSearchText(searchQueries[next].substring(0, (next + 1) * 6))
-        } else if (next >= 3 && next < 6) {
-          const queryIndex = next - 3
-          setSearchText(searchQueries[queryIndex])
+          const text = searchQueries[0]
+          setSearchText(text.substring(0, Math.ceil((next + 1) * 4)))
+        } 
+        // Show first results
+        else if (next >= 4 && next < 7) {
+          setCurrentQuery(0)
+          setSearchText(searchQueries[0])
           setShowResults(true)
-        } else if (next >= 6 && next < 9) {
+        } 
+        // Clear between searches
+        else if (next >= 7 && next < 9) {
           setShowResults(false)
           setSearchText('')
-        } else {
+        } 
+        // Second search query - typing animation
+        else if (next >= 9 && next < 13) {
+          setCurrentQuery(1)
           setShowResults(false)
-          setSearchText('')
+          const text = searchQueries[1]
+          setSearchText(text.substring(0, Math.ceil((next - 9 + 1) * 4)))
+        } 
+        // Show second results
+        else if (next >= 13 && next < 16) {
+          setCurrentQuery(1)
+          setSearchText(searchQueries[1])
+          setShowResults(true)
         }
 
         return next
       })
-    }, 1200)
+    }, 1000)
 
     return () => clearInterval(interval)
   }, [isInView])
@@ -154,21 +202,30 @@ export default function DemoUI() {
 
                   {/* Results */}
                   {showResults && (
-                    <div className="space-y-3 animate-fadeIn">
-                      <p className="text-sm font-semibold text-muted-foreground">Search Results</p>
-                      <div className="space-y-2 max-h-64 overflow-y-auto">
+                    <div className="space-y-4 animate-fadeIn">
+                      <p className="text-sm font-semibold text-muted-foreground">Search Results ({results.length})</p>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-h-72 overflow-y-auto">
                         {results.map((result) => (
                           <div
                             key={result.id}
-                            className="p-4 bg-secondary/50 border border-border rounded-lg hover:border-primary/50 transition-all"
+                            className={`${result.bgColor} border border-border rounded-lg overflow-hidden hover:border-primary/50 transition-all cursor-pointer group`}
                           >
-                            <p className="text-xs text-muted-foreground mb-2">From: {result.source}</p>
-                            <p className="text-sm text-foreground">
-                              {result.text}
-                              <span className="bg-primary/30 text-primary font-semibold rounded px-1">
-                                {result.highlight}
-                              </span>
-                            </p>
+                            {/* File Thumbnail Area */}
+                            <div className="aspect-video bg-background/50 flex items-center justify-center relative border-b border-border">
+                              <div className={`${result.badgeColor} text-white text-xs font-bold px-3 py-1 rounded-full`}>
+                                {result.type}
+                              </div>
+                            </div>
+                            
+                            {/* File Info */}
+                            <div className="p-4">
+                              <p className="text-sm font-semibold text-foreground truncate group-hover:text-primary transition-colors">
+                                {result.name}
+                              </p>
+                              <p className="text-xs text-muted-foreground mt-2">
+                                {result.type === 'IMAGE' ? 'IMAGE' : 'FILE'} • {result.date}
+                              </p>
+                            </div>
                           </div>
                         ))}
                       </div>
