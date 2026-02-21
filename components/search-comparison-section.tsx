@@ -139,7 +139,7 @@ const AnimatedImageCard = () => {
         {/* Stage 3: Expanded image - zoomed and animated */}
         {stage === 'expanded' && selectedImage !== null && (
           <div className="w-full h-full flex flex-col items-center justify-center gap-4 animate-expand">
-            <div className="relative rounded-xl overflow-hidden" style={{ boxShadow: '0 0 20px rgba(34, 211, 238, 0.4)' }}>
+            <div className="relative rounded-xl overflow-hidden">
               <div className="relative w-[500px] h-[500px] bg-secondary/40 rounded-xl border border-accent/40 flex items-center justify-center overflow-hidden backdrop-blur-sm">
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
@@ -362,11 +362,11 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
               </div>
 
               {/* Play button */}
-              <div className="relative z-10 p-5 bg-accent/30 rounded-full border border-accent/60 hover:border-accent transition-colors">
+              <div className="relative z-10 p-3 bg-accent/30 rounded-full border border-accent/60 hover:border-accent transition-colors">
                 <PlayIcon />
               </div>
 
-              <div className="absolute bottom-4 left-4 right-4 px-3 py-2 bg-accent/20 border border-accent/60 rounded-lg backdrop-blur-sm z-20">
+              <div className="absolute bottom-2 left-3 right-3 px-2 py-1 bg-accent/20 border border-accent/60 rounded-lg backdrop-blur-sm z-20">
                 <p className="text-xs font-semibold text-accent">We'll test the new pricing next quarter.</p>
               </div>
               </div>
