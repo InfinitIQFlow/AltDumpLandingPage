@@ -43,36 +43,8 @@ export default function HeroSection() {
             </p>
           </div>
 
-          {/* Key Benefits */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl fade-in-up" style={{ animationDelay: '0.1s' }}>
-            <div className="flex items-center gap-3 justify-center md:justify-start md:col-start-1">
-              <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
-                <svg className="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <span className="text-sm text-muted-foreground">Works Offline</span>
-            </div>
-            <div className="flex items-center gap-3 justify-center">
-              <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
-                <svg className="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <span className="text-sm text-muted-foreground">100% Private</span>
-            </div>
-            <div className="flex items-center gap-3 justify-center md:justify-end md:col-end-4">
-              <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
-                <svg className="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <span className="text-sm text-muted-foreground">AI-Powered</span>
-            </div>
-          </div>
-
           {/* CTA Button */}
-          <div className="flex flex-col items-center gap-3 pt-4 fade-in-up" style={{ animationDelay: '0.15s' }}>
+          <div className="flex flex-col items-center gap-3 pt-2 fade-in-up" style={{ animationDelay: '0.1s' }}>
             <button 
               onClick={handleBuyClick} 
               disabled={isLoading}
