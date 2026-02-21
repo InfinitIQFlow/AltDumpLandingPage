@@ -139,12 +139,12 @@ const AnimatedImageCard = () => {
         {/* Stage 3: Expanded image - zoomed and animated */}
         {stage === 'expanded' && selectedImage !== null && (
           <div className="w-full h-full flex flex-col items-center justify-center gap-4 animate-expand">
-            <div className="relative rounded-xl overflow-hidden" style={{ boxShadow: '0 0 60px rgba(34, 211, 238, 0.6), inset 0 0 30px rgba(34, 211, 238, 0.2)' }}>
-              <div className="relative w-96 h-96 bg-secondary/40 rounded-xl border-2 border-accent/60 flex items-center justify-center overflow-hidden backdrop-blur-sm">
+            <div className="relative rounded-xl overflow-hidden" style={{ boxShadow: '0 0 20px rgba(34, 211, 238, 0.4)' }}>
+              <div className="relative w-80 h-80 bg-secondary/40 rounded-xl border border-accent/40 flex items-center justify-center overflow-hidden backdrop-blur-sm">
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
                   alt="JavaScript error screenshot"
-                  className="w-full h-full object-contain bg-secondary/60"
+                  className="w-full h-full object-cover rounded-lg"
                 />
               </div>
             </div>
