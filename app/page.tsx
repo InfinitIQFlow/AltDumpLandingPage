@@ -9,7 +9,6 @@ import PrivacySection from '@/components/privacy-section'
 import SearchComparisonSection from '@/components/search-comparison-section'
 import BeforeAfterSection from '@/components/before-after-section'
 import StoryDemoSection from '@/components/story-demo-section'
-import PersonaCardsSection from '@/components/persona-cards-section'
 import PricingSection from '@/components/pricing-section'
 import FAQSection from '@/components/faq-section'
 import Footer from '@/components/footer'
@@ -27,7 +26,6 @@ export default function Page() {
         <SearchComparisonSection />
         <BeforeAfterSection />
         <StoryDemoSection />
-        <PersonaCardsSection />
         <PricingSection />
         <FAQSection />
       </main>

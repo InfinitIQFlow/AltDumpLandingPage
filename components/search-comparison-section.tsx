@@ -79,11 +79,11 @@ const AnimatedImageCard = () => {
   }, [stage])
 
   return (
-    <div className="relative bg-slate-900/60 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/30 h-screen md:h-[500px] flex flex-col shadow-lg hover:shadow-2xl hover:border-slate-600/50 transition-all duration-300">
+    <div className="relative bg-gradient-to-br from-secondary/60 to-background backdrop-blur-sm rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[500px] flex flex-col shadow-lg hover:shadow-2xl hover:border-accent/40 transition-all duration-300 smooth-glow">
       {/* Card header with copy */}
-      <div className="relative p-6 border-b border-slate-700/20 bg-gradient-to-r from-slate-800/20 to-slate-900/20 backdrop-blur-sm">
-        <h3 className="text-base font-semibold text-slate-100 mb-1">Images</h3>
-        <p className="text-xs text-slate-400">Find text inside real-world photos — receipts, warranty cards, whiteboards, packaging, anything you've snapped.</p>
+      <div className="relative p-6 border-b border-border/50 bg-gradient-to-r from-secondary/40 to-background/40 backdrop-blur-sm">
+        <h3 className="text-base font-semibold text-foreground mb-1">Images</h3>
+        <p className="text-xs text-muted-foreground">Find text inside real-world photos — receipts, warranty cards, whiteboards, packaging, anything you've snapped.</p>
       </div>
 
       {/* Search input area */}
@@ -94,7 +94,7 @@ const AnimatedImageCard = () => {
             value={displayedQuery}
             readOnly
             placeholder="Search inside images..."
-            className="w-full bg-slate-800/30 text-slate-100 placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600/30 transition-all duration-300 group-hover:border-slate-500/50 group-hover:bg-slate-800/50 backdrop-blur-sm"
+            className="w-full bg-input text-foreground placeholder-muted-foreground px-4 py-3 rounded-lg text-sm focus:outline-none border border-border/50 transition-all duration-300 group-hover:border-accent/50 group-hover:bg-input/80 backdrop-blur-sm"
           />
         </div>
       </div>
@@ -108,17 +108,17 @@ const AnimatedImageCard = () => {
             {images.map((img, idx) => (
               <div key={img.id} className="flex flex-col items-center gap-3 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
                 {/* Image container - larger */}
-                <div className="relative w-32 h-32 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl border border-slate-600/40 flex items-center justify-center text-slate-400 overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-slate-500/60 transition-all duration-300">
+                <div className="relative w-32 h-32 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center text-muted-foreground overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
                   <ImageIcon />
                   
                   {/* Realistic glowing scan line - on top, sharp */}
                   {stage === 'scanning' && (
                     <div 
-                      className="absolute inset-x-0 h-0.5 bg-gradient-to-b from-transparent via-emerald-400 to-transparent"
+                      className="absolute inset-x-0 h-0.5 bg-gradient-to-b from-transparent via-accent to-transparent"
                       style={{
                         top: `${scanProgress}%`,
                         opacity: 0.9,
-                        boxShadow: '0 0 16px rgba(16, 185, 129, 0.8), 0 0 8px rgba(16, 185, 129, 0.5)',
+                        boxShadow: '0 0 16px rgba(34, 211, 238, 0.8), 0 0 8px rgba(34, 211, 238, 0.5)',
                         zIndex: 10
                       }}
                     />
@@ -249,12 +249,12 @@ const AnimatedVideoCard = () => {
   }, [stage])
 
   return (
-    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
-      <div className="p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
+    <div className="bg-gradient-to-br from-secondary/60 to-background rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300 smooth-glow hover:shadow-accent/20">
+      <div className="p-6 border-b border-border/50 bg-gradient-to-r from-secondary/40 to-background/40 backdrop-blur-sm">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full transition-colors ${stage === 'showing-text' ? 'bg-emerald-500' : stage === 'scanning' ? 'bg-amber-500' : 'bg-slate-500'}`} />
-            <span className="text-xs font-medium text-slate-400">
+            <div className={`w-2 h-2 rounded-full transition-colors ${stage === 'showing-text' ? 'bg-accent' : stage === 'scanning' ? 'bg-yellow-500' : 'bg-muted'}`} />
+            <span className="text-xs font-medium text-muted-foreground">
               {stage === 'showing-text' ? 'Match found' : stage === 'scanning' ? 'Scanning videos...' : 'Ready to search'}
             </span>
           </div>
@@ -265,7 +265,7 @@ const AnimatedVideoCard = () => {
             value={displayedText}
             readOnly
             placeholder="Search inside videos..."
-            className="w-full bg-slate-800/40 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600 transition-all duration-300 group-hover:border-slate-500 group-hover:bg-slate-800/60"
+            className="w-full bg-input text-foreground placeholder-muted-foreground px-4 py-3 rounded-lg text-sm focus:outline-none border border-border/50 transition-all duration-300 group-hover:border-accent/50 group-hover:bg-input/80"
           />
         </div>
       </div>
@@ -277,7 +277,7 @@ const AnimatedVideoCard = () => {
             {videos.map((video, idx) => (
               <div key={video.id} className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
                 {/* Video thumbnail */}
-                <div className="relative w-56 h-40 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl border border-slate-600/40 flex items-center justify-center overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300">
+                <div className="relative w-56 h-40 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
                   {/* Frame strip flicker animation */}
                   {stage === 'scanning' && (
                     <>
@@ -285,14 +285,14 @@ const AnimatedVideoCard = () => {
                         {[0, 1, 2, 3].map((i) => (
                           <div
                             key={i}
-                            className="absolute h-full w-12 bg-emerald-400/20"
+                            className="absolute h-full w-12 bg-accent/20"
                             style={{
                               left: `${(scanProgress[idx] + i * 20) % 100}%`,
                             }}
                           />
                         ))}
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-300/5 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent" />
                     </>
                   )}
                 </div>
@@ -307,9 +307,9 @@ const AnimatedVideoCard = () => {
         {/* Expanded: Show selected video zoomed */}
         {stage === 'expanded' && selectedVideo !== null && (
           <div className="animate-expand flex flex-col items-center justify-center gap-4 h-full w-full">
-            <div className="relative w-96 h-72 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl border-2 border-emerald-500/60 flex items-center justify-center overflow-hidden shadow-2xl backdrop-blur-sm" style={{ boxShadow: '0 0 32px rgba(16, 185, 129, 0.3)' }}>
+            <div className="relative w-96 h-72 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border-2 border-accent/60 flex items-center justify-center overflow-hidden shadow-2xl backdrop-blur-sm" style={{ boxShadow: '0 0 32px rgba(34, 211, 238, 0.3)' }}>
               {/* Video visual background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/10 via-slate-800 to-slate-900" />
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-secondary/50 to-background/80" />
               
               {/* Animated waveform pattern (represents video content) */}
               <div className="absolute inset-0 flex items-center justify-center opacity-20">
@@ -317,7 +317,7 @@ const AnimatedVideoCard = () => {
                   {[...Array(8)].map((_, i) => (
                     <div
                       key={i}
-                      className="w-1 bg-emerald-400 rounded-full"
+                      className="w-1 bg-accent rounded-full"
                       style={{
                         height: `${30 + (i % 3) * 20}px`,
                         animation: `wave 0.8s ease-in-out ${i * 0.1}s infinite`
@@ -328,16 +328,16 @@ const AnimatedVideoCard = () => {
               </div>
 
               {/* Play button */}
-              <div className="relative z-10 p-5 bg-emerald-500/30 rounded-full border border-emerald-400/60">
+              <div className="relative z-10 p-5 bg-accent/30 rounded-full border border-accent/60 hover:border-accent transition-colors">
                 <PlayIcon />
               </div>
 
               {/* Caption at bottom */}
-              <div className="absolute bottom-4 left-4 right-4 px-3 py-2 bg-emerald-500/20 border border-emerald-400/60 rounded-lg backdrop-blur-sm z-20">
-                <p className="text-xs font-semibold text-emerald-300">We'll test the new pricing next quarter.</p>
+              <div className="absolute bottom-4 left-4 right-4 px-3 py-2 bg-accent/20 border border-accent/60 rounded-lg backdrop-blur-sm z-20">
+                <p className="text-xs font-semibold text-accent">We'll test the new pricing next quarter.</p>
               </div>
             </div>
-            <p className="text-sm text-slate-300 font-medium">{videos[selectedVideo].name}</p>
+            <p className="text-sm text-muted-foreground font-medium">{videos[selectedVideo].name}</p>
           </div>
         )}
         {stage === 'showing-text' && selectedVideo !== null && (
@@ -409,12 +409,12 @@ const AnimatedPDFCard = () => {
   }, [])
 
   return (
-    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
-      <div className="p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
+    <div className="bg-gradient-to-br from-secondary/60 to-background rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300 smooth-glow hover:shadow-accent/20">
+      <div className="p-6 border-b border-border/50 bg-gradient-to-r from-secondary/40 to-background/40 backdrop-blur-sm">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-            <span className="text-xs font-medium text-slate-400">
+            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-accent' : 'bg-yellow-500'}`} />
+            <span className="text-xs font-medium text-muted-foreground">
               {showResults ? 'Matches found' : 'Scanning document...'}
             </span>
           </div>
@@ -425,7 +425,7 @@ const AnimatedPDFCard = () => {
             value={displayedText}
             readOnly
             placeholder="Search PDFs and documents..."
-            className="w-full bg-slate-800/40 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600 transition-all duration-300 group-hover:border-slate-500 group-hover:bg-slate-800/60"
+            className="w-full bg-input text-foreground placeholder-muted-foreground px-4 py-3 rounded-lg text-sm focus:outline-none border border-border/50 transition-all duration-300 group-hover:border-accent/50 group-hover:bg-input/80"
           />
         </div>
       </div>
@@ -433,24 +433,24 @@ const AnimatedPDFCard = () => {
       <div className="flex-1 p-8 space-y-3 overflow-y-auto">
         {showResults && (
           <div className="animate-fade-in space-y-4">
-            <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide">2 Matches Found:</div>
-            <div className="bg-slate-800/40 border border-slate-600 rounded-lg p-4 space-y-3 hover:bg-slate-800/60 hover:border-slate-500 transition-all duration-300">
+            <div className="text-xs text-muted-foreground font-semibold uppercase tracking-wide">2 Matches Found:</div>
+            <div className="bg-secondary/40 border border-border/50 rounded-lg p-4 space-y-3 hover:bg-secondary/60 hover:border-accent/50 transition-all duration-300">
               <div className="flex justify-between items-center">
-                <span className="text-xs text-slate-400 font-medium">Page 8 of 45</span>
-                <span className="text-xs bg-teal-500/30 text-teal-300 px-2 py-1 rounded font-medium">Match</span>
+                <span className="text-xs text-muted-foreground font-medium">Page 8 of 45</span>
+                <span className="text-xs bg-accent/30 text-accent px-2 py-1 rounded font-medium">Match</span>
               </div>
-              <p className="text-white text-sm leading-relaxed">
-                All products will adhere to the <span className="font-bold bg-teal-500/20 px-2 py-1 rounded text-teal-300">delivery timeline</span> outlined in the contract terms.
+              <p className="text-foreground text-sm leading-relaxed">
+                All products will adhere to the <span className="font-bold bg-accent/20 px-2 py-1 rounded text-accent">delivery timeline</span> outlined in the contract terms.
               </p>
             </div>
 
-            <div className="bg-slate-800/40 border border-slate-600 rounded-lg p-4 space-y-3 hover:bg-slate-800/60 hover:border-slate-500 transition-all duration-300">
+            <div className="bg-secondary/40 border border-border/50 rounded-lg p-4 space-y-3 hover:bg-secondary/60 hover:border-accent/50 transition-all duration-300">
               <div className="flex justify-between items-center">
-                <span className="text-xs text-slate-400 font-medium">Page 15 of 45</span>
-                <span className="text-xs bg-teal-500/30 text-teal-300 px-2 py-1 rounded font-medium">Match</span>
+                <span className="text-xs text-muted-foreground font-medium">Page 15 of 45</span>
+                <span className="text-xs bg-accent/30 text-accent px-2 py-1 rounded font-medium">Match</span>
               </div>
-              <p className="text-white text-sm leading-relaxed">
-                The <span className="font-bold bg-teal-500/20 px-2 py-1 rounded text-teal-300">delivery timeline</span> cannot exceed 30 business days from order confirmation.
+              <p className="text-foreground text-sm leading-relaxed">
+                The <span className="font-bold bg-accent/20 px-2 py-1 rounded text-accent">delivery timeline</span> cannot exceed 30 business days from order confirmation.
               </p>
             </div>
           </div>

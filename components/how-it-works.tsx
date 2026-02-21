@@ -43,11 +43,11 @@ export default function HowItWorks() {
   ]
 
   return (
-    <section className="w-full py-20 md:py-28 bg-secondary/20 border-y border-border">
+    <section className="w-full py-20 md:py-28 bg-background border-y border-border">
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
         <div className="space-y-16">
           {/* Section heading */}
-          <div className="text-center space-y-3">
+          <div className="text-center space-y-3 fade-up">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground">
               How It Works
             </h2>
@@ -60,9 +60,9 @@ export default function HowItWorks() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {steps.map((step, index) => (
               <div key={index} className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-xl"></div>
-                <div className="relative bg-background border border-border rounded-xl p-8 flex flex-col items-center text-center space-y-4 hover:border-accent/50 transition-colors">
-                  <div className="text-foreground">{step.icon}</div>
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+                <div className="relative bg-secondary/40 border border-accent/20 rounded-2xl p-8 flex flex-col items-center text-center space-y-4 hover:border-accent/40 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300 smooth-glow">
+                  <div className="text-accent">{step.icon}</div>
                   <div className="space-y-2">
                     <h3 className="text-2xl font-bold text-foreground">{step.title}</h3>
                     <p className="text-sm text-muted-foreground">{step.description}</p>
@@ -70,7 +70,7 @@ export default function HowItWorks() {
                   </div>
                 </div>
                 {index < steps.length - 1 && (
-                  <div className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 text-muted-foreground">
+                  <div className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 text-accent/40 group-hover:text-accent transition-colors">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
@@ -85,7 +85,7 @@ export default function HowItWorks() {
             <div className="space-y-6">
               <div className="text-center space-y-2">
                 <h3 className="text-2xl md:text-3xl font-bold text-foreground">
-                  Semantic Search in Action
+                  See It In Real Action
                 </h3>
                 <p className="text-muted-foreground">
                   See real-time search and semantic indexing in action.
@@ -119,15 +119,15 @@ export default function HowItWorks() {
               {/* Demo Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* OCR Demo */}
-                <div className="bg-background border border-border rounded-xl overflow-hidden hover:border-accent/50 transition-colors">
-                  <div className="bg-secondary border-b border-border p-4 flex items-center gap-3">
-                    <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-secondary/40 border border-accent/20 rounded-2xl overflow-hidden hover:border-accent/40 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300 smooth-glow">
+                  <div className="bg-secondary/60 border-b border-accent/20 p-4 flex items-center gap-3">
+                    <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                     </svg>
                     <span className="text-sm font-semibold text-foreground">OCR Processing</span>
                   </div>
                   <div className="p-4 space-y-3">
-                    <div className="bg-secondary rounded p-3 text-xs text-muted-foreground">
+                    <div className="bg-background/80 rounded p-3 text-xs text-muted-foreground border border-border/50">
                       <p className="font-mono">Error: 500 Internal Server</p>
                       <p className="font-mono">Stack at lines 142-156</p>
                     </div>
@@ -136,9 +136,9 @@ export default function HowItWorks() {
                 </div>
 
                 {/* Video Metadata Demo */}
-                <div className="bg-background border border-border rounded-xl overflow-hidden hover:border-accent/50 transition-colors">
-                  <div className="bg-secondary border-b border-border p-4 flex items-center gap-3">
-                    <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-secondary/40 border border-accent/20 rounded-2xl overflow-hidden hover:border-accent/40 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300 smooth-glow">
+                  <div className="bg-secondary/60 border-b border-accent/20 p-4 flex items-center gap-3">
+                    <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 4v16M17 4v16M3 8h2m12 0h2M3 12h18M3 16h2m12 0h2M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
                     </svg>
                     <span className="text-sm font-semibold text-foreground">Video Metadata</span>
@@ -154,9 +154,9 @@ export default function HowItWorks() {
                 </div>
 
                 {/* PDFs, Word Docs & Excel Sheets Demo */}
-                <div className="bg-background border border-border rounded-xl overflow-hidden hover:border-accent/50 transition-colors">
-                  <div className="bg-secondary border-b border-border p-4 flex items-center gap-3">
-                    <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-secondary/40 border border-accent/20 rounded-2xl overflow-hidden hover:border-accent/40 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300 smooth-glow">
+                  <div className="bg-secondary/60 border-b border-accent/20 p-4 flex items-center gap-3">
+                    <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                     </svg>
                     <span className="text-sm font-semibold text-foreground">Document Extraction</span>
@@ -172,9 +172,9 @@ export default function HowItWorks() {
                 </div>
 
                 {/* Links Demo */}
-                <div className="bg-background border border-border rounded-xl overflow-hidden hover:border-accent/50 transition-colors">
-                  <div className="bg-secondary border-b border-border p-4 flex items-center gap-3">
-                    <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-secondary/40 border border-accent/20 rounded-2xl overflow-hidden hover:border-accent/40 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300 smooth-glow">
+                  <div className="bg-secondary/60 border-b border-accent/20 p-4 flex items-center gap-3">
+                    <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.658 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                     </svg>
                     <span className="text-sm font-semibold text-foreground">Link Extraction</span>
@@ -190,15 +190,15 @@ export default function HowItWorks() {
                 </div>
 
                 {/* Text / Notes / Code Demo */}
-                <div className="bg-background border border-border rounded-xl overflow-hidden hover:border-accent/50 transition-colors">
-                  <div className="bg-secondary border-b border-border p-4 flex items-center gap-3">
-                    <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-secondary/40 border border-accent/20 rounded-2xl overflow-hidden hover:border-accent/40 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300 smooth-glow">
+                  <div className="bg-secondary/60 border-b border-accent/20 p-4 flex items-center gap-3">
+                    <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                     <span className="text-sm font-semibold text-foreground">Text / Notes / Code</span>
                   </div>
                   <div className="p-4 space-y-3">
-                    <div className="bg-secondary rounded p-3 text-xs text-muted-foreground font-mono">
+                    <div className="bg-background/80 rounded p-3 text-xs text-muted-foreground font-mono border border-border/50">
                       <p>function search() {'{}'}</p>
                       <p>  return vault.find()</p>
                       <p>{'}'};</p>
@@ -208,9 +208,9 @@ export default function HowItWorks() {
                 </div>
 
                 {/* Other Files Demo */}
-                <div className="bg-background border border-border rounded-xl overflow-hidden hover:border-accent/50 transition-colors">
-                  <div className="bg-secondary border-b border-border p-4 flex items-center gap-3">
-                    <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-secondary/40 border border-accent/20 rounded-2xl overflow-hidden hover:border-accent/40 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300 smooth-glow">
+                  <div className="bg-secondary/60 border-b border-accent/20 p-4 flex items-center gap-3">
+                    <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4v2m0 4v2M6 9h12a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V11a2 2 0 012-2z" />
                     </svg>
                     <span className="text-sm font-semibold text-foreground">Other File Types</span>
