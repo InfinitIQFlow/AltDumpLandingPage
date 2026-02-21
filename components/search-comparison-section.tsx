@@ -10,10 +10,10 @@ const ImageIcon = () => (
 
 const AnimatedImageCard = () => {
   const [animationCycle, setAnimationCycle] = useState(0)
-  const [stage, setStage] = useState<'search' | 'typing' | 'scanning' | 'filtered' | 'expanded'>('search')
+  const [stage, setStage] = useState<'initial' | 'typing' | 'scanning' | 'expanded'>('initial')
   const [displayedQuery, setDisplayedQuery] = useState('')
+  const [scanProgress, setScanProgress] = useState(0)
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
-  const [scanningIndices, setScanningIndices] = useState<number[]>([0, 1, 2])
 
   const fullQuery = "javascript error"
   const images = [
@@ -22,22 +22,22 @@ const AnimatedImageCard = () => {
     { id: 3, name: 'screenshot_236' }
   ]
 
-  // Main animation cycle: 13 seconds total
+  // Main animation cycle
   useEffect(() => {
     const cycle = setInterval(() => {
       setAnimationCycle(c => c + 1)
-      setStage('search')
+      setStage('initial')
       setDisplayedQuery('')
+      setScanProgress(0)
       setSelectedImage(null)
-      setScanningIndices([0, 1, 2])
-    }, 13000)
+    }, 14000)
 
     return () => clearInterval(cycle)
   }, [])
 
   // Stage 1: Type search query (0-1.2s)
   useEffect(() => {
-    if (stage === 'search' && animationCycle > 0) {
+    if (stage === 'initial' && animationCycle > 0) {
       let index = 0
       const typeInterval = setInterval(() => {
         if (index <= fullQuery.length) {
@@ -45,69 +45,80 @@ const AnimatedImageCard = () => {
           index++
         } else {
           clearInterval(typeInterval)
-          setTimeout(() => setStage('scanning'), 200)
+          setTimeout(() => setStage('scanning'), 300)
         }
-      }, 70)
+      }, 60)
 
       return () => clearInterval(typeInterval)
     }
   }, [stage, animationCycle])
 
-  // Stage 2: Scanning (1.2-3.5s) - pulsing effect on all 3 images
+  // Stage 2: Scanning animation (1.2-3.5s) - soft scanning line on all 3 images
   useEffect(() => {
     if (stage === 'scanning') {
-      const scanTimer = setTimeout(() => {
-        setSelectedImage(1) // Select image at index 1
-        setScanningIndices([])
-        setStage('filtered')
-      }, 2300)
+      setScanProgress(0)
+      const scanInterval = setInterval(() => {
+        setScanProgress(p => {
+          if (p >= 100) {
+            clearInterval(scanInterval)
+            setTimeout(() => {
+              setSelectedImage(0)
+              setStage('expanded')
+            }, 400)
+            return 100
+          }
+          return p + 2
+        })
+      }, 30)
 
-      return () => clearTimeout(scanTimer)
-    }
-  }, [stage])
-
-  // Stage 3: Expand selected image (3.5-13s)
-  useEffect(() => {
-    if (stage === 'filtered') {
-      const expandTimer = setTimeout(() => {
-        setStage('expanded')
-      }, 300)
-
-      return () => clearTimeout(expandTimer)
+      return () => clearInterval(scanInterval)
     }
   }, [stage])
 
   return (
-    <div className="relative bg-gradient-to-br from-slate-800 via-slate-800/95 to-slate-900 rounded-2xl overflow-hidden border border-slate-700/50 h-96 flex flex-col shadow-2xl">
-      {/* Header */}
-      <div className="relative p-6 border-b border-slate-700/30 bg-slate-800/30 backdrop-blur-sm">
+    <div className="relative bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-96 flex flex-col shadow-xl hover:shadow-2xl transition-shadow duration-300">
+      {/* Premium top section */}
+      <div className="relative p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
         <h3 className="text-lg font-semibold text-white mb-1">Search naturally. Find instantly.</h3>
         <p className="text-xs text-slate-400">No file names needed.</p>
       </div>
 
       {/* Search input area */}
       <div className="relative px-6 pt-6 pb-4">
-        <input
-          type="text"
-          value={displayedQuery}
-          readOnly
-          placeholder="Search inside images..."
-          className="w-full bg-slate-700/40 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600/50"
-        />
+        <div className="relative group">
+          <input
+            type="text"
+            value={displayedQuery}
+            readOnly
+            placeholder="Search inside images..."
+            className="w-full bg-slate-800/40 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600 transition-all duration-300 group-hover:border-slate-500 group-hover:bg-slate-800/60"
+          />
+        </div>
       </div>
 
       {/* Main content area */}
       <div className="relative flex-1 px-6 pb-6 flex items-center justify-center overflow-hidden">
         
-        {/* Stage 1 & 2: 3 Images Grid */}
-        {(stage === 'search' || stage === 'typing' || stage === 'scanning') && (
-          <div className="animate-fade-in flex gap-4 justify-center items-end h-full">
+        {/* Stage 1 & 2: 3 Square Images - No pulsing, static until scan */}
+        {(stage === 'initial' || stage === 'typing' || stage === 'scanning') && (
+          <div className="w-full flex gap-6 justify-center items-center">
             {images.map((img, idx) => (
               <div key={img.id} className="flex flex-col items-center gap-3">
-                <div className={`w-24 h-32 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg border border-slate-600 flex items-center justify-center text-slate-400 transition-all duration-300 ${
-                  scanningIndices.includes(idx) ? 'animate-pulse ring-2 ring-amber-400/50' : ''
-                }`}>
+                {/* Square image container */}
+                <div className="relative w-20 h-20 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg border border-slate-600 flex items-center justify-center text-slate-400 overflow-hidden shadow-md hover:shadow-lg hover:border-slate-500 transition-all duration-300">
                   <ImageIcon />
+                  
+                  {/* Soft scanning line animation */}
+                  {stage === 'scanning' && (
+                    <div 
+                      className="absolute inset-x-0 h-1 bg-gradient-to-b from-transparent via-white/60 to-transparent blur-sm"
+                      style={{
+                        top: `${scanProgress}%`,
+                        opacity: 0.8,
+                        boxShadow: '0 0 12px rgba(255, 255, 255, 0.4)'
+                      }}
+                    />
+                  )}
                 </div>
                 <p className="text-xs text-slate-400 font-medium text-center">{img.name}</p>
               </div>
@@ -115,29 +126,23 @@ const AnimatedImageCard = () => {
           </div>
         )}
 
-        {/* Stage 3 & 4: Single expanded image */}
-        {(stage === 'filtered' || stage === 'expanded') && selectedImage && (
-          <div className={`animate-fade-in flex flex-col items-center gap-4 h-full justify-center w-full max-w-lg transition-all duration-500`}>
-            <div className={`relative bg-white rounded-lg border border-slate-600 overflow-hidden shadow-lg ${stage === 'expanded' ? 'w-80 h-96' : 'w-56 h-72'} transition-all duration-500`}>
+        {/* Stage 3: Expanded image - zoomed in to fill area */}
+        {stage === 'expanded' && selectedImage !== null && (
+          <div className="w-full h-full flex flex-col items-center justify-center gap-4 animate-fade-in">
+            <div className="relative w-80 h-80 bg-white rounded-lg border border-slate-600 overflow-hidden shadow-2xl">
               <img
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
                 alt="JavaScript error screenshot"
                 className="w-full h-full object-cover"
               />
               
-              {/* Highlight overlay for "javascript error" - appears in expanded state */}
-              {stage === 'expanded' && (
-                <div className="absolute inset-0 pointer-events-none">
-                  {/* Highlight box around error icon and text */}
-                  <div className="absolute top-6 left-5 w-56 h-12 border-2 border-yellow-400 rounded-lg opacity-80 shadow-lg" style={{ boxShadow: '0 0 20px rgba(250, 204, 21, 0.4)' }} />
-                  {/* Glow effect */}
-                  <div className="absolute top-6 left-5 w-56 h-12 bg-yellow-400/10 rounded-lg animate-pulse" />
-                </div>
-              )}
+              {/* Highlight the top part showing match found */}
+              <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-yellow-300/20 to-transparent pointer-events-none animate-pulse" />
+              <div className="absolute top-2 left-4 right-4 px-3 py-2 bg-yellow-400/30 border border-yellow-400/60 rounded-md backdrop-blur-sm">
+                <p className="text-xs font-semibold text-yellow-700">✓ Match found: javascript error</p>
+              </div>
             </div>
-            <p className={`text-slate-200 font-semibold text-center transition-all duration-300 ${stage === 'expanded' ? 'text-base' : 'text-sm'}`}>
-              {images[selectedImage - 1].name}
-            </p>
+            <p className="text-sm text-slate-300 font-medium">{images[selectedImage].name}</p>
           </div>
         )}
       </div>
@@ -182,6 +187,58 @@ const AnimatedVideoCard = () => {
             setShowResults(false)
           }, 3000)
         }
+      }, 50)
+    }, 5200)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-96 flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
+      <div className="p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+            <span className="text-xs font-medium text-slate-400">
+              {showResults ? 'Frames matched' : 'Scanning video...'}
+            </span>
+          </div>
+        </div>
+        <div className="relative group">
+          <input
+            type="text"
+            value={displayedText}
+            readOnly
+            placeholder="Search inside videos..."
+            className="w-full bg-slate-800/40 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600 transition-all duration-300 group-hover:border-slate-500 group-hover:bg-slate-800/60"
+          />
+        </div>
+      </div>
+
+      <div className="flex-1 p-6 flex items-center justify-center">
+        {showResults && (
+          <div className="animate-fade-in space-y-4 w-full">
+            <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide">2 Frames Found:</div>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { color: 'from-orange-500 to-red-500', text: 'Laughing moments', time: '00:45' },
+                { color: 'from-amber-500 to-orange-500', text: 'Birthday celebration', time: '01:12' }
+              ].map((frame, i) => (
+                <div
+                  key={i}
+                  className={`bg-gradient-to-br ${frame.color} rounded-lg p-5 text-white text-center space-y-3 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 border border-white/10`}
+                >
+                  <p className="font-semibold text-sm">{frame.text}</p>
+                  <p className="text-xs opacity-90">{frame.time}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
       }, 50)
     }, 5200)
 
@@ -262,49 +319,50 @@ const AnimatedPDFCard = () => {
   }, [])
 
   return (
-    <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden border border-slate-700/50 h-96 flex flex-col shadow-2xl">
-      <div className="p-6 border-b border-slate-700/50 bg-slate-800/50 backdrop-blur">
+    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-96 flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
+      <div className="p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-green-500' : 'bg-amber-500 animate-pulse'}`} />
+            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-emerald-500' : 'bg-amber-500'}`} />
             <span className="text-xs font-medium text-slate-400">
-              {showResults ? 'Matches Found' : 'Scanning PDF...'}
+              {showResults ? 'Matches found' : 'Scanning document...'}
             </span>
           </div>
         </div>
-        <input
-          type="text"
-          value={displayedText}
-          readOnly
-          placeholder="Search PDFs and documents..."
-          className="w-full bg-slate-700/50 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600"
-        />
+        <div className="relative group">
+          <input
+            type="text"
+            value={displayedText}
+            readOnly
+            placeholder="Search PDFs and documents..."
+            className="w-full bg-slate-800/40 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600 transition-all duration-300 group-hover:border-slate-500 group-hover:bg-slate-800/60"
+          />
+        </div>
       </div>
 
       <div className="flex-1 p-6 space-y-3 overflow-y-auto">
         {showResults && (
-          <div className="animate-fade-in space-y-3">
-            <div className="bg-slate-700/40 border border-slate-600/50 rounded-lg p-4 space-y-2">
+          <div className="animate-fade-in space-y-4">
+            <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide">2 Matches Found:</div>
+            <div className="bg-slate-800/40 border border-slate-600 rounded-lg p-4 space-y-3 hover:bg-slate-800/60 hover:border-slate-500 transition-all duration-300">
               <div className="flex justify-between items-center">
                 <span className="text-xs text-slate-400 font-medium">Page 8 of 45</span>
-                <span className="text-xs bg-cyan-500/30 text-cyan-300 px-2 py-1 rounded">Match</span>
+                <span className="text-xs bg-teal-500/30 text-teal-300 px-2 py-1 rounded font-medium">Match</span>
               </div>
               <p className="text-white text-sm leading-relaxed">
-                All products will adhere to the <span className="font-bold bg-cyan-500/30 px-1 py-1 rounded text-cyan-300">delivery timeline</span> outlined in the contract terms.
+                All products will adhere to the <span className="font-bold bg-teal-500/20 px-2 py-1 rounded text-teal-300">delivery timeline</span> outlined in the contract terms.
               </p>
             </div>
 
-            <div className="bg-slate-700/40 border border-slate-600/50 rounded-lg p-4 space-y-2">
+            <div className="bg-slate-800/40 border border-slate-600 rounded-lg p-4 space-y-3 hover:bg-slate-800/60 hover:border-slate-500 transition-all duration-300">
               <div className="flex justify-between items-center">
                 <span className="text-xs text-slate-400 font-medium">Page 15 of 45</span>
-                <span className="text-xs bg-cyan-500/30 text-cyan-300 px-2 py-1 rounded">Match</span>
+                <span className="text-xs bg-teal-500/30 text-teal-300 px-2 py-1 rounded font-medium">Match</span>
               </div>
               <p className="text-white text-sm leading-relaxed">
-                The <span className="font-bold bg-cyan-500/30 px-1 py-1 rounded text-cyan-300">delivery timeline</span> cannot exceed 30 business days from order confirmation.
+                The <span className="font-bold bg-teal-500/20 px-2 py-1 rounded text-teal-300">delivery timeline</span> cannot exceed 30 business days from order confirmation.
               </p>
             </div>
-
-            <div className="text-xs text-slate-400">2 matches found across document</div>
           </div>
         )}
       </div>
@@ -340,42 +398,44 @@ const AnimatedDataCard = () => {
   }, [])
 
   return (
-    <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden border border-slate-700/50 h-96 flex flex-col shadow-2xl">
-      <div className="p-6 border-b border-slate-700/50 bg-slate-800/50 backdrop-blur">
+    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-96 flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
+      <div className="p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-green-500' : 'bg-amber-500 animate-pulse'}`} />
+            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-emerald-500' : 'bg-amber-500'}`} />
             <span className="text-xs font-medium text-slate-400">
-              {showResults ? 'Rows Highlighted' : 'Scanning spreadsheet...'}
+              {showResults ? 'Rows highlighted' : 'Scanning spreadsheet...'}
             </span>
           </div>
         </div>
-        <input
-          type="text"
-          value={displayedText}
-          readOnly
-          placeholder="Search spreadsheet data..."
-          className="w-full bg-slate-700/50 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600"
-        />
+        <div className="relative group">
+          <input
+            type="text"
+            value={displayedText}
+            readOnly
+            placeholder="Search spreadsheet data..."
+            className="w-full bg-slate-800/40 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600 transition-all duration-300 group-hover:border-slate-500 group-hover:bg-slate-800/60"
+          />
+        </div>
       </div>
 
       <div className="flex-1 p-6 overflow-y-auto">
         {showResults && (
-          <div className="animate-fade-in space-y-2">
-            <div className="text-xs text-slate-400 font-medium mb-3">Highlighted Results (4 matched):</div>
+          <div className="animate-fade-in space-y-3">
+            <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide mb-4">4 Rows Matched:</div>
             {[
               { row: 3, q: 'Q1', data: 'sales data', value: '12,500' },
               { row: 7, q: 'Q2', data: 'sales data', value: '15,200' },
               { row: 11, q: 'Q3', data: 'sales data', value: '18,900' },
               { row: 15, q: 'Q4', data: 'sales data', value: '22,100' }
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-3 px-4 py-3 bg-green-500/20 border border-green-500/40 rounded-lg hover:bg-green-500/30 transition-all">
-                <span className="text-slate-400 text-xs min-w-fit">Row {item.row}</span>
+              <div key={i} className="flex items-center gap-3 px-4 py-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg hover:bg-emerald-500/20 hover:border-emerald-500/50 transition-all duration-300">
+                <span className="text-slate-400 text-xs min-w-fit font-medium">Row {item.row}</span>
                 <span className="text-slate-300 text-sm flex-1">
-                  <span className="font-bold text-green-400">{item.q}</span>
+                  <span className="font-bold text-emerald-400">{item.q}</span>
                   {' '}{item.data}
                 </span>
-                <span className="text-green-400 font-bold">${item.value}</span>
+                <span className="text-emerald-400 font-bold text-sm">${item.value}</span>
               </div>
             ))}
           </div>
@@ -413,43 +473,44 @@ const AnimatedNoteCard = () => {
   }, [])
 
   return (
-    <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden border border-slate-700/50 h-96 flex flex-col shadow-2xl">
-      <div className="p-6 border-b border-slate-700/50 bg-slate-800/50 backdrop-blur">
+    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-96 flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
+      <div className="p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-green-500' : 'bg-amber-500 animate-pulse'}`} />
+            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-emerald-500' : 'bg-amber-500'}`} />
             <span className="text-xs font-medium text-slate-400">
-              {showResults ? 'Notes Found' : 'Scanning notes...'}
+              {showResults ? 'Notes found' : 'Scanning notes...'}
             </span>
           </div>
         </div>
-        <input
-          type="text"
-          value={displayedText}
-          readOnly
-          placeholder="Search across your notes..."
-          className="w-full bg-slate-700/50 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600"
-        />
+        <div className="relative group">
+          <input
+            type="text"
+            value={displayedText}
+            readOnly
+            placeholder="Search across your notes..."
+            className="w-full bg-slate-800/40 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600 transition-all duration-300 group-hover:border-slate-500 group-hover:bg-slate-800/60"
+          />
+        </div>
       </div>
 
       <div className="flex-1 p-6 space-y-3 overflow-y-auto">
         {showResults && (
           <div className="animate-fade-in space-y-3">
-            <div className="bg-purple-900/20 border border-purple-700/40 rounded-lg p-4">
-              <div className="text-xs text-purple-300 font-medium mb-2">Research Notes</div>
+            <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide mb-3">2 Notes Matched:</div>
+            <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-4 hover:bg-purple-500/15 hover:border-purple-500/50 transition-all duration-300">
+              <div className="text-xs text-purple-300 font-semibold mb-2">Research Notes</div>
               <p className="text-white text-sm leading-relaxed">
-                Building a <span className="font-bold bg-purple-500/30 px-1 py-1 rounded text-purple-200">machine learning model</span> for image classification using CNN architecture.
+                Building a <span className="font-bold bg-purple-500/30 px-2 py-1 rounded text-purple-200">machine learning model</span> for image classification using CNN architecture.
               </p>
             </div>
 
-            <div className="bg-blue-900/20 border border-blue-700/40 rounded-lg p-4">
-              <div className="text-xs text-blue-300 font-medium mb-2">Project Ideas</div>
+            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 hover:bg-blue-500/15 hover:border-blue-500/50 transition-all duration-300">
+              <div className="text-xs text-blue-300 font-semibold mb-2">Project Ideas</div>
               <p className="text-white text-sm leading-relaxed">
-                Create an intelligent system with a <span className="font-bold bg-blue-500/30 px-1 py-1 rounded text-blue-200">machine learning model</span> to optimize data processing.
+                Create an intelligent system with a <span className="font-bold bg-blue-500/30 px-2 py-1 rounded text-blue-200">machine learning model</span> to optimize data processing.
               </p>
             </div>
-
-            <div className="text-xs text-slate-400">2 notes matched</div>
           </div>
         )}
       </div>
@@ -460,7 +521,7 @@ const AnimatedNoteCard = () => {
 const AnimatedCodeCard = () => {
   const [displayedText, setDisplayedText] = useState('')
   const [showResults, setShowResults] = useState(false)
-  const fullQuery = "useEffect hook"
+  const fullQuery = "database connection"
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -478,6 +539,62 @@ const AnimatedCodeCard = () => {
             setShowResults(false)
           }, 3000)
         }
+      }, 50)
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-96 flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
+      <div className="p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+            <span className="text-xs font-medium text-slate-400">
+              {showResults ? 'Results found' : 'Scanning code...'}
+            </span>
+          </div>
+        </div>
+        <div className="relative group">
+          <input
+            type="text"
+            value={displayedText}
+            readOnly
+            placeholder="Search code snippets..."
+            className="w-full bg-slate-800/40 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600 transition-all duration-300 group-hover:border-slate-500 group-hover:bg-slate-800/60"
+          />
+        </div>
+      </div>
+
+      <div className="flex-1 p-6 space-y-3 overflow-y-auto">
+        {showResults && (
+          <div className="animate-fade-in space-y-3">
+            <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide mb-3">2 Code Snippets Matched:</div>
+            <div className="bg-slate-800/40 border border-slate-600 rounded-lg p-4 font-mono text-xs space-y-1 hover:bg-slate-800/60 hover:border-slate-500 transition-all duration-300">
+              <div className="text-slate-400">const setupDB = () =&gt; {`{`}</div>
+              <div className="text-slate-400 pl-4">
+                // Initialize <span className="font-bold bg-emerald-500/20 px-1 py-1 rounded text-emerald-300">database connection</span>
+              </div>
+              <div className="text-slate-400 pl-4">
+                await db.init(config);
+              </div>
+              <div className="text-slate-400">{`}`}</div>
+            </div>
+
+            <div className="bg-slate-800/40 border border-slate-600 rounded-lg p-4 font-mono text-xs space-y-1 hover:bg-slate-800/60 hover:border-slate-500 transition-all duration-300">
+              <div className="text-slate-400">const <span className="font-bold text-cyan-400">initConnection</span> = (config) =&gt; {`{`}</div>
+              <div className="text-slate-400 pl-4">
+                new <span className="font-bold bg-emerald-500/20 px-1 py-1 rounded text-emerald-300">database connection</span>
+              </div>
+              <div className="text-slate-400">{`}`}</div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
       }, 50)
     }, 5000)
 
@@ -543,23 +660,23 @@ const AnimatedCodeCard = () => {
 
 export default function SearchComparisonSection() {
   return (
-    <section className="w-full py-20 md:py-28 bg-background border-b border-border">
+    <section className="w-full py-24 md:py-32 bg-background border-b border-border">
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
-        <div className="space-y-16">
+        <div className="space-y-20">
           {/* Main heading */}
-          <div className="text-center space-y-4">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground text-balance">
+          <div className="text-center space-y-6">
+            <h2 className="text-5xl md:text-6xl font-bold text-foreground text-balance leading-tight">
               Windows Search looks at filenames.
               <br />
-              <span className="text-accent">AltDump looks inside your files.</span>
+              <span className="bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent font-black">AltDump looks inside your files.</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Even if you forgot the filename, if it's buried in a PDF, if it's inside an image, if it's hidden in a document — results appear instantly.
             </p>
           </div>
 
-          {/* 6 Animated Feature Cards - 2 per row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* 6 Animated Feature Cards - 2 per row - longer cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
             {/* Images */}
             <div className="space-y-4">
               <AnimatedImageCard />
