@@ -23,7 +23,10 @@ const AnimatedImageCard = () => {
     { id: 3, name: 'screenshot_236' }
   ]
 
-  // Start animation cycle\n  useEffect(() => {\n    setAnimationCycle(1)\n  }, [])
+  // Start animation cycle
+  useEffect(() => {
+    setAnimationCycle(1)
+  }, [])
 
   // Stage 1: Type search query (0-1s)
   useEffect(() => {
