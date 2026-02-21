@@ -520,16 +520,12 @@ const AnimatedDataCard = () => {
   return (
     <div className="relative bg-slate-900/60 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/30 h-screen md:h-[500px] flex flex-col shadow-lg hover:shadow-2xl hover:border-slate-600/50 transition-all duration-300">
       <div className="p-6 border-b border-slate-700/20 bg-gradient-to-r from-slate-800/20 to-slate-900/20 backdrop-blur-sm">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-base font-semibold text-slate-100">Spreadsheets</h3>
-          <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full transition-colors ${highlightedRows.length > 0 ? 'bg-emerald-500' : stage === 'typing' || stage === 'initial' ? 'bg-amber-500' : 'bg-slate-500'}`} />
-            <span className="text-xs font-medium text-slate-400">
-              {highlightedRows.length > 0 ? 'Rows matched' : stage === 'expanding' ? 'Opening...' : 'Ready'}
-            </span>
-          </div>
+        <div className="space-y-2 mb-4">
+          <h3 className="font-bold text-foreground">Data Files</h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Instant insight inside spreadsheets and structured data — numbers matter.
+          </p>
         </div>
-        <p className="text-xs text-slate-400 mb-4">Search inside spreadsheets — find cells with specific data, calculations, or patterns instantly.</p>
         <div className="relative group">
           <input
             type="text"
@@ -679,13 +675,11 @@ const AnimatedNoteCard = () => {
   return (
     <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
       <div className="p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-            <span className="text-xs font-medium text-slate-400">
-              {showResults ? 'Notes found' : 'Scanning notes...'}
-            </span>
-          </div>
+        <div className="space-y-2 mb-4">
+          <h3 className="font-bold text-foreground">Notes</h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Find ideas, notes, and drafts instantly — even if you only remember a phrase.
+          </p>
         </div>
         <div className="relative group">
           <input
@@ -792,16 +786,12 @@ export default pool`
   return (
     <div className="relative bg-slate-900/60 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/30 h-screen md:h-[500px] flex flex-col shadow-lg hover:shadow-2xl hover:border-slate-600/50 transition-all duration-300">
       <div className="p-6 border-b border-slate-700/20 bg-gradient-to-r from-slate-800/20 to-slate-900/20 backdrop-blur-sm">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-base font-semibold text-slate-100">Code</h3>
-          <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full transition-colors ${stage === 'expanded' ? 'bg-emerald-500' : stage === 'scanning' ? 'bg-amber-500' : 'bg-slate-500'}`} />
-            <span className="text-xs font-medium text-slate-400">
-              {stage === 'expanded' ? 'Match found' : stage === 'scanning' ? 'Scanning...' : 'Ready'}
-            </span>
-          </div>
+        <div className="space-y-2 mb-4">
+          <h3 className="font-bold text-foreground">Code</h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Search across your whole codebase — functions, variables, logic.
+          </p>
         </div>
-        <p className="text-xs text-slate-400 mb-4">Find code patterns, functions, variables, and configurations across your codebase.</p>
         <div className="relative group">
           <input
             type="text"
@@ -959,14 +949,8 @@ export default function SearchComparisonSection() {
           {/* 6 Animated Feature Cards - 2 per row - longer cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-12">
             {/* Images */}
-            <div className="space-y-4">
+            <div>
               <AnimatedImageCard />
-              <div className="space-y-2">
-                <h3 className="font-bold text-foreground">Images</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Find text inside real-world photos — receipts, warranty cards, whiteboards, packaging, anything you've snapped.
-                </p>
-              </div>
             </div>
 
             {/* Video */}
@@ -978,47 +962,23 @@ export default function SearchComparisonSection() {
             </div>
 
             {/* PDFs & Docs */}
-            <div className="space-y-4">
+            <div>
               <AnimatedPDFCard />
-              <div className="space-y-2">
-                <h3 className="font-bold text-foreground">PDFs & Docs</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Get pinpoint matches inside PDFs and docs — every paragraph is searchable.
-                </p>
-              </div>
             </div>
 
             {/* Data Files */}
-            <div className="space-y-4">
+            <div>
               <AnimatedDataCard />
-              <div className="space-y-2">
-                <h3 className="font-bold text-foreground">Data Files</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Instant insight inside spreadsheets and structured data — numbers matter.
-                </p>
-              </div>
             </div>
 
             {/* Notes */}
-            <div className="space-y-4">
+            <div>
               <AnimatedNoteCard />
-              <div className="space-y-2">
-                <h3 className="font-bold text-foreground">Notes</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Find ideas, notes, and drafts instantly — even if you only remember a phrase.
-                </p>
-              </div>
             </div>
 
             {/* Code */}
-            <div className="space-y-4">
+            <div>
               <AnimatedCodeCard />
-              <div className="space-y-2">
-                <h3 className="font-bold text-foreground">Code</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Search across your whole codebase — functions, variables, logic.
-                </p>
-              </div>
             </div>
           </div>
         </div>
