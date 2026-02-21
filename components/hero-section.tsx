@@ -48,11 +48,8 @@ export default function HeroSection() {
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" strokeWidth="2"/>
                 <path d="M9 9h6M12 6v6M9 15h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
               </svg>
-              Download on Microsoft Store
+              Get AltDump
             </button>
-            <p className="text-sm text-muted-foreground">
-              Free trial available
-            </p>
           </div>
         </div>
       </div>

@@ -1,16 +1,70 @@
 'use client'
 
+const PDFIcon = () => (
+  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+  </svg>
+)
+
+const ImageIcon = () => (
+  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+  </svg>
+)
+
+const VideoIcon = () => (
+  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+)
+
+const PresentationIcon = () => (
+  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 4v16a1 1 0 001 1h2a1 1 0 001-1V4a1 1 0 00-1-1H8a1 1 0 00-1 1zm4 0v16a1 1 0 001 1h2a1 1 0 001-1V4a1 1 0 00-1-1h-2a1 1 0 00-1 1zm4 0v16a1 1 0 001 1h2a1 1 0 001-1V4a1 1 0 00-1-1h-2a1 1 0 00-1 1z" />
+  </svg>
+)
+
+const DocumentIcon = () => (
+  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+  </svg>
+)
+
+const ChartIcon = () => (
+  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+  </svg>
+)
+
+const NoteIcon = () => (
+  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+  </svg>
+)
+
+const CodeIcon = () => (
+  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+  </svg>
+)
+
+const BulbIcon = () => (
+  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5a4 4 0 100-8 4 4 0 000 8z" />
+  </svg>
+)
+
 export default function MemorySection() {
   const dumpItems = [
-    { icon: '📄', label: 'PDFs', color: 'text-red-500' },
-    { icon: '🖼️', label: 'Images', color: 'text-blue-500' },
-    { icon: '🎥', label: 'Videos', color: 'text-purple-500' },
-    { icon: '📊', label: 'PowerPoints', color: 'text-orange-500' },
-    { icon: '📝', label: 'Word docs', color: 'text-blue-400' },
-    { icon: '📈', label: 'Excel sheets', color: 'text-green-500' },
-    { icon: '📓', label: 'Notes', color: 'text-yellow-500' },
-    { icon: '💻', label: 'Code snippets', color: 'text-pink-500' },
-    { icon: '💡', label: 'Ideas', color: 'text-amber-400' },
+    { icon: <PDFIcon />, label: 'PDFs', color: 'text-blue-500' },
+    { icon: <ImageIcon />, label: 'Images', color: 'text-cyan-500' },
+    { icon: <VideoIcon />, label: 'Videos', color: 'text-purple-500' },
+    { icon: <PresentationIcon />, label: 'PowerPoints', color: 'text-orange-500' },
+    { icon: <DocumentIcon />, label: 'Word docs', color: 'text-blue-400' },
+    { icon: <ChartIcon />, label: 'Excel sheets', color: 'text-green-500' },
+    { icon: <NoteIcon />, label: 'Notes', color: 'text-amber-500' },
+    { icon: <CodeIcon />, label: 'Code snippets', color: 'text-slate-400' },
+    { icon: <BulbIcon />, label: 'Ideas', color: 'text-yellow-500' },
   ]
 
   return (
@@ -21,7 +75,7 @@ export default function MemorySection() {
           <div className="space-y-12">
             {/* Heading */}
             <div className="text-center">
-              <h2 className="text-5xl md:text-6xl font-bold text-foreground text-balance">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground text-balance">
                 Build a memory you can search.
               </h2>
             </div>
@@ -85,7 +139,7 @@ export default function MemorySection() {
                         key={index}
                         className="flex items-center gap-3 group cursor-pointer transition-all"
                       >
-                        <div className={`text-3xl group-hover:scale-110 transition-transform`}>
+                        <div className={`text-foreground group-hover:text-accent transition-colors group-hover:scale-110 transition-transform`}>
                           {item.icon}
                         </div>
                         <span className="text-lg text-foreground group-hover:text-primary transition-colors font-medium">
@@ -103,28 +157,40 @@ export default function MemorySection() {
                   {/* Right: Visual showcase with floating elements */}
                   <div className="relative h-96 md:h-auto flex items-center justify-center">
                     {/* Floating visual cards */}
-                    <div className="absolute top-0 right-0 w-32 h-40 bg-red-500/10 border border-red-500/30 rounded-lg p-4 transform -rotate-12 flex items-center justify-center backdrop-blur-sm">
-                      <div className="text-5xl">📄</div>
+                    <div className="absolute top-0 right-0 w-32 h-40 bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 transform -rotate-12 flex items-center justify-center backdrop-blur-sm">
+                      <div className="text-blue-500">
+                        <PDFIcon />
+                      </div>
                     </div>
 
-                    <div className="absolute top-20 left-0 w-32 h-32 bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 transform rotate-12 flex items-center justify-center backdrop-blur-sm">
-                      <div className="text-5xl">🖼️</div>
+                    <div className="absolute top-20 left-0 w-32 h-32 bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4 transform rotate-12 flex items-center justify-center backdrop-blur-sm">
+                      <div className="text-cyan-500">
+                        <ImageIcon />
+                      </div>
                     </div>
 
-                    <div className="absolute bottom-10 left-12 w-36 h-36 bg-green-500/10 border border-green-500/30 rounded-lg p-4 transform -rotate-6 flex items-center justify-center backdrop-blur-sm">
-                      <div className="text-5xl">💻</div>
+                    <div className="absolute bottom-10 left-12 w-36 h-36 bg-slate-500/10 border border-slate-500/30 rounded-lg p-4 transform -rotate-6 flex items-center justify-center backdrop-blur-sm">
+                      <div className="text-slate-400 scale-150">
+                        <CodeIcon />
+                      </div>
                     </div>
 
                     <div className="absolute bottom-0 right-10 w-32 h-40 bg-purple-500/10 border border-purple-500/30 rounded-lg p-4 transform rotate-6 flex items-center justify-center backdrop-blur-sm">
-                      <div className="text-5xl">🎥</div>
+                      <div className="text-purple-500 scale-150">
+                        <VideoIcon />
+                      </div>
                     </div>
 
-                    <div className="absolute top-32 right-20 w-28 h-28 bg-amber-500/10 border border-amber-500/30 rounded-full p-3 flex items-center justify-center backdrop-blur-sm">
-                      <div className="text-4xl">💡</div>
+                    <div className="absolute top-32 right-20 w-28 h-28 bg-yellow-500/10 border border-yellow-500/30 rounded-full p-3 flex items-center justify-center backdrop-blur-sm">
+                      <div className="text-yellow-500 scale-125">
+                        <BulbIcon />
+                      </div>
                     </div>
 
-                    <div className="absolute bottom-20 right-32 w-24 h-24 bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-2 transform rotate-45 flex items-center justify-center backdrop-blur-sm">
-                      <div className="text-3xl">📓</div>
+                    <div className="absolute bottom-20 right-32 w-24 h-24 bg-amber-500/10 border border-amber-500/30 rounded-lg p-2 transform rotate-45 flex items-center justify-center backdrop-blur-sm">
+                      <div className="text-amber-500 scale-125">
+                        <NoteIcon />
+                      </div>
                     </div>
                   </div>
                 </div>
