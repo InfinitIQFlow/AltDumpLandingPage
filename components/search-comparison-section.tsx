@@ -23,19 +23,7 @@ const AnimatedImageCard = () => {
     { id: 3, name: 'screenshot_236' }
   ]
 
-  // Main animation cycle - reduced to 12s
-  useEffect(() => {
-    const cycle = setInterval(() => {
-      setAnimationCycle(c => c + 1)
-      setStage('initial')
-      setDisplayedQuery('')
-      setScanProgress(0)
-      setSelectedImage(null)
-      setFadeOpacity([1, 1, 1])
-    }, 12000)
-
-    return () => clearInterval(cycle)
-  }, [])
+  // Start animation cycle\n  useEffect(() => {\n    setAnimationCycle(1)\n  }, [])
 
   // Stage 1: Type search query (0-1s)
   useEffect(() => {
@@ -75,6 +63,21 @@ const AnimatedImageCard = () => {
       }, 25)
 
       return () => clearInterval(scanInterval)
+    }
+  }, [stage])
+
+  // Stage 3: Stay expanded for 2 seconds then reset
+  useEffect(() => {
+    if (stage === 'expanded') {
+      const expandedTimer = setTimeout(() => {
+        setStage('initial')
+        setDisplayedQuery('')
+        setScanProgress(0)
+        setSelectedImage(null)
+        setFadeOpacity([1, 1, 1])
+      }, 2000)
+
+      return () => clearTimeout(expandedTimer)
     }
   }, [stage])
 
@@ -133,12 +136,14 @@ const AnimatedImageCard = () => {
         {/* Stage 3: Expanded image - zoomed and animated */}
         {stage === 'expanded' && selectedImage !== null && (
           <div className="w-full h-full flex flex-col items-center justify-center gap-4 animate-expand">
-            <div className="relative w-96 h-96 bg-secondary/40 rounded-xl border-2 border-accent/60 flex items-center justify-center overflow-hidden shadow-2xl backdrop-blur-sm" style={{ boxShadow: '0 0 32px rgba(34, 211, 238, 0.3)' }}>
-              <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
-                alt="JavaScript error screenshot"
-                className="w-full h-full object-cover"
-              />
+            <div className="relative rounded-xl overflow-hidden" style={{ boxShadow: '0 0 60px rgba(34, 211, 238, 0.6), inset 0 0 30px rgba(34, 211, 238, 0.2)' }}>
+              <div className="relative w-96 h-96 bg-secondary/40 rounded-xl border-2 border-accent/60 flex items-center justify-center overflow-hidden backdrop-blur-sm">
+                <img
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
+                  alt="JavaScript error screenshot"
+                  className="w-full h-full object-contain bg-secondary/60"
+                />
+              </div>
             </div>
             <div className="flex flex-col items-center gap-3">
               <div className="px-3 py-2 bg-accent/20 border border-accent/60 rounded-lg backdrop-blur-sm">
@@ -248,6 +253,21 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
     }
   }, [stage])
 
+  // Stage 3: Stay expanded for 2 seconds then reset
+  useEffect(() => {
+    if (stage === 'expanded') {
+      const expandedTimer = setTimeout(() => {
+        setStage('initial')
+        setDisplayedText('')
+        setScanProgress([0, 0])
+        setSelectedVideo(null)
+        setFadeOpacity([1, 1])
+      }, 2000)
+
+      return () => clearTimeout(expandedTimer)
+    }
+  }, [stage])
+
   return (
     <div className="bg-gradient-to-br from-secondary/60 to-background rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[600px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300 smooth-glow hover:shadow-accent/20">
       <div className="p-6 border-b border-border/50 bg-gradient-to-r from-secondary/40 to-background/40 backdrop-blur-sm">
@@ -269,8 +289,8 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
       </div>
 
       <div className="flex-1 p-8 flex items-center justify-center overflow-hidden">
-        {/* Initial + Typing: Show 2 videos */}
-        {(stage === 'initial' || stage === 'typing') && (
+        {/* Initial + Typing + Scanning: Show 2 videos */}
+        {(stage === 'initial' || stage === 'typing' || stage === 'scanning') && (
           <div className="flex gap-12 justify-center items-center h-full transition-opacity duration-500">
             {videos.map((video, idx) => (
               <div key={video.id} className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
@@ -381,10 +401,10 @@ const AnimatedPDFCard = () => {
           setTimeout(() => {
             setDisplayedText('')
             setShowResults(false)
-          }, 3000)
+          }, 2000)
         }
       }, 50)
-    }, 5000)
+    }, 4500)
 
     return () => clearInterval(interval)
   }, [])
@@ -514,6 +534,21 @@ const AnimatedDataCard = () => {
       }, 300)
     }
   }, [stage])
+
+  // Stage 4: Stay in table view for 2 seconds then reset
+  useEffect(() => {
+    if (stage === 'table' && highlightedRows.length > 0) {
+      const tableTimer = setTimeout(() => {
+        setStage('initial')
+        setDisplayedText('')
+        setSelectedFile(null)
+        setHighlightedRows([])
+        setFadeOpacity([1, 1, 1])
+      }, 2000)
+
+      return () => clearTimeout(tableTimer)
+    }
+  }, [stage, highlightedRows])
 
   return (
     <div className="relative bg-gradient-to-br from-secondary/60 to-background backdrop-blur-sm rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[600px] flex flex-col shadow-lg hover:shadow-2xl hover:border-accent/40 transition-all duration-300 smooth-glow">
@@ -778,6 +813,20 @@ export default pool`
         setFadeOpacity([0, 1])
         setStage('expanded')
       }, 800)
+    }
+  }, [stage])
+
+  // Stage 3: Stay expanded for 2 seconds then reset
+  useEffect(() => {
+    if (stage === 'expanded') {
+      const expandedTimer = setTimeout(() => {
+        setStage('initial')
+        setDisplayedText('')
+        setSelectedFile(null)
+        setFadeOpacity([1, 1])
+      }, 2000)
+
+      return () => clearTimeout(expandedTimer)
     }
   }, [stage])
 
