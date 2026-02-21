@@ -19,7 +19,10 @@ export default function Header() {
             alt="AltDump logo"
             className="w-8 h-8"
           />
-          <span className="font-bold text-lg text-foreground">AltDump</span>
+          <span className="font-bold text-lg">
+            <span className="text-foreground">Alt</span>
+            <span className="text-accent">Dump</span>
+          </span>
         </Link>
         
         <nav className="flex items-center gap-6">

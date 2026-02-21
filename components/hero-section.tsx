@@ -17,49 +17,81 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="w-full py-16 md:py-28 bg-background border-b border-border overflow-hidden">
-      <div className="container px-4 md:px-6 max-w-6xl mx-auto">
-        <div className="flex flex-col items-center justify-center text-center space-y-6">
-          {/* Content */}
-          <div className="space-y-4 max-w-3xl fade-in-up">
-            <h1 className="text-6xl md:text-7xl font-bold text-foreground leading-tight text-balance">
-              A focused second brain for your important files.
+    <section className="w-full py-20 md:py-32 bg-gradient-to-b from-background via-secondary/10 to-background border-b border-border/50 overflow-hidden relative">
+      {/* Background gradient accent */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="container px-4 md:px-6 max-w-6xl mx-auto relative z-10">
+        <div className="flex flex-col items-center justify-center text-center space-y-8">
+          {/* Eyebrow text */}
+          <div className="fade-in-up">
+            <span className="inline-block px-4 py-2 rounded-full bg-accent/10 border border-accent/30 text-sm font-semibold text-accent mb-6">
+              Your Private Vault, Instantly Searchable
+            </span>
+          </div>
+
+          {/* Main Heading */}
+          <div className="space-y-5 max-w-3xl fade-in-up" style={{ animationDelay: '0.05s' }}>
+            <h1 className="text-5xl md:text-7xl font-bold text-foreground leading-tight text-balance">
+              Never lose a file, screenshot, or idea again.
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              Save files, screenshots, videos, code, and ideas into your private second brain — and search them instantly with semantic search, not filenames.
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+              Search anything instantly across all your files, images, videos, and notes. Powered by AI. Completely offline. 100% private.
             </p>
           </div>
 
-          {/* Highlighted Tagline */}
-          <div className="relative fade-in-up" style={{ animationDelay: '0.1s' }}>
-            <p className="text-xl md:text-2xl font-bold text-primary glow-text px-6 py-2 rounded-lg">
-              Offline, private, and instant.
-            </p>
+          {/* Key Benefits */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl fade-in-up" style={{ animationDelay: '0.1s' }}>
+            <div className="flex items-center gap-3 justify-center md:justify-start md:col-start-1">
+              <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
+                <svg className="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <span className="text-sm text-muted-foreground">Works Offline</span>
+            </div>
+            <div className="flex items-center gap-3 justify-center">
+              <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
+                <svg className="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <span className="text-sm text-muted-foreground">100% Private</span>
+            </div>
+            <div className="flex items-center gap-3 justify-center md:justify-end md:col-end-4">
+              <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
+                <svg className="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <span className="text-sm text-muted-foreground">AI-Powered</span>
+            </div>
           </div>
 
-          {/* Download Button */}
-          <div className="flex flex-col items-center gap-2 pt-2 fade-in-up" style={{ animationDelay: '0.2s' }}>
+          {/* CTA Button */}
+          <div className="flex flex-col items-center gap-3 pt-4 fade-in-up" style={{ animationDelay: '0.15s' }}>
             <button 
               onClick={handleBuyClick} 
               disabled={isLoading}
-              className="relative px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold transition-all disabled:opacity-50 flex items-center gap-3 group overflow-hidden hover:shadow-lg hover:shadow-accent/30 hover:scale-105"
+              className="relative px-10 py-4 bg-gradient-to-r from-accent to-cyan-400 text-background rounded-xl font-bold text-lg transition-all disabled:opacity-50 group overflow-hidden"
             >
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary/80 to-primary/40 rounded-lg blur opacity-75 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+              {/* Animated glow background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-accent via-cyan-300 to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></div>
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-accent to-cyan-400 rounded-xl blur opacity-50 group-hover:opacity-75 transition-opacity duration-300 -z-10"></div>
               
-              <span className="relative flex items-center gap-3">
-                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" strokeWidth="2"/>
-                  <path d="M9 9h6M12 6v6M9 15h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-                Get AltDump
+              <span className="relative flex items-center justify-center gap-2">
+                Get AltDump Now
               </span>
             </button>
+            <p className="text-xs text-muted-foreground">
+              One-time payment • Lifetime access • $12
+            </p>
           </div>
         </div>
       </div>
-
     </section>
   )
 }

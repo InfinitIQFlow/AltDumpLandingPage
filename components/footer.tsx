@@ -14,7 +14,10 @@ export default function Footer() {
                 alt="AltDump logo"
                 className="w-6 h-6"
               />
-              <span className="font-semibold text-foreground">AltDump</span>
+              <span className="font-semibold">
+                <span className="text-foreground">Alt</span>
+                <span className="text-accent">Dump</span>
+              </span>
             </Link>
             <p className="text-sm text-muted-foreground text-center md:text-left">
               Your offline AI-powered vault.
