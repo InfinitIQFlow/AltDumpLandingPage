@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 
-const CaptureOverlay = ({ showText = false, showCursor = false }) => (
+const CaptureOverlay = ({ text = '', showCursor = false, showSaving = false }) => (
   <div className="relative w-96 bg-gradient-to-b from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl">
     {/* Background */}
     <div className="absolute inset-0 bg-gradient-to-b from-slate-800/20 to-slate-950" />
@@ -12,10 +12,10 @@ const CaptureOverlay = ({ showText = false, showCursor = false }) => (
       {/* Text input area */}
       <div className="space-y-3">
         <div className="min-h-24 bg-slate-800/40 border border-slate-700/50 rounded-lg p-4 backdrop-blur-sm">
-          {showText ? (
+          {text ? (
             <div className="text-slate-300 text-sm font-mono leading-relaxed">
-              Project deadline tomorrow{' '}
-              <span className={`transition-opacity ${showCursor ? 'opacity-100' : 'opacity-0'}`}>|</span>
+              {text}
+              <span className={`transition-opacity ml-0.5 ${showCursor ? 'opacity-100' : 'opacity-0'}`}>|</span>
             </div>
           ) : (
             <p className="text-slate-500 text-sm">Type or paste anything to dump...</p>
@@ -30,11 +30,11 @@ const CaptureOverlay = ({ showText = false, showCursor = false }) => (
             Paste
           </button>
           <button className={`flex-1 px-4 py-2 border rounded-lg text-sm font-medium transition-all duration-300 ${
-            showText
+            text
               ? 'bg-emerald-500/30 border-emerald-400/60 text-emerald-300'
               : 'bg-slate-700/50 border-slate-600 text-slate-400'
           }`}>
-            Save {showText && '⌘↵'}
+            Save {text && '⌘↵'}
           </button>
         </div>
         <button className="w-full px-4 py-2 bg-slate-800/30 border border-slate-700/30 rounded-lg text-slate-400 text-sm font-medium hover:bg-slate-800/50 transition-all duration-300">
@@ -42,6 +42,16 @@ const CaptureOverlay = ({ showText = false, showCursor = false }) => (
         </button>
       </div>
     </div>
+
+    {/* Saving overlay */}
+    {showSaving && (
+      <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-20">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-12 h-12 rounded-full border-3 border-emerald-400/30 border-t-emerald-400 animate-spin" />
+          <p className="text-sm text-emerald-300 font-medium">Saving to vault...</p>
+        </div>
+      </div>
+    )}
   </div>
 )
 
@@ -154,18 +164,19 @@ const SearchFlow = ({ showSearch = false, searchValue = '', showCursor = false }
 const CaptureWorkflowDemo = () => {
   const [stage, setStage] = useState<'alt-d' | 'typing' | 'save' | 'alt-d-drop' | 'drop-pdf' | 'save-drop' | 'ctrl-d' | 'search-typing' | 'search-results' | 'ctrl-d-idle'>('alt-d')
   const [showTextCursor, setShowTextCursor] = useState(false)
+  const [captureText, setCaptureText] = useState('')
   const [searchText, setSearchText] = useState('')
 
   useEffect(() => {
     const timeline: Array<{ stage: typeof stage; delay: number }> = [
       { stage: 'alt-d', delay: 1000 },
-      { stage: 'typing', delay: 1500 },
+      { stage: 'typing', delay: 2000 },
       { stage: 'save', delay: 1500 },
       { stage: 'alt-d-drop', delay: 1500 },
       { stage: 'drop-pdf', delay: 1500 },
       { stage: 'save-drop', delay: 1500 },
       { stage: 'ctrl-d', delay: 1500 },
-      { stage: 'search-typing', delay: 1800 },
+      { stage: 'search-typing', delay: 2200 },
       { stage: 'search-results', delay: 2000 },
       { stage: 'ctrl-d-idle', delay: 1000 },
     ]
@@ -177,7 +188,9 @@ const CaptureWorkflowDemo = () => {
 
     let currentIndex = 0
     const interval = setInterval(() => {
-      setStage(timeline[currentIndex % timeline.length].stage)
+      const newStage = timeline[currentIndex % timeline.length].stage
+      setStage(newStage)
+      setCaptureText('')
       setSearchText('')
       currentIndex++
     }, totalDuration / timeline.length)
@@ -185,9 +198,27 @@ const CaptureWorkflowDemo = () => {
     return () => clearInterval(interval)
   }, [])
 
-  // Cursor blinking for capture
+  // Typing animation for capture text
   useEffect(() => {
     if (stage === 'typing') {
+      setCaptureText('')
+      const fullText = 'Project deadline tomorrow'
+      let index = 0
+      const typeInterval = setInterval(() => {
+        if (index <= fullText.length) {
+          setCaptureText(fullText.slice(0, index))
+          index++
+        } else {
+          clearInterval(typeInterval)
+        }
+      }, 60)
+      return () => clearInterval(typeInterval)
+    }
+  }, [stage])
+
+  // Cursor blinking
+  useEffect(() => {
+    if (stage === 'typing' || stage === 'search-typing') {
       const blink = setInterval(() => setShowTextCursor(prev => !prev), 500)
       return () => clearInterval(blink)
     }
@@ -197,7 +228,7 @@ const CaptureWorkflowDemo = () => {
   useEffect(() => {
     if (stage === 'search-typing') {
       setSearchText('')
-      const fullText = 'project deadline'
+      const fullText = 'what was tomorrow'
       let index = 0
       const typeInterval = setInterval(() => {
         if (index <= fullText.length) {
@@ -211,14 +242,6 @@ const CaptureWorkflowDemo = () => {
     }
   }, [stage])
 
-  // Search cursor blinking
-  useEffect(() => {
-    if (stage === 'search-typing') {
-      const blink = setInterval(() => setShowTextCursor(prev => !prev), 500)
-      return () => clearInterval(blink)
-    }
-  }, [stage])
-
   return (
     <div className="w-full space-y-16">
       {/* Capture flows */}
@@ -229,9 +252,13 @@ const CaptureWorkflowDemo = () => {
             <div className="px-4 py-1.5 bg-emerald-500/20 border border-emerald-400/60 rounded-full">
               <p className="text-xs font-semibold text-emerald-300">Press Alt + D</p>
             </div>
-            <CaptureOverlay showText={stage === 'typing' || stage === 'save'} showCursor={showTextCursor} />
+            <CaptureOverlay 
+              text={captureText} 
+              showCursor={showTextCursor && stage === 'typing'}
+              showSaving={stage === 'save'}
+            />
             {stage === 'save' && (
-              <div className="flex items-center gap-2 text-emerald-400 text-sm">
+              <div className="flex items-center gap-2 text-emerald-400 text-sm animate-fade-in">
                 <div className="w-4 h-4 rounded-full bg-emerald-500" />
                 <span className="font-medium">Saved to vault</span>
               </div>
@@ -266,8 +293,8 @@ const CaptureWorkflowDemo = () => {
             </div>
             <SearchFlow
               showSearch={stage === 'search-results'}
-              searchValue={searchText || (stage === 'ctrl-d-idle' ? 'project deadline' : '')}
-              showCursor={showTextCursor && (stage === 'search-typing')}
+              searchValue={stage === 'search-typing' || stage === 'search-results' ? searchText : (stage === 'ctrl-d-idle' ? 'what was tomorrow' : '')}
+              showCursor={showTextCursor && stage === 'search-typing'}
             />
           </div>
         )}
