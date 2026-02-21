@@ -949,7 +949,7 @@ export default function SearchComparisonSection() {
             
             {/* Descriptive text with visual hierarchy */}
             <div className="space-y-4 max-w-3xl mx-auto fade-in-up" style={{ animationDelay: '0.1s' }}>
-              <div className="space-y-3">
+              <div className="border-l-4 border-accent bg-secondary/40 rounded-lg p-6 md:p-8 space-y-3">
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                   Even if you forgot the filename—
                 </p>
