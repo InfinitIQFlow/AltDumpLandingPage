@@ -76,7 +76,7 @@ const AnimatedImageCard = () => {
   }, [stage])
 
   return (
-    <div className="relative bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-96 flex flex-col shadow-xl hover:shadow-2xl transition-shadow duration-300">
+    <div className="relative bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-shadow duration-300">
       {/* Premium top section */}
       <div className="relative p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
         <h3 className="text-lg font-semibold text-white mb-1">Search naturally. Find instantly.</h3>
@@ -166,14 +166,46 @@ const AnimatedImageCard = () => {
   )
 }
 
+const PlayIcon = () => (
+  <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M8 5v14l11-7z" />
+  </svg>
+)
+
+const VideoIcon = () => (
+  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+)
+
 const AnimatedVideoCard = () => {
   const [displayedText, setDisplayedText] = useState('')
-  const [showResults, setShowResults] = useState(false)
-  const fullQuery = "birthday party laughing"
+  const [stage, setStage] = useState<'initial' | 'typing' | 'scanning' | 'expanded' | 'showing-text'>('initial')
+  const [selectedVideo, setSelectedVideo] = useState<number | null>(null)
+  const [scanProgress, setScanProgress] = useState([0, 0])
 
+  const fullQuery = "the meeting about the pricing change"
+  const videos = [
+    { id: 1, name: 'screen_recording.mp4' },
+    { id: 2, name: 'vid_182_782.mp4' }
+  ]
+
+  // Main animation cycle
   useEffect(() => {
-    const interval = setInterval(() => {
-      setShowResults(false)
+    const cycle = setInterval(() => {
+      setStage('initial')
+      setDisplayedText('')
+      setScanProgress([0, 0])
+      setSelectedVideo(null)
+    }, 18000)
+
+    return () => clearInterval(cycle)
+  }, [])
+
+  // Stage 1: Type search query (0-2s)
+  useEffect(() => {
+    if (stage === 'initial') {
       let index = 0
       const typeInterval = setInterval(() => {
         if (index <= fullQuery.length) {
@@ -181,26 +213,50 @@ const AnimatedVideoCard = () => {
           index++
         } else {
           clearInterval(typeInterval)
-          setShowResults(true)
-          setTimeout(() => {
-            setDisplayedText('')
-            setShowResults(false)
-          }, 3000)
+          setTimeout(() => setStage('scanning'), 300)
         }
-      }, 50)
-    }, 5200)
+      }, 45)
 
-    return () => clearInterval(interval)
-  }, [])
+      return () => clearInterval(typeInterval)
+    }
+  }, [stage])
+
+  // Stage 2: Scanning animation (2-4.5s) - frame strip flicker
+  useEffect(() => {
+    if (stage === 'scanning') {
+      let progress = [0, 0]
+      const scanInterval = setInterval(() => {
+        progress = [progress[0] + 3, progress[1] + 3]
+        if (progress[0] >= 100) {
+          progress = [100, 100]
+          clearInterval(scanInterval)
+          setTimeout(() => {
+            setSelectedVideo(1) // Select vid_182_782.mp4 (index 1)
+            setStage('expanded')
+          }, 300)
+        }
+        setScanProgress([...progress])
+      }, 40)
+
+      return () => clearInterval(scanInterval)
+    }
+  }, [stage])
+
+  // Stage 3: Show text result (4.5-6.5s)
+  useEffect(() => {
+    if (stage === 'expanded') {
+      setTimeout(() => setStage('showing-text'), 500)
+    }
+  }, [stage])
 
   return (
-    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-96 flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
+    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
       <div className="p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+            <div className={`w-2 h-2 rounded-full transition-colors ${stage === 'showing-text' ? 'bg-emerald-500' : stage === 'scanning' ? 'bg-amber-500' : 'bg-slate-500'}`} />
             <span className="text-xs font-medium text-slate-400">
-              {showResults ? 'Frames matched' : 'Scanning video...'}
+              {stage === 'showing-text' ? 'Match found' : stage === 'scanning' ? 'Scanning videos...' : 'Ready to search'}
             </span>
           </div>
         </div>
@@ -215,27 +271,108 @@ const AnimatedVideoCard = () => {
         </div>
       </div>
 
-      <div className="flex-1 p-6 flex items-center justify-center">
-        {showResults && (
-          <div className="animate-fade-in space-y-4 w-full">
-            <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide">2 Frames Found:</div>
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { color: 'from-orange-500 to-red-500', text: 'Laughing moments', time: '00:45' },
-                { color: 'from-amber-500 to-orange-500', text: 'Birthday celebration', time: '01:12' }
-              ].map((frame, i) => (
-                <div
-                  key={i}
-                  className={`bg-gradient-to-br ${frame.color} rounded-lg p-5 text-white text-center space-y-3 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 border border-white/10`}
-                >
-                  <p className="font-semibold text-sm">{frame.text}</p>
-                  <p className="text-xs opacity-90">{frame.time}</p>
+      <div className="flex-1 p-8 flex items-center justify-center overflow-hidden">
+        {/* Initial + Scanning: Show 2 videos */}
+        {(stage === 'initial' || stage === 'typing' || stage === 'scanning') && (
+          <div className="flex gap-8 justify-center items-center h-full">
+            {videos.map((video, idx) => (
+              <div key={video.id} className="flex flex-col items-center gap-4">
+                {/* Video thumbnail */}
+                <div className="relative w-48 h-32 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                  {/* Frame strip flicker animation during scanning */}
+                  {stage === 'scanning' && (
+                    <>
+                      {/* Horizontal flickering frames */}
+                      <div className="absolute inset-0 opacity-30">
+                        {[0, 1, 2, 3, 4].map((i) => (
+                          <div
+                            key={i}
+                            className="absolute h-full w-8 bg-white/20"
+                            style={{
+                              left: `${(scanProgress[idx] + i * 15) % 100}%`,
+                              animation: 'none'
+                            }}
+                          />
+                        ))}
+                      </div>
+                      {/* Soft pulsing overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse" />
+                    </>
+                  )}
+
+                  {/* Play button and icon */}
+                  <div className="relative z-10 flex flex-col items-center gap-3">
+                    <div className="text-slate-300">
+                      <VideoIcon />
+                    </div>
+                    <div className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-all duration-300">
+                      <PlayIcon />
+                    </div>
+                  </div>
                 </div>
-              ))}
+
+                {/* Video name */}
+                <p className="text-sm text-slate-300 font-medium text-center">{video.name}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Expanded: Show selected video zoomed in */}
+        {stage === 'expanded' && selectedVideo !== null && (
+          <div className="animate-fade-in flex flex-col items-center justify-center gap-6 h-full w-full">
+            <div className="relative w-80 h-56 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg border-2 border-slate-600 flex items-center justify-center overflow-hidden shadow-2xl ring-2 ring-indigo-500/50">
+              <div className="relative z-10 flex flex-col items-center gap-3">
+                <div className="text-slate-200">
+                  <VideoIcon />
+                </div>
+                <div className="p-4 bg-white/30 rounded-full">
+                  <PlayIcon />
+                </div>
+              </div>
             </div>
+            <p className="text-lg text-slate-200 font-semibold">{videos[selectedVideo].name}</p>
+          </div>
+        )}
+
+        {/* Showing text result */}
+        {stage === 'showing-text' && selectedVideo !== null && (
+          <div className="animate-fade-in flex flex-col items-center justify-center gap-8 h-full w-full">
+            <div className="relative w-96 h-64 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg border-2 border-slate-600 flex items-center justify-center overflow-hidden shadow-2xl">
+              {/* Soft indigo glow background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-transparent to-indigo-500/10" />
+              
+              {/* Text with highlight */}
+              <div className="relative z-10 text-center px-8">
+                <p className="text-lg text-white font-semibold leading-relaxed">
+                  <span className="block mb-3">We'll test the</span>
+                  <span className="inline-block px-4 py-2 bg-indigo-500/30 rounded-lg border border-indigo-400/60 text-indigo-200 font-bold">
+                    new pricing
+                  </span>
+                  <span className="block mt-3">next quarter.</span>
+                </p>
+              </div>
+            </div>
+            <p className="text-lg text-slate-200 font-semibold">{videos[selectedVideo].name}</p>
           </div>
         )}
       </div>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(8px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.5s ease-out;
+        }
+      `}</style>
     </div>
   )
 }
@@ -268,7 +405,7 @@ const AnimatedPDFCard = () => {
   }, [])
 
   return (
-    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-96 flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
+    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
       <div className="p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
@@ -289,7 +426,7 @@ const AnimatedPDFCard = () => {
         </div>
       </div>
 
-      <div className="flex-1 p-6 space-y-3 overflow-y-auto">
+      <div className="flex-1 p-8 space-y-3 overflow-y-auto">
         {showResults && (
           <div className="animate-fade-in space-y-4">
             <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide">2 Matches Found:</div>
@@ -347,7 +484,7 @@ const AnimatedDataCard = () => {
   }, [])
 
   return (
-    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-96 flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
+    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
       <div className="p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
@@ -368,7 +505,7 @@ const AnimatedDataCard = () => {
         </div>
       </div>
 
-      <div className="flex-1 p-6 overflow-y-auto">
+      <div className="flex-1 p-8 overflow-y-auto">
         {showResults && (
           <div className="animate-fade-in space-y-3">
             <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide mb-4">4 Rows Matched:</div>
@@ -422,7 +559,7 @@ const AnimatedNoteCard = () => {
   }, [])
 
   return (
-    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-96 flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
+    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
       <div className="p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
@@ -443,7 +580,7 @@ const AnimatedNoteCard = () => {
         </div>
       </div>
 
-      <div className="flex-1 p-6 space-y-3 overflow-y-auto">
+      <div className="flex-1 p-8 space-y-3 overflow-y-auto">
         {showResults && (
           <div className="animate-fade-in space-y-3">
             <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide mb-3">2 Notes Matched:</div>
@@ -495,7 +632,7 @@ const AnimatedCodeCard = () => {
   }, [])
 
   return (
-    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-96 flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
+    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
       <div className="p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
@@ -516,7 +653,7 @@ const AnimatedCodeCard = () => {
         </div>
       </div>
 
-      <div className="flex-1 p-6 space-y-3 overflow-y-auto">
+      <div className="flex-1 p-8 space-y-3 overflow-y-auto">
         {showResults && (
           <div className="animate-fade-in space-y-3">
             <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide mb-3">2 Code Snippets Matched:</div>
@@ -563,7 +700,7 @@ export default function SearchComparisonSection() {
           </div>
 
           {/* 6 Animated Feature Cards - 2 per row - longer cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-12">
             {/* Images */}
             <div className="space-y-4">
               <AnimatedImageCard />
