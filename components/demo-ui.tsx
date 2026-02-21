@@ -183,7 +183,7 @@ export default function DemoUI() {
           {/* Demo App - Windows Style */}
           <div ref={containerRef} className="flex justify-center fade-in-up">
             <div className="w-full max-w-4xl">
-              <div className="bg-background rounded-xl border border-border shadow-2xl overflow-hidden hover:shadow-2xl hover:shadow-accent/20 transition-all duration-300 smooth-glow">
+              <div className="bg-background rounded-xl border border-border shadow-2xl overflow-hidden hover:shadow-2xl hover:shadow-accent/20 transition-all duration-300">
                 {/* Windows Title Bar */}
                 <div className="bg-secondary border-b border-border px-4 py-3 flex items-center justify-between">
                   <div className="text-sm font-medium text-foreground">AltDump - Your Second Brain</div>
