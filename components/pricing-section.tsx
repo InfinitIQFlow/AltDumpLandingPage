@@ -15,7 +15,8 @@ export default function PricingSection() {
         <div className="space-y-8 flex flex-col items-center">
           {/* Pricing card */}
           <div className="relative fade-in-up w-full max-w-md">
-            <div className="bg-secondary/50 border border-border/50 rounded-3xl p-8 space-y-6 transition-all duration-300">
+            <div className="absolute inset-0 bg-gradient-to-r from-accent/20 to-cyan-400/20 rounded-3xl blur-xl opacity-60"></div>
+            <div className="relative bg-secondary/50 border border-accent/40 rounded-3xl p-8 space-y-6 transition-all duration-300">
               {/* Title and Badge */}
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold text-foreground">Lifetime License</h2>
