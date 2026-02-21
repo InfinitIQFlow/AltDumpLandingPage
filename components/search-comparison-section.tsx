@@ -14,6 +14,7 @@ const AnimatedImageCard = () => {
   const [displayedQuery, setDisplayedQuery] = useState('')
   const [scanProgress, setScanProgress] = useState(0)
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
+  const [fadeOpacity, setFadeOpacity] = useState([1, 1, 1])
 
   const fullQuery = "javascript error"
   const images = [
@@ -22,7 +23,7 @@ const AnimatedImageCard = () => {
     { id: 3, name: 'screenshot_236' }
   ]
 
-  // Main animation cycle
+  // Main animation cycle - reduced to 12s
   useEffect(() => {
     const cycle = setInterval(() => {
       setAnimationCycle(c => c + 1)
@@ -30,12 +31,13 @@ const AnimatedImageCard = () => {
       setDisplayedQuery('')
       setScanProgress(0)
       setSelectedImage(null)
-    }, 14000)
+      setFadeOpacity([1, 1, 1])
+    }, 12000)
 
     return () => clearInterval(cycle)
   }, [])
 
-  // Stage 1: Type search query (0-1.2s)
+  // Stage 1: Type search query (0-1s)
   useEffect(() => {
     if (stage === 'initial' && animationCycle > 0) {
       let index = 0
@@ -45,15 +47,15 @@ const AnimatedImageCard = () => {
           index++
         } else {
           clearInterval(typeInterval)
-          setTimeout(() => setStage('scanning'), 300)
+          setTimeout(() => setStage('scanning'), 200)
         }
-      }, 60)
+      }, 50)
 
       return () => clearInterval(typeInterval)
     }
   }, [stage, animationCycle])
 
-  // Stage 2: Scanning animation (1.2-3.5s) - soft scanning line on all 3 images
+  // Stage 2: Scanning animation (1-2.5s)
   useEffect(() => {
     if (stage === 'scanning') {
       setScanProgress(0)
@@ -63,24 +65,25 @@ const AnimatedImageCard = () => {
             clearInterval(scanInterval)
             setTimeout(() => {
               setSelectedImage(0)
+              setFadeOpacity([1, 0, 0])
               setStage('expanded')
-            }, 400)
+            }, 300)
             return 100
           }
-          return p + 2
+          return p + 3
         })
-      }, 30)
+      }, 25)
 
       return () => clearInterval(scanInterval)
     }
   }, [stage])
 
   return (
-    <div className="relative bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-shadow duration-300">
-      {/* Premium top section */}
-      <div className="relative p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
-        <h3 className="text-lg font-semibold text-white mb-1">Search naturally. Find instantly.</h3>
-        <p className="text-xs text-slate-400">No file names needed.</p>
+    <div className="relative bg-slate-900/60 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/30 h-screen md:h-[500px] flex flex-col shadow-lg hover:shadow-2xl hover:border-slate-600/50 transition-all duration-300">
+      {/* Card header with copy */}
+      <div className="relative p-6 border-b border-slate-700/20 bg-gradient-to-r from-slate-800/20 to-slate-900/20 backdrop-blur-sm">
+        <h3 className="text-base font-semibold text-slate-100 mb-1">Images</h3>
+        <p className="text-xs text-slate-400">Find text inside real-world photos — receipts, warranty cards, whiteboards, packaging, anything you've snapped.</p>
       </div>
 
       {/* Search input area */}
@@ -91,7 +94,7 @@ const AnimatedImageCard = () => {
             value={displayedQuery}
             readOnly
             placeholder="Search inside images..."
-            className="w-full bg-slate-800/40 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600 transition-all duration-300 group-hover:border-slate-500 group-hover:bg-slate-800/60"
+            className="w-full bg-slate-800/30 text-slate-100 placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600/30 transition-all duration-300 group-hover:border-slate-500/50 group-hover:bg-slate-800/50 backdrop-blur-sm"
           />
         </div>
       </div>
@@ -99,47 +102,47 @@ const AnimatedImageCard = () => {
       {/* Main content area */}
       <div className="relative flex-1 px-6 pb-6 flex items-center justify-center overflow-hidden">
         
-        {/* Stage 1 & 2: 3 Square Images - No pulsing, static until scan */}
+        {/* Stage 1 & 2: 3 Images */}
         {(stage === 'initial' || stage === 'typing' || stage === 'scanning') && (
-          <div className="w-full flex gap-6 justify-center items-center">
+          <div className="w-full flex gap-8 justify-center items-center h-full">
             {images.map((img, idx) => (
-              <div key={img.id} className="flex flex-col items-center gap-3">
-                {/* Square image container */}
-                <div className="relative w-20 h-20 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg border border-slate-600 flex items-center justify-center text-slate-400 overflow-hidden shadow-md hover:shadow-lg hover:border-slate-500 transition-all duration-300">
+              <div key={img.id} className="flex flex-col items-center gap-3 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
+                {/* Image container - larger */}
+                <div className="relative w-32 h-32 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl border border-slate-600/40 flex items-center justify-center text-slate-400 overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-slate-500/60 transition-all duration-300">
                   <ImageIcon />
                   
-                  {/* Soft scanning line animation */}
+                  {/* Realistic glowing scan line - on top, sharp */}
                   {stage === 'scanning' && (
                     <div 
-                      className="absolute inset-x-0 h-1 bg-gradient-to-b from-transparent via-white/60 to-transparent blur-sm"
+                      className="absolute inset-x-0 h-0.5 bg-gradient-to-b from-transparent via-emerald-400 to-transparent"
                       style={{
                         top: `${scanProgress}%`,
-                        opacity: 0.8,
-                        boxShadow: '0 0 12px rgba(255, 255, 255, 0.4)'
+                        opacity: 0.9,
+                        boxShadow: '0 0 16px rgba(16, 185, 129, 0.8), 0 0 8px rgba(16, 185, 129, 0.5)',
+                        zIndex: 10
                       }}
                     />
                   )}
                 </div>
-                <p className="text-xs text-slate-400 font-medium text-center">{img.name}</p>
+                <p className="text-xs text-slate-400 font-medium">{img.name}</p>
               </div>
             ))}
           </div>
         )}
 
-        {/* Stage 3: Expanded image - zoomed in to fill area */}
+        {/* Stage 3: Expanded image - zoomed and animated */}
         {stage === 'expanded' && selectedImage !== null && (
-          <div className="w-full h-full flex flex-col items-center justify-center gap-4 animate-fade-in">
-            <div className="relative w-80 h-80 bg-white rounded-lg border border-slate-600 overflow-hidden shadow-2xl">
+          <div className="w-full h-full flex flex-col items-center justify-center gap-6 animate-expand">
+            <div className="relative w-96 h-96 bg-slate-700/30 rounded-xl border-2 border-emerald-500/60 flex items-center justify-center overflow-hidden shadow-2xl backdrop-blur-sm" style={{ boxShadow: '0 0 32px rgba(16, 185, 129, 0.3)' }}>
               <img
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
                 alt="JavaScript error screenshot"
                 className="w-full h-full object-cover"
               />
               
-              {/* Highlight the top part showing match found */}
-              <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-yellow-300/20 to-transparent pointer-events-none animate-pulse" />
-              <div className="absolute top-2 left-4 right-4 px-3 py-2 bg-yellow-400/30 border border-yellow-400/60 rounded-md backdrop-blur-sm">
-                <p className="text-xs font-semibold text-yellow-700">✓ Match found: javascript error</p>
+              {/* Highlight the match */}
+              <div className="absolute top-4 left-4 right-4 px-3 py-2 bg-emerald-500/20 border border-emerald-400/60 rounded-lg backdrop-blur-sm">
+                <p className="text-xs font-semibold text-emerald-300">✓ Match found: javascript error</p>
               </div>
             </div>
             <p className="text-sm text-slate-300 font-medium">{images[selectedImage].name}</p>
@@ -148,18 +151,18 @@ const AnimatedImageCard = () => {
       </div>
 
       <style jsx>{`
-        @keyframes fadeIn {
+        @keyframes expand {
           from {
             opacity: 0;
-            transform: translateY(8px);
+            transform: scale(0.85);
           }
           to {
             opacity: 1;
-            transform: translateY(0);
+            transform: scale(1);
           }
         }
-        .animate-fade-in {
-          animation: fadeIn 0.5s ease-out;
+        .animate-expand {
+          animation: expand 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
       `}</style>
     </div>
@@ -181,9 +184,10 @@ const VideoIcon = () => (
 
 const AnimatedVideoCard = () => {
   const [displayedText, setDisplayedText] = useState('')
-  const [stage, setStage] = useState<'initial' | 'typing' | 'scanning' | 'expanded' | 'showing-text'>('initial')
+  const [stage, setStage] = useState<'initial' | 'typing' | 'scanning' | 'expanded'>('initial')
   const [selectedVideo, setSelectedVideo] = useState<number | null>(null)
   const [scanProgress, setScanProgress] = useState([0, 0])
+  const [fadeOpacity, setFadeOpacity] = useState([1, 1])
 
   const fullQuery = "the meeting about the pricing change"
   const videos = [
@@ -191,19 +195,20 @@ const AnimatedVideoCard = () => {
     { id: 2, name: 'vid_182_782.mp4' }
   ]
 
-  // Main animation cycle
+  // Main animation cycle - reduced to 12s
   useEffect(() => {
     const cycle = setInterval(() => {
       setStage('initial')
       setDisplayedText('')
       setScanProgress([0, 0])
       setSelectedVideo(null)
-    }, 18000)
+      setFadeOpacity([1, 1])
+    }, 12000)
 
     return () => clearInterval(cycle)
   }, [])
 
-  // Stage 1: Type search query (0-2s)
+  // Stage 1: Type search query (0-1s)
   useEffect(() => {
     if (stage === 'initial') {
       let index = 0
@@ -213,15 +218,15 @@ const AnimatedVideoCard = () => {
           index++
         } else {
           clearInterval(typeInterval)
-          setTimeout(() => setStage('scanning'), 300)
+          setTimeout(() => setStage('scanning'), 200)
         }
-      }, 45)
+      }, 40)
 
       return () => clearInterval(typeInterval)
     }
   }, [stage])
 
-  // Stage 2: Scanning animation (2-4.5s) - frame strip flicker
+  // Stage 2: Scanning animation (1-2.5s) - frame strip flicker
   useEffect(() => {
     if (stage === 'scanning') {
       let progress = [0, 0]
@@ -232,20 +237,14 @@ const AnimatedVideoCard = () => {
           clearInterval(scanInterval)
           setTimeout(() => {
             setSelectedVideo(1) // Select vid_182_782.mp4 (index 1)
+            setFadeOpacity([0, 1])
             setStage('expanded')
-          }, 300)
+          }, 250)
         }
         setScanProgress([...progress])
-      }, 40)
+      }, 30)
 
       return () => clearInterval(scanInterval)
-    }
-  }, [stage])
-
-  // Stage 3: Show text result (4.5-6.5s)
-  useEffect(() => {
-    if (stage === 'expanded') {
-      setTimeout(() => setStage('showing-text'), 500)
     }
   }, [stage])
 
@@ -464,9 +463,10 @@ const FileIcon = () => (
 
 const AnimatedDataCard = () => {
   const [displayedText, setDisplayedText] = useState('')
-  const [stage, setStage] = useState<'initial' | 'typing' | 'expanding' | 'table' | 'highlighting'>('initial')
+  const [stage, setStage] = useState<'initial' | 'typing' | 'expanding' | 'table'>('initial')
   const [selectedFile, setSelectedFile] = useState<number | null>(null)
   const [highlightedRows, setHighlightedRows] = useState<number[]>([])
+  const [fadeOpacity, setFadeOpacity] = useState([1, 1, 1])
 
   const fullQuery = "customers from california with revenue over 5000"
   const files = [
@@ -482,19 +482,20 @@ const AnimatedDataCard = () => {
     { name: 'John Park', state: 'Nevada', revenue: 2900, match: false }
   ]
 
-  // Main animation cycle
+  // Main animation cycle - 12s
   useEffect(() => {
     const cycle = setInterval(() => {
       setStage('initial')
       setDisplayedText('')
       setSelectedFile(null)
       setHighlightedRows([])
-    }, 20000)
+      setFadeOpacity([1, 1, 1])
+    }, 12000)
 
     return () => clearInterval(cycle)
   }, [])
 
-  // Stage 1: Type search query (0-2.5s)
+  // Stage 1: Type search query (0-1.2s)
   useEffect(() => {
     if (stage === 'initial') {
       let index = 0
@@ -504,50 +505,52 @@ const AnimatedDataCard = () => {
           index++
         } else {
           clearInterval(typeInterval)
-          setTimeout(() => setStage('expanding'), 300)
+          setTimeout(() => setStage('expanding'), 200)
         }
-      }, 35)
+      }, 30)
 
       return () => clearInterval(typeInterval)
     }
   }, [stage])
 
-  // Stage 2: Expand selected file (2.5-3.5s)
+  // Stage 2: Expand selected file (1.2-2.5s)
   useEffect(() => {
     if (stage === 'expanding') {
       setSelectedFile(1) // customer_data.csv
-      setTimeout(() => setStage('table'), 1000)
+      setFadeOpacity([0, 1, 0])
+      setTimeout(() => setStage('table'), 800)
     }
   }, [stage])
 
-  // Stage 3: Show table and animate highlighting (3.5-5.5s)
+  // Stage 3: Show table and highlight (2.5-5s)
   useEffect(() => {
     if (stage === 'table') {
       setTimeout(() => {
         setHighlightedRows([1, 2]) // Maya Singh and David Kim
-        setStage('highlighting')
-      }, 500)
+      }, 300)
     }
   }, [stage])
 
   return (
-    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
-      <div className="p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
-        <div className="flex items-center justify-between mb-4">
+    <div className="relative bg-slate-900/60 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/30 h-screen md:h-[500px] flex flex-col shadow-lg hover:shadow-2xl hover:border-slate-600/50 transition-all duration-300">
+      <div className="p-6 border-b border-slate-700/20 bg-gradient-to-r from-slate-800/20 to-slate-900/20 backdrop-blur-sm">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-base font-semibold text-slate-100">Spreadsheets</h3>
           <div className="flex items-center gap-2">
             <div className={`w-2 h-2 rounded-full transition-colors ${highlightedRows.length > 0 ? 'bg-emerald-500' : stage === 'typing' || stage === 'initial' ? 'bg-amber-500' : 'bg-slate-500'}`} />
             <span className="text-xs font-medium text-slate-400">
-              {highlightedRows.length > 0 ? 'Query matched' : stage === 'expanding' ? 'Opening file...' : 'Ready to search'}
+              {highlightedRows.length > 0 ? 'Rows matched' : stage === 'expanding' ? 'Opening...' : 'Ready'}
             </span>
           </div>
         </div>
+        <p className="text-xs text-slate-400 mb-4">Search inside spreadsheets — find cells with specific data, calculations, or patterns instantly.</p>
         <div className="relative group">
           <input
             type="text"
             value={displayedText}
             readOnly
             placeholder="Search inside spreadsheets..."
-            className="w-full bg-slate-800/40 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600 transition-all duration-300 group-hover:border-slate-500 group-hover:bg-slate-800/60"
+            className="w-full bg-slate-800/30 text-slate-100 placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600/30 transition-all duration-300 group-hover:border-slate-500/50 group-hover:bg-slate-800/50 backdrop-blur-sm"
           />
         </div>
       </div>
@@ -555,11 +558,11 @@ const AnimatedDataCard = () => {
       <div className="flex-1 p-8 overflow-y-auto flex items-center justify-center">
         {/* Initial state: Show 3 file cards */}
         {(stage === 'initial' || stage === 'typing') && (
-          <div className="flex gap-6 justify-center items-center h-full">
+          <div className="flex gap-8 justify-center items-center h-full transition-opacity duration-500">
             {files.map((file, idx) => (
-              <div key={file.id} className="flex flex-col items-center gap-3">
-                <div className="w-24 h-32 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg border border-slate-600 flex flex-col items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300">
-                  <div className="text-slate-400">
+              <div key={file.id} className="flex flex-col items-center gap-3 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
+                <div className="w-28 h-36 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl border border-slate-600/40 flex flex-col items-center justify-center gap-2 shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300">
+                  <div className="text-slate-300">
                     <FileIcon />
                   </div>
                   <p className="text-xs text-slate-400 font-medium text-center px-2">CSV</p>
@@ -570,36 +573,36 @@ const AnimatedDataCard = () => {
           </div>
         )}
 
-        {/* Expanding and table state: Show selected file with table */}
-        {(stage === 'expanding' || stage === 'table' || stage === 'highlighting') && selectedFile !== null && (
-          <div className="animate-fade-in w-full max-w-2xl">
+        {/* Table state: Show selected file zoomed */}
+        {(stage === 'expanding' || stage === 'table') && selectedFile !== null && (
+          <div className="animate-expand w-full max-w-3xl">
             <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-16 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg border border-slate-600 flex items-center justify-center ring-2 ring-indigo-500/50">
-                  <div className="text-slate-300 text-sm">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-18 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-lg border-2 border-emerald-500/60 flex items-center justify-center shadow-lg backdrop-blur-sm" style={{ boxShadow: '0 0 16px rgba(16, 185, 129, 0.2)' }}>
+                  <div className="text-emerald-400 text-lg">
                     <FileIcon />
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm text-slate-200 font-semibold">{files[selectedFile].name}</p>
+                  <p className="text-base text-slate-100 font-semibold">{files[selectedFile].name}</p>
                   {highlightedRows.length > 0 && (
-                    <p className="text-xs text-emerald-400 font-medium mt-1">{highlightedRows.length} matches</p>
+                    <p className="text-xs text-emerald-400 font-medium mt-1">{highlightedRows.length} rows matched</p>
                   )}
                 </div>
               </div>
             </div>
 
             {/* CSV Table */}
-            <div className="bg-slate-800/30 rounded-lg border border-slate-700 overflow-hidden">
+            <div className="bg-slate-800/30 backdrop-blur-sm rounded-lg border border-slate-700/50 overflow-hidden">
               {/* Table Header */}
-              <div className="grid grid-cols-3 gap-4 p-4 bg-slate-800/60 border-b border-slate-700">
+              <div className="grid grid-cols-3 gap-4 p-4 bg-slate-800/40 border-b border-slate-700/30">
                 <p className="text-xs font-semibold text-slate-300">Name</p>
                 <p className="text-xs font-semibold text-slate-300">State</p>
                 <p className="text-xs font-semibold text-slate-300">Revenue</p>
               </div>
 
               {/* Table Rows */}
-              <div className="divide-y divide-slate-700">
+              <div className="divide-y divide-slate-700/20">
                 {tableData.map((row, idx) => {
                   const isHighlighted = highlightedRows.includes(idx)
                   const isVisible = highlightedRows.length === 0 || isHighlighted
@@ -609,16 +612,16 @@ const AnimatedDataCard = () => {
                       key={idx}
                       className={`grid grid-cols-3 gap-4 p-4 transition-all duration-500 ${
                         isHighlighted
-                          ? 'bg-indigo-500/15 border-l-2 border-indigo-500'
+                          ? 'bg-emerald-500/15 border-l-2 border-emerald-500'
                           : isVisible
                           ? 'opacity-100'
                           : 'opacity-40'
                       }`}
                     >
-                      <p className={`text-sm ${isHighlighted ? 'text-white font-semibold' : 'text-slate-300'}`}>
+                      <p className={`text-sm ${isHighlighted ? 'text-slate-100 font-semibold' : 'text-slate-300'}`}>
                         {row.name}
                       </p>
-                      <p className={`text-sm ${isHighlighted ? 'text-indigo-200 font-medium' : 'text-slate-400'}`}>
+                      <p className={`text-sm ${isHighlighted ? 'text-emerald-200 font-medium' : 'text-slate-400'}`}>
                         {row.state}
                       </p>
                       <p
@@ -642,18 +645,18 @@ const AnimatedDataCard = () => {
       </div>
 
       <style jsx>{`
-        @keyframes fadeIn {
+        @keyframes expand {
           from {
             opacity: 0;
-            transform: translateY(8px);
+            transform: scale(0.85);
           }
           to {
             opacity: 1;
-            transform: translateY(0);
+            transform: scale(1);
           }
         }
-        .animate-fade-in {
-          animation: fadeIn 0.5s ease-out;
+        .animate-expand {
+          animation: expand 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
       `}</style>
     </div>
@@ -761,52 +764,126 @@ const AnimatedCodeCard = () => {
   }, [])
 
   return (
-    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
-      <div className="p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
-        <div className="flex items-center justify-between mb-4">
+    <div className="relative bg-slate-900/60 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/30 h-screen md:h-[500px] flex flex-col shadow-lg hover:shadow-2xl hover:border-slate-600/50 transition-all duration-300">
+      <div className="p-6 border-b border-slate-700/20 bg-gradient-to-r from-slate-800/20 to-slate-900/20 backdrop-blur-sm">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-base font-semibold text-slate-100">Videos</h3>
           <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+            <div className={`w-2 h-2 rounded-full transition-colors ${stage === 'expanded' ? 'bg-emerald-500' : stage === 'scanning' ? 'bg-amber-500' : 'bg-slate-500'}`} />
             <span className="text-xs font-medium text-slate-400">
-              {showResults ? 'Results found' : 'Scanning code...'}
+              {stage === 'expanded' ? 'Match found' : stage === 'scanning' ? 'Scanning...' : 'Ready'}
             </span>
           </div>
         </div>
+        <p className="text-xs text-slate-400 mb-4">Find exact moments in videos — subtitles, captions, actions, anything captured.</p>
         <div className="relative group">
           <input
             type="text"
             value={displayedText}
             readOnly
-            placeholder="Search code snippets..."
-            className="w-full bg-slate-800/40 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600 transition-all duration-300 group-hover:border-slate-500 group-hover:bg-slate-800/60"
+            placeholder="Search inside videos..."
+            className="w-full bg-slate-800/30 text-slate-100 placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600/30 transition-all duration-300 group-hover:border-slate-500/50 group-hover:bg-slate-800/50 backdrop-blur-sm"
           />
         </div>
       </div>
 
-      <div className="flex-1 p-8 space-y-3 overflow-y-auto">
-        {showResults && (
-          <div className="animate-fade-in space-y-3">
-            <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide mb-3">2 Code Snippets Matched:</div>
-            <div className="bg-slate-800/40 border border-slate-600 rounded-lg p-4 font-mono text-xs space-y-1 hover:bg-slate-800/60 hover:border-slate-500 transition-all duration-300">
-              <div className="text-slate-400">const setupDB = () =&gt; {`{`}</div>
-              <div className="text-slate-400 pl-4">
-                // Initialize <span className="font-bold bg-emerald-500/20 px-1 py-1 rounded text-emerald-300">database connection</span>
-              </div>
-              <div className="text-slate-400 pl-4">
-                await db.init(config);
-              </div>
-              <div className="text-slate-400">{`}`}</div>
-            </div>
+      <div className="flex-1 p-8 flex items-center justify-center overflow-hidden">
+        
+        {/* Initial + Scanning: Show 2 videos */}
+        {(stage === 'initial' || stage === 'typing' || stage === 'scanning') && (
+          <div className="flex gap-12 justify-center items-center h-full transition-opacity duration-500">
+            {videos.map((video, idx) => (
+              <div key={video.id} className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
+                {/* Video thumbnail */}
+                <div className="relative w-56 h-40 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl border border-slate-600/40 flex items-center justify-center overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300">
+                  {/* Frame strip flicker animation */}
+                  {stage === 'scanning' && (
+                    <>
+                      <div className="absolute inset-0 opacity-40">
+                        {[0, 1, 2, 3].map((i) => (
+                          <div
+                            key={i}
+                            className="absolute h-full w-12 bg-emerald-400/20"
+                            style={{
+                              left: `${(scanProgress[idx] + i * 20) % 100}%`,
+                            }}
+                          />
+                        ))}
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-300/5 to-transparent" />
+                    </>
+                  )}
 
-            <div className="bg-slate-800/40 border border-slate-600 rounded-lg p-4 font-mono text-xs space-y-1 hover:bg-slate-800/60 hover:border-slate-500 transition-all duration-300">
-              <div className="text-slate-400">const <span className="font-bold text-cyan-400">initConnection</span> = (config) =&gt; {`{`}</div>
-              <div className="text-slate-400 pl-4">
-                new <span className="font-bold bg-emerald-500/20 px-1 py-1 rounded text-emerald-300">database connection</span>
+                  {/* Play button */}
+                  <div className="relative z-10 p-4 bg-emerald-500/20 rounded-full hover:bg-emerald-500/30 transition-all duration-300 border border-emerald-400/40">
+                    <PlayIcon />
+                  </div>
+                </div>
+
+                {/* Video name */}
+                <p className="text-sm text-slate-300 font-medium">{video.name}</p>
               </div>
-              <div className="text-slate-400">{`}`}</div>
+            ))}
+          </div>
+        )}
+
+        {/* Expanded: Show selected video zoomed */}
+        {stage === 'expanded' && selectedVideo !== null && (
+          <div className="animate-expand flex flex-col items-center justify-center gap-6 h-full w-full">
+            <div className="relative w-96 h-72 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl border-2 border-emerald-500/60 flex items-center justify-center overflow-hidden shadow-2xl backdrop-blur-sm" style={{ boxShadow: '0 0 32px rgba(16, 185, 129, 0.3)' }}>
+              {/* Video visual background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/10 via-slate-800 to-slate-900" />
+              
+              {/* Animated waveform pattern (represents video content) */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-20">
+                <div className="flex gap-1">
+                  {[...Array(8)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="w-1 bg-emerald-400 rounded-full"
+                      style={{
+                        height: `${30 + (i % 3) * 20}px`,
+                        animation: `wave 0.8s ease-in-out ${i * 0.1}s infinite`
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Play button */}
+              <div className="relative z-10 p-5 bg-emerald-500/30 rounded-full border border-emerald-400/60">
+                <PlayIcon />
+              </div>
+
+              {/* Caption at bottom */}
+              <div className="absolute bottom-4 left-4 right-4 px-3 py-2 bg-emerald-500/20 border border-emerald-400/60 rounded-lg backdrop-blur-sm z-20">
+                <p className="text-xs font-semibold text-emerald-300">We'll test the new pricing next quarter.</p>
+              </div>
             </div>
+            <p className="text-sm text-slate-300 font-medium">{videos[selectedVideo].name}</p>
           </div>
         )}
       </div>
+
+      <style jsx>{`
+        @keyframes expand {
+          from {
+            opacity: 0;
+            transform: scale(0.85);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        @keyframes wave {
+          0%, 100% { transform: scaleY(1); }
+          50% { transform: scaleY(0.6); }
+        }
+        .animate-expand {
+          animation: expand 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+      `}</style>
     </div>
   )
 }
