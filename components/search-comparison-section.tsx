@@ -738,12 +738,45 @@ const AnimatedNoteCard = () => {
 
 const AnimatedCodeCard = () => {
   const [displayedText, setDisplayedText] = useState('')
-  const [showResults, setShowResults] = useState(false)
-  const fullQuery = "database connection"
+  const [stage, setStage] = useState<'initial' | 'typing' | 'scanning' | 'expanded'>('initial')
+  const [selectedFile, setSelectedFile] = useState<number | null>(null)
+  const [fadeOpacity, setFadeOpacity] = useState([1, 1])
 
+  const fullQuery = "database connection pool"
+  const codeFiles = [
+    { id: 1, name: 'server.js' },
+    { id: 2, name: 'db.config.ts' }
+  ]
+
+  const codeSnippet = `const pool = new Pool({
+  host: 'localhost',
+  port: 5432,
+  database: 'app_db',
+  user: 'admin',
+  password: process.env.DB_PASS
+})
+
+pool.on('error', (err) => {
+  console.error('Unexpected error', err)
+})
+
+export default pool`
+
+  // Main animation cycle - 12s
   useEffect(() => {
-    const interval = setInterval(() => {
-      setShowResults(false)
+    const cycle = setInterval(() => {
+      setStage('initial')
+      setDisplayedText('')
+      setSelectedFile(null)
+      setFadeOpacity([1, 1])
+    }, 12000)
+
+    return () => clearInterval(cycle)
+  }, [])
+
+  // Stage 1: Type search query (0-1.2s)
+  useEffect(() => {
+    if (stage === 'initial') {
       let index = 0
       const typeInterval = setInterval(() => {
         if (index <= fullQuery.length) {
@@ -751,23 +784,30 @@ const AnimatedCodeCard = () => {
           index++
         } else {
           clearInterval(typeInterval)
-          setShowResults(true)
-          setTimeout(() => {
-            setDisplayedText('')
-            setShowResults(false)
-          }, 3000)
+          setTimeout(() => setStage('scanning'), 200)
         }
-      }, 50)
-    }, 5000)
+      }, 40)
 
-    return () => clearInterval(interval)
-  }, [])
+      return () => clearInterval(typeInterval)
+    }
+  }, [stage])
+
+  // Stage 2: Scanning and expand (1.2-2.5s)
+  useEffect(() => {
+    if (stage === 'scanning') {
+      setTimeout(() => {
+        setSelectedFile(1) // db.config.ts
+        setFadeOpacity([0, 1])
+        setStage('expanded')
+      }, 800)
+    }
+  }, [stage])
 
   return (
     <div className="relative bg-slate-900/60 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/30 h-screen md:h-[500px] flex flex-col shadow-lg hover:shadow-2xl hover:border-slate-600/50 transition-all duration-300">
       <div className="p-6 border-b border-slate-700/20 bg-gradient-to-r from-slate-800/20 to-slate-900/20 backdrop-blur-sm">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-base font-semibold text-slate-100">Videos</h3>
+          <h3 className="text-base font-semibold text-slate-100">Code</h3>
           <div className="flex items-center gap-2">
             <div className={`w-2 h-2 rounded-full transition-colors ${stage === 'expanded' ? 'bg-emerald-500' : stage === 'scanning' ? 'bg-amber-500' : 'bg-slate-500'}`} />
             <span className="text-xs font-medium text-slate-400">
@@ -775,92 +815,87 @@ const AnimatedCodeCard = () => {
             </span>
           </div>
         </div>
-        <p className="text-xs text-slate-400 mb-4">Find exact moments in videos — subtitles, captions, actions, anything captured.</p>
+        <p className="text-xs text-slate-400 mb-4">Find code patterns, functions, variables, and configurations across your codebase.</p>
         <div className="relative group">
           <input
             type="text"
             value={displayedText}
             readOnly
-            placeholder="Search inside videos..."
+            placeholder="Search code..."
             className="w-full bg-slate-800/30 text-slate-100 placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600/30 transition-all duration-300 group-hover:border-slate-500/50 group-hover:bg-slate-800/50 backdrop-blur-sm"
           />
         </div>
       </div>
 
-      <div className="flex-1 p-8 flex items-center justify-center overflow-hidden">
-        
-        {/* Initial + Scanning: Show 2 videos */}
+      <div className="flex-1 p-8 overflow-y-auto flex items-center justify-center">
+        {/* Initial state: Show 2 code files */}
         {(stage === 'initial' || stage === 'typing' || stage === 'scanning') && (
           <div className="flex gap-12 justify-center items-center h-full transition-opacity duration-500">
-            {videos.map((video, idx) => (
-              <div key={video.id} className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
-                {/* Video thumbnail */}
-                <div className="relative w-56 h-40 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl border border-slate-600/40 flex items-center justify-center overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300">
-                  {/* Frame strip flicker animation */}
-                  {stage === 'scanning' && (
-                    <>
-                      <div className="absolute inset-0 opacity-40">
-                        {[0, 1, 2, 3].map((i) => (
-                          <div
-                            key={i}
-                            className="absolute h-full w-12 bg-emerald-400/20"
-                            style={{
-                              left: `${(scanProgress[idx] + i * 20) % 100}%`,
-                            }}
-                          />
-                        ))}
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-300/5 to-transparent" />
-                    </>
-                  )}
-
-                  {/* Play button */}
-                  <div className="relative z-10 p-4 bg-emerald-500/20 rounded-full hover:bg-emerald-500/30 transition-all duration-300 border border-emerald-400/40">
-                    <PlayIcon />
+            {codeFiles.map((file, idx) => (
+              <div key={file.id} className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
+                <div className="w-32 h-40 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl border border-slate-600/40 flex flex-col items-center justify-center gap-3 shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300">
+                  <div className="w-full h-full flex flex-col items-center justify-center gap-2">
+                    <div className="text-slate-300">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.321 3.646l2.031 2.031a2 2 0 010 2.828l-8.486 8.486a2 2 0 01-2.828 0l-2.031-2.031a2 2 0 010-2.828l8.486-8.486a2 2 0 012.828 0z" />
+                      </svg>
+                    </div>
+                    <p className="text-xs text-slate-400 font-mono text-center">{file.name.split('.')[1]}</p>
                   </div>
                 </div>
-
-                {/* Video name */}
-                <p className="text-sm text-slate-300 font-medium">{video.name}</p>
+                <p className="text-xs text-slate-300 font-mono text-center">{file.name}</p>
               </div>
             ))}
           </div>
         )}
 
-        {/* Expanded: Show selected video zoomed */}
-        {stage === 'expanded' && selectedVideo !== null && (
-          <div className="animate-expand flex flex-col items-center justify-center gap-6 h-full w-full">
-            <div className="relative w-96 h-72 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl border-2 border-emerald-500/60 flex items-center justify-center overflow-hidden shadow-2xl backdrop-blur-sm" style={{ boxShadow: '0 0 32px rgba(16, 185, 129, 0.3)' }}>
-              {/* Video visual background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/10 via-slate-800 to-slate-900" />
-              
-              {/* Animated waveform pattern (represents video content) */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-20">
-                <div className="flex gap-1">
-                  {[...Array(8)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="w-1 bg-emerald-400 rounded-full"
-                      style={{
-                        height: `${30 + (i % 3) * 20}px`,
-                        animation: `wave 0.8s ease-in-out ${i * 0.1}s infinite`
-                      }}
-                    />
-                  ))}
+        {/* Expanded: Show code snippet zoomed */}
+        {stage === 'expanded' && selectedFile !== null && (
+          <div className="animate-expand w-full max-w-2xl">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-16 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-lg border-2 border-emerald-500/60 flex items-center justify-center shadow-lg backdrop-blur-sm" style={{ boxShadow: '0 0 16px rgba(16, 185, 129, 0.2)' }}>
+                  <div className="text-emerald-400 text-sm">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.321 3.646l2.031 2.031a2 2 0 010 2.828l-8.486 8.486a2 2 0 01-2.828 0l-2.031-2.031a2 2 0 010-2.828l8.486-8.486a2 2 0 012.828 0z" />
+                    </svg>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-base text-slate-100 font-semibold font-mono">{codeFiles[selectedFile].name}</p>
+                  <p className="text-xs text-emerald-400 font-medium mt-1">1 match found</p>
                 </div>
               </div>
-
-              {/* Play button */}
-              <div className="relative z-10 p-5 bg-emerald-500/30 rounded-full border border-emerald-400/60">
-                <PlayIcon />
-              </div>
-
-              {/* Caption at bottom */}
-              <div className="absolute bottom-4 left-4 right-4 px-3 py-2 bg-emerald-500/20 border border-emerald-400/60 rounded-lg backdrop-blur-sm z-20">
-                <p className="text-xs font-semibold text-emerald-300">We'll test the new pricing next quarter.</p>
-              </div>
             </div>
-            <p className="text-sm text-slate-300 font-medium">{videos[selectedVideo].name}</p>
+
+            {/* Code snippet */}
+            <div className="bg-slate-800/30 backdrop-blur-sm rounded-lg border border-slate-700/50 overflow-hidden">
+              <div className="bg-slate-800/40 border-b border-slate-700/30 px-4 py-3">
+                <p className="text-xs text-slate-400 font-mono">database connection pool</p>
+              </div>
+              <pre className="p-4 overflow-x-auto">
+                <code className="text-xs font-mono text-slate-300 leading-relaxed">
+                  <span className="text-emerald-400">{`const`}</span>
+                  {` pool = `}
+                  <span className="text-blue-400">{`new`}</span>
+                  {` Pool({`}
+                  <br />
+                  {`  host: `}
+                  <span className="text-orange-400">{'\'localhost\''}</span>
+                  {`,`}
+                  <br />
+                  {`  port: `}
+                  <span className="text-purple-400">{`5432`}</span>
+                  {`,`}
+                  <br />
+                  {`  database: `}
+                  <span className="text-orange-400">{'\'app_db\''}</span>
+                  {`...`}
+                  <br />
+                  {`})`}
+                </code>
+              </pre>
+            </div>
           </div>
         )}
       </div>
@@ -875,10 +910,6 @@ const AnimatedCodeCard = () => {
             opacity: 1;
             transform: scale(1);
           }
-        }
-        @keyframes wave {
-          0%, 100% { transform: scaleY(1); }
-          50% { transform: scaleY(0.6); }
         }
         .animate-expand {
           animation: expand 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
