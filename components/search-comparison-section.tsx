@@ -340,43 +340,6 @@ const AnimatedVideoCard = () => {
             <p className="text-sm text-slate-300 font-medium">{videos[selectedVideo].name}</p>
           </div>
         )}
-
-                  {/* Play button and icon */}
-                  <div className="relative z-10 flex flex-col items-center gap-3">
-                    <div className="text-slate-300">
-                      <VideoIcon />
-                    </div>
-                    <div className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-all duration-300">
-                      <PlayIcon />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Video name */}
-                <p className="text-sm text-slate-300 font-medium text-center">{video.name}</p>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Expanded: Show selected video zoomed in */}
-        {stage === 'expanded' && selectedVideo !== null && (
-          <div className="animate-fade-in flex flex-col items-center justify-center gap-6 h-full w-full">
-            <div className="relative w-80 h-56 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg border-2 border-slate-600 flex items-center justify-center overflow-hidden shadow-2xl ring-2 ring-indigo-500/50">
-              <div className="relative z-10 flex flex-col items-center gap-3">
-                <div className="text-slate-200">
-                  <VideoIcon />
-                </div>
-                <div className="p-4 bg-white/30 rounded-full">
-                  <PlayIcon />
-                </div>
-              </div>
-            </div>
-            <p className="text-lg text-slate-200 font-semibold">{videos[selectedVideo].name}</p>
-          </div>
-        )}
-
-        {/* Showing text result */}
         {stage === 'showing-text' && selectedVideo !== null && (
           <div className="animate-fade-in flex flex-col items-center justify-center gap-8 h-full w-full">
             <div className="relative w-96 h-64 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg border-2 border-slate-600 flex items-center justify-center overflow-hidden shadow-2xl">
