@@ -930,18 +930,18 @@ export default function SearchComparisonSection() {
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
         <div className="space-y-20">
           {/* Main heading */}
-          <div className="text-center space-y-6 fade-in-down">
+          <div className="text-center space-y-6 fade-in-down font-serif">
             {/* First line - Windows Search */}
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground inline-block">
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground inline-block">
                 Windows Search looks at filenames.
               </h2>
             </div>
             
             {/* Second line - AltDump */}
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold">
-                <span className="bg-gradient-to-r from-blue-500 to-blue-600 bg-clip-text text-transparent">
+              <h2 className="text-4xl md:text-5xl font-bold">
+                <span className="bg-gradient-to-r from-purple-500 via-accent to-indigo-500 bg-clip-text text-transparent">
                   AltDump looks inside your files.
                 </span>
               </h2>
@@ -950,24 +950,24 @@ export default function SearchComparisonSection() {
             {/* Descriptive text with visual hierarchy */}
             <div className="space-y-4 max-w-3xl mx-auto fade-in-up" style={{ animationDelay: '0.1s' }}>
               <div className="space-y-3">
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-serif">
                   Even if you forgot the filename—
                 </p>
                 
                 <div className="flex flex-col gap-2 text-center">
-                  <p className="text-base md:text-lg text-muted-foreground italic text-blue-400">
+                  <p className="text-lg md:text-xl text-muted-foreground italic font-serif text-purple-400">
                     if it's buried in a PDF,
                   </p>
-                  <p className="text-base md:text-lg text-muted-foreground italic text-blue-300">
+                  <p className="text-lg md:text-xl text-muted-foreground italic font-serif text-purple-300">
                     if it's inside an image,
                   </p>
-                  <p className="text-base md:text-lg text-muted-foreground italic text-blue-500">
+                  <p className="text-lg md:text-xl text-muted-foreground italic font-serif text-purple-500">
                     if it's hidden in a document —
                   </p>
                 </div>
                 
                 <div className="pt-2">
-                  <p className="text-lg md:text-xl font-bold text-blue-500">
+                  <p className="text-xl md:text-2xl font-bold font-serif bg-gradient-to-r from-purple-500 to-indigo-500 bg-clip-text text-transparent">
                     results appear instantly.
                   </p>
                 </div>
