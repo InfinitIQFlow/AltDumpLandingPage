@@ -173,9 +173,9 @@ export default function StoryDemoSection() {
         <div className="space-y-16">
           {/* Section heading */}
           <div className="text-center space-y-3">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground text-balance">
-              Watch How It Works
-            </h2>
+  <h2 className="text-4xl md:text-5xl font-bold text-foreground text-balance">
+  See It In Real Action
+  </h2>
             <p className="text-lg text-muted-foreground">
               See how AltDump finds content across every file type.
             </p>

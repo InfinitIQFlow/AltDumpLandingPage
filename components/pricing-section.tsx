@@ -11,108 +11,88 @@ export default function PricingSection() {
 
   return (
     <section id="pricing" className="w-full py-20 md:py-28 bg-background border-b border-border">
-      <div className="container px-4 md:px-6 max-w-4xl mx-auto">
-        <div className="space-y-12">
-          {/* Section heading */}
-          <div className="text-center space-y-3">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground">
-              Early Access Pricing
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Limited-time offer. Price increases as we ship features.
-            </p>
-          </div>
-
+      <div className="container px-4 md:px-6 max-w-2xl mx-auto">
+        <div className="space-y-8 flex flex-col items-center">
           {/* Pricing card */}
-          <div className="relative">
-            {/* Early Access Badge */}
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-              <div className="bg-accent text-accent-foreground px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wide">
-                Early Access
+          <div className="relative fade-in-up w-full max-w-md">
+            <div className="absolute inset-0 bg-gradient-to-r from-accent/20 to-cyan-400/20 rounded-3xl blur-xl opacity-60"></div>
+            <div className="relative bg-secondary/50 border border-accent/40 rounded-3xl p-8 space-y-6 transition-all duration-300">
+              {/* Title and Badge */}
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold text-foreground">Lifetime License</h2>
+                <p className="text-sm font-semibold text-accent">All Access Forever</p>
               </div>
-            </div>
-            
-            <div className="bg-secondary border border-accent/40 rounded-xl p-12 text-center space-y-8 hover:border-accent/60 transition-colors shadow-lg hover:shadow-xl">
-            <div className="space-y-4">
-              <p className="text-muted-foreground text-sm uppercase tracking-wide">Current Price</p>
-              <div className="flex items-baseline justify-center gap-1">
-                <span className="text-6xl md:text-7xl font-bold text-foreground">$12</span>
-                <span className="text-muted-foreground">/lifetime</span>
-              </div>
-              
-              {/* One Time Payment, Lifetime Access */}
-              <div className="pt-2">
-                <div className="inline-block px-6 py-3 rounded-lg bg-gradient-to-r from-accent/20 via-accent/10 to-accent/20 border border-accent/40 shadow-[0_0_20px_rgba(var(--color-accent),0.15)]">
-                  <p className="text-lg md:text-xl font-bold text-accent">
-                    One Time Payment, Lifetime Access
-                  </p>
+
+              {/* Price Section */}
+              <div className="space-y-2">
+                <div className="flex items-baseline gap-3">
+                  <p className="text-5xl font-bold text-foreground">$12</p>
+                  <p className="text-sm text-muted-foreground">USD / one-time</p>
                 </div>
               </div>
-            </div>
 
-            <div className="flex flex-col md:flex-row gap-8 justify-center">
-              <div className="space-y-3">
-                <p className="font-semibold text-sm text-muted-foreground uppercase">What you get:</p>
-                <ul className="space-y-2 text-left">
-                  <li className="flex items-center gap-2 text-foreground">
-                    <svg className="w-5 h-5 text-accent flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              {/* Features List */}
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.05s' }}>
+                  <span className="w-2 h-2 rounded-full bg-accent flex-shrink-0 mt-2"></span>
+                  <span className="text-sm text-muted-foreground">Windows 10/11</span>
+                </li>
+                <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.1s' }}>
+                  <span className="w-2 h-2 rounded-full bg-accent flex-shrink-0 mt-2"></span>
+                  <span className="text-sm text-muted-foreground">Lifetime license</span>
+                </li>
+                <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.15s' }}>
+                  <span className="w-2 h-2 rounded-full bg-accent flex-shrink-0 mt-2"></span>
+                  <span className="text-sm text-muted-foreground">One-time payment</span>
+                </li>
+                <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.2s' }}>
+                  <span className="w-2 h-2 rounded-full bg-accent flex-shrink-0 mt-2"></span>
+                  <span className="text-sm text-muted-foreground">All future updates included</span>
+                </li>
+                <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.25s' }}>
+                  <span className="w-2 h-2 rounded-full bg-accent flex-shrink-0 mt-2"></span>
+                  <span className="text-sm text-muted-foreground">Unlimited storage</span>
+                </li>
+                <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.3s' }}>
+                  <span className="w-2 h-2 rounded-full bg-accent flex-shrink-0 mt-2"></span>
+                  <span className="text-sm text-muted-foreground">Offline AI processing</span>
+                </li>
+                <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.35s' }}>
+                  <span className="w-2 h-2 rounded-full bg-accent flex-shrink-0 mt-2"></span>
+                  <span className="text-sm text-muted-foreground">Smart semantic search</span>
+                </li>
+              </ul>
+
+              {/* Button */}
+              <button 
+                onClick={handleBuyClick} 
+                disabled={isLoading}
+                className="w-full px-6 py-3 bg-foreground text-background rounded-xl font-semibold hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-2 fade-in-up"
+                style={{ animationDelay: '0.4s' }}
+              >
+                {isLoading ? 'Processing...' : (
+                  <>
+                    Get AltDump
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
-                    Lifetime license
-                  </li>
-                  <li className="flex items-center gap-2 text-foreground">
-                    <svg className="w-5 h-5 text-accent flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    All future updates included
-                  </li>
-                  <li className="flex items-center gap-2 text-foreground">
-                    <svg className="w-5 h-5 text-accent flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    No subscription ever
-                  </li>
-                </ul>
+                  </>
+                )}
+              </button>
+
+              {/* Footer text */}
+              <div className="pt-2 text-center">
+                <p className="text-xs text-muted-foreground">
+                  Secure payments via Dodo Payments
+                </p>
               </div>
 
-              <div className="w-px bg-border hidden md:block"></div>
-
-              <div className="space-y-3">
-                <p className="font-semibold text-sm text-muted-foreground uppercase">Price promise:</p>
-                <div className="space-y-2 text-left">
-                  <p className="text-foreground">
-                    <span className="text-accent">Early: $12</span>
-                    <span className="text-muted-foreground text-sm">(you get this)</span>
-                  </p>
-                  <p className="text-muted-foreground">
-                    Future: $29
-                    <span className="text-xs">(locked in for early buyers)</span>
-                  </p>
-                </div>
-              </div>
+              {error && (
+                <p className="text-sm text-destructive text-center" role="alert">
+                  {error}. Check environment variables.
+                </p>
+              )}
             </div>
-
-            <button 
-              onClick={handleBuyClick} 
-              disabled={isLoading}
-              className="w-full md:w-auto px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all hover:shadow-lg disabled:opacity-50"
-            >
-              {isLoading ? 'Processing...' : 'Buy Early Access Now'}
-            </button>
-
-            {error && (
-              <p className="text-sm text-destructive" role="alert">
-                {error}. Check environment variables.
-              </p>
-            )}
-            </div>
-          </div>
-
-          {/* Benefits callout */}
-          <div className="bg-accent/5 border border-accent/20 rounded-lg p-6 text-center">
-            <p className="text-sm text-foreground">
-              <span className="font-semibold">Limited offer:</span> Early access buyers pay permanently locked price. Buy now before price increases.
-            </p>
           </div>
         </div>
       </div>
