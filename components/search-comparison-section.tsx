@@ -2,64 +2,42 @@
 
 import { useEffect, useState } from 'react'
 
+const ImageIcon = () => (
+  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+  </svg>
+)
+
 const AnimatedImageCard = () => {
   const [animationCycle, setAnimationCycle] = useState(0)
-  const [scanProgress, setScanProgress] = useState(0)
-  const [showQuery, setShowQuery] = useState(false)
+  const [stage, setStage] = useState<'search' | 'typing' | 'scanning' | 'filtered' | 'expanded'>('search')
   const [displayedQuery, setDisplayedQuery] = useState('')
-  const [highlightedText, setHighlightedText] = useState<string[]>([])
-  const [isHovered, setIsHovered] = useState(false)
+  const [selectedImage, setSelectedImage] = useState<number | null>(null)
+  const [scanningIndices, setScanningIndices] = useState<number[]>([0, 1, 2])
 
-  const fullQuery = "2 year warranty"
-  const textElements = [
-    { text: "2 Year Limited Warranty", type: "title", x: 15, y: 20 },
-    { text: "Covers manufacturing defects", type: "body", x: 15, y: 45 },
-    { text: "Valid from purchase date", type: "body", x: 15, y: 65 },
-    { text: "Serial: 8XK2E4591D", type: "serial", x: 15, y: 85 }
+  const fullQuery = "javascript error"
+  const images = [
+    { id: 1, name: 'screenshot_357' },
+    { id: 2, name: 'screenshot_843' },
+    { id: 3, name: 'screenshot_236' }
   ]
 
-  // Main animation loop
+  // Main animation cycle: 13 seconds total
   useEffect(() => {
-    const mainCycle = setInterval(() => {
+    const cycle = setInterval(() => {
       setAnimationCycle(c => c + 1)
-      setScanProgress(0)
-      setShowQuery(false)
+      setStage('search')
       setDisplayedQuery('')
-      setHighlightedText([])
-    }, 8000)
+      setSelectedImage(null)
+      setScanningIndices([0, 1, 2])
+    }, 13000)
 
-    return () => clearInterval(mainCycle)
+    return () => clearInterval(cycle)
   }, [])
 
-  // Scanning line animation
+  // Stage 1: Type search query (0-1.2s)
   useEffect(() => {
-    const scanInterval = setInterval(() => {
-      setScanProgress(p => {
-        if (p >= 100) {
-          clearInterval(scanInterval)
-          return 100
-        }
-        return p + 2
-      })
-    }, 30)
-
-    return () => clearInterval(scanInterval)
-  }, [animationCycle])
-
-  // Query typing animation
-  useEffect(() => {
-    if (scanProgress >= 100) {
-      const typeInterval = setTimeout(() => {
-        setShowQuery(true)
-      }, 300)
-
-      return () => clearTimeout(typeInterval)
-    }
-  }, [scanProgress])
-
-  // Type query
-  useEffect(() => {
-    if (showQuery) {
+    if (stage === 'search' && animationCycle > 0) {
       let index = 0
       const typeInterval = setInterval(() => {
         if (index <= fullQuery.length) {
@@ -67,117 +45,116 @@ const AnimatedImageCard = () => {
           index++
         } else {
           clearInterval(typeInterval)
-          // Highlight matching text
-          setTimeout(() => {
-            setHighlightedText(['2 Year Limited Warranty'])
-          }, 300)
+          setTimeout(() => setStage('scanning'), 200)
         }
-      }, 50)
+      }, 70)
 
       return () => clearInterval(typeInterval)
     }
-  }, [showQuery])
+  }, [stage, animationCycle])
+
+  // Stage 2: Scanning (1.2-3.5s) - pulsing effect on all 3 images
+  useEffect(() => {
+    if (stage === 'scanning') {
+      const scanTimer = setTimeout(() => {
+        setSelectedImage(1) // Select image at index 1
+        setScanningIndices([])
+        setStage('filtered')
+      }, 2300)
+
+      return () => clearTimeout(scanTimer)
+    }
+  }, [stage])
+
+  // Stage 3: Expand selected image (3.5-13s)
+  useEffect(() => {
+    if (stage === 'filtered') {
+      const expandTimer = setTimeout(() => {
+        setStage('expanded')
+      }, 300)
+
+      return () => clearTimeout(expandTimer)
+    }
+  }, [stage])
 
   return (
-    <div
-      className="group relative bg-gradient-to-br from-slate-800 via-slate-800/95 to-slate-900 rounded-2xl overflow-hidden border border-indigo-500/20 h-96 flex flex-col shadow-2xl transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10 hover:scale-102"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Soft glow background */}
-      <div className={`absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-transparent to-indigo-500/5 pointer-events-none transition-opacity duration-500 ${isHovered ? 'opacity-100' : 'opacity-50'}`} />
-
-      {/* Top section: Headline and description */}
-      <div className="relative p-6 border-b border-indigo-500/10 bg-slate-800/30 backdrop-blur-sm">
-        <h3 className="text-lg font-semibold text-white mb-1">Search Inside Images.</h3>
-        <p className="text-xs text-slate-400">AltDump scans, understands, and indexes the actual text inside your photos.</p>
+    <div className="relative bg-gradient-to-br from-slate-800 via-slate-800/95 to-slate-900 rounded-2xl overflow-hidden border border-slate-700/50 h-96 flex flex-col shadow-2xl">
+      {/* Header */}
+      <div className="relative p-6 border-b border-slate-700/30 bg-slate-800/30 backdrop-blur-sm">
+        <h3 className="text-lg font-semibold text-white mb-1">Search naturally. Find instantly.</h3>
+        <p className="text-xs text-slate-400">No file names needed.</p>
       </div>
 
-      {/* Main visual area */}
-      <div className="relative flex-1 p-6 flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-800/50 to-slate-900/50">
-        {/* Mock image with text and scanning line */}
-        <div className="relative w-full max-w-xs h-56 bg-gradient-to-br from-indigo-950/40 to-slate-900/60 rounded-xl border border-indigo-500/20 overflow-hidden shadow-inner">
-          {/* Image content */}
-          <div className="absolute inset-0 p-4 text-left">
-            {textElements.map((el, idx) => {
-              const isHighlighted = highlightedText.includes(el.text)
-              return (
-                <div
-                  key={idx}
-                  className={`absolute text-xs transition-all duration-300 ${
-                    isHighlighted
-                      ? 'text-indigo-300 font-semibold'
-                      : displayedQuery && el.text.toLowerCase().includes(displayedQuery.toLowerCase())
-                      ? 'text-indigo-400 font-medium'
-                      : 'text-slate-400'
-                  }`}
-                  style={{ top: `${el.y}%`, left: `${el.x}%` }}
-                >
-                  <div className={`${isHighlighted ? 'bg-indigo-500/40 px-2 py-1 rounded' : ''}`}>
-                    {el.text}
-                  </div>
+      {/* Search input area */}
+      <div className="relative px-6 pt-6 pb-4">
+        <input
+          type="text"
+          value={displayedQuery}
+          readOnly
+          placeholder="Search inside images..."
+          className="w-full bg-slate-700/40 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600/50"
+        />
+      </div>
+
+      {/* Main content area */}
+      <div className="relative flex-1 px-6 pb-6 flex items-center justify-center overflow-hidden">
+        
+        {/* Stage 1 & 2: 3 Images Grid */}
+        {(stage === 'search' || stage === 'typing' || stage === 'scanning') && (
+          <div className="animate-fade-in flex gap-4 justify-center items-end h-full">
+            {images.map((img, idx) => (
+              <div key={img.id} className="flex flex-col items-center gap-3">
+                <div className={`w-24 h-32 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg border border-slate-600 flex items-center justify-center text-slate-400 transition-all duration-300 ${
+                  scanningIndices.includes(idx) ? 'animate-pulse ring-2 ring-amber-400/50' : ''
+                }`}>
+                  <ImageIcon />
                 </div>
-              )
-            })}
-
-            {/* OCR bounding boxes appear during scan */}
-            {scanProgress > 20 && scanProgress < 100 && textElements.map((el, idx) => (
-              <div
-                key={`box-${idx}`}
-                className="absolute border border-indigo-500/40 rounded pointer-events-none transition-all duration-200"
-                style={{
-                  top: `${el.y - 5}%`,
-                  left: `${el.x - 2}%`,
-                  width: '70px',
-                  height: '16px',
-                  opacity: Math.max(0, 1 - Math.abs(scanProgress - (el.y + 10)) / 30)
-                }}
-              />
+                <p className="text-xs text-slate-400 font-medium text-center">{img.name}</p>
+              </div>
             ))}
-
-            {/* Scanning line animation */}
-            {scanProgress < 100 && (
-              <div
-                className="absolute inset-x-0 h-1 bg-gradient-to-b from-transparent via-indigo-400/60 to-transparent blur-sm transition-all duration-75"
-                style={{
-                  top: `${scanProgress}%`,
-                  boxShadow: '0 0 20px rgba(99, 102, 241, 0.5)'
-                }}
-              />
-            )}
           </div>
+        )}
 
-          {/* Search input overlay - appears after scan */}
-          {showQuery && (
-            <div className="absolute top-3 right-3 left-3 animate-fade-in">
-              <input
-                type="text"
-                value={displayedQuery}
-                readOnly
-                placeholder="Search..."
-                className="w-full bg-slate-900/80 backdrop-blur-sm text-white placeholder-slate-500 px-2 py-1 rounded text-xs border border-indigo-500/40 focus:outline-none focus:border-indigo-500/60"
+        {/* Stage 3 & 4: Single expanded image */}
+        {(stage === 'filtered' || stage === 'expanded') && selectedImage && (
+          <div className={`animate-fade-in flex flex-col items-center gap-4 h-full justify-center w-full max-w-lg transition-all duration-500`}>
+            <div className={`relative bg-white rounded-lg border border-slate-600 overflow-hidden shadow-lg ${stage === 'expanded' ? 'w-80 h-96' : 'w-56 h-72'} transition-all duration-500`}>
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
+                alt="JavaScript error screenshot"
+                className="w-full h-full object-cover"
               />
+              
+              {/* Highlight overlay for "javascript error" - appears in expanded state */}
+              {stage === 'expanded' && (
+                <div className="absolute inset-0 pointer-events-none">
+                  {/* Highlight box around error icon and text */}
+                  <div className="absolute top-6 left-5 w-56 h-12 border-2 border-yellow-400 rounded-lg opacity-80 shadow-lg" style={{ boxShadow: '0 0 20px rgba(250, 204, 21, 0.4)' }} />
+                  {/* Glow effect */}
+                  <div className="absolute top-6 left-5 w-56 h-12 bg-yellow-400/10 rounded-lg animate-pulse" />
+                </div>
+              )}
             </div>
-          )}
-        </div>
+            <p className={`text-slate-200 font-semibold text-center transition-all duration-300 ${stage === 'expanded' ? 'text-base' : 'text-sm'}`}>
+              {images[selectedImage - 1].name}
+            </p>
+          </div>
+        )}
       </div>
-
-      {/* Bottom section: Micro copy and status */}
-      {highlightedText.length > 0 && (
-        <div className="relative px-6 py-4 border-t border-indigo-500/10 bg-slate-800/30 backdrop-blur-sm animate-fade-in">
-          <p className="text-xs text-indigo-300">
-            Found: <span className="font-semibold">{highlightedText[0]}</span>
-          </p>
-        </div>
-      )}
 
       <style jsx>{`
-        @keyframes glow {
-          0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
-          50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.5); }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(8px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
-        .group:hover {
-          animation: glow 2s ease-in-out infinite;
+        .animate-fade-in {
+          animation: fadeIn 0.5s ease-out;
         }
       `}</style>
     </div>
