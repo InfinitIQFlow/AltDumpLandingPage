@@ -239,57 +239,6 @@ const AnimatedVideoCard = () => {
     </div>
   )
 }
-      }, 50)
-    }, 5200)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  return (
-    <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden border border-slate-700/50 h-96 flex flex-col shadow-2xl">
-      <div className="p-6 border-b border-slate-700/50 bg-slate-800/50 backdrop-blur">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-green-500' : 'bg-amber-500 animate-pulse'}`} />
-            <span className="text-xs font-medium text-slate-400">
-              {showResults ? 'Frames Found' : 'Scanning video frames...'}
-            </span>
-          </div>
-        </div>
-        <input
-          type="text"
-          value={displayedText}
-          readOnly
-          placeholder="Search inside videos..."
-          className="w-full bg-slate-700/50 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600"
-        />
-      </div>
-
-      <div className="flex-1 p-6 flex items-center justify-center">
-        {showResults && (
-          <div className="animate-fade-in space-y-4 w-full">
-            <div className="text-xs text-slate-400 font-medium">Matching Frames (2 found):</div>
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { emoji: '🎉', text: 'Laughing faces & party setup' },
-                { emoji: '🎂', text: 'Birthday cake & celebration' }
-              ].map((frame, i) => (
-                <div
-                  key={i}
-                  className="bg-orange-900/20 border-2 border-orange-500/50 rounded-lg p-4 text-center space-y-2 hover:border-orange-400 transition-all"
-                >
-                  <div className="text-4xl">{frame.emoji}</div>
-                  <p className="text-xs text-orange-200 font-medium">{frame.text}</p>
-                  <p className="text-xs text-slate-400">00:45</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  )
-}
 
 const AnimatedPDFCard = () => {
   const [displayedText, setDisplayedText] = useState('')
