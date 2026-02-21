@@ -77,6 +77,18 @@ const DropZone = ({ showDragging = false, showSaving = false }) => (
         </p>
         <p className="text-xs text-slate-400">PDFs, images, documents—anything goes</p>
       </div>
+
+      {/* Dragging PDF visual */}
+      {showDragging && (
+        <div className="absolute top-8 right-8 z-20 animate-bounce">
+          <div className="flex items-center gap-2 px-3 py-2 bg-slate-800/80 border border-emerald-400/50 rounded-lg backdrop-blur-sm shadow-lg">
+            <svg className="w-4 h-4 text-red-400" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
+            </svg>
+            <span className="text-xs font-medium text-slate-200">report.pdf</span>
+          </div>
+        </div>
+      )}
     </div>
 
     {/* Saving overlay */}
@@ -91,7 +103,7 @@ const DropZone = ({ showDragging = false, showSaving = false }) => (
   </div>
 )
 
-const SearchFlow = ({ showSearch = false, searchValue = '' }) => (
+const SearchFlow = ({ showSearch = false, searchValue = '', showCursor = false }) => (
   <div className="relative w-96 bg-gradient-to-b from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl">
     {/* Background with gradient */}
     <div className="absolute inset-0 bg-gradient-to-b from-slate-800/20 to-slate-950" />
@@ -103,13 +115,16 @@ const SearchFlow = ({ showSearch = false, searchValue = '' }) => (
           <svg className="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
-          <input
-            type="text"
-            value={searchValue}
-            readOnly
-            placeholder="Type what you remember..."
-            className="flex-1 bg-transparent text-slate-300 text-sm outline-none placeholder-slate-500"
-          />
+          <div className="flex-1 text-slate-300 text-sm outline-none">
+            {searchValue ? (
+              <span>
+                {searchValue}
+                <span className={`transition-opacity ml-0.5 ${showCursor ? 'opacity-100' : 'opacity-0'}`}>|</span>
+              </span>
+            ) : (
+              <span className="text-slate-500">Type what you remember...</span>
+            )}
+          </div>
         </div>
       </div>
 
@@ -137,8 +152,9 @@ const SearchFlow = ({ showSearch = false, searchValue = '' }) => (
 )
 
 const CaptureWorkflowDemo = () => {
-  const [stage, setStage] = useState<'alt-d' | 'typing' | 'save' | 'alt-d-drop' | 'drop-pdf' | 'save-drop' | 'ctrl-d' | 'search' | 'ctrl-d-idle'>('alt-d')
+  const [stage, setStage] = useState<'alt-d' | 'typing' | 'save' | 'alt-d-drop' | 'drop-pdf' | 'save-drop' | 'ctrl-d' | 'search-typing' | 'search-results' | 'ctrl-d-idle'>('alt-d')
   const [showTextCursor, setShowTextCursor] = useState(false)
+  const [searchText, setSearchText] = useState('')
 
   useEffect(() => {
     const timeline: Array<{ stage: typeof stage; delay: number }> = [
@@ -149,7 +165,8 @@ const CaptureWorkflowDemo = () => {
       { stage: 'drop-pdf', delay: 1500 },
       { stage: 'save-drop', delay: 1500 },
       { stage: 'ctrl-d', delay: 1500 },
-      { stage: 'search', delay: 2000 },
+      { stage: 'search-typing', delay: 1800 },
+      { stage: 'search-results', delay: 2000 },
       { stage: 'ctrl-d-idle', delay: 1000 },
     ]
 
@@ -161,15 +178,42 @@ const CaptureWorkflowDemo = () => {
     let currentIndex = 0
     const interval = setInterval(() => {
       setStage(timeline[currentIndex % timeline.length].stage)
+      setSearchText('')
       currentIndex++
     }, totalDuration / timeline.length)
 
     return () => clearInterval(interval)
   }, [])
 
-  // Cursor blinking
+  // Cursor blinking for capture
   useEffect(() => {
     if (stage === 'typing') {
+      const blink = setInterval(() => setShowTextCursor(prev => !prev), 500)
+      return () => clearInterval(blink)
+    }
+  }, [stage])
+
+  // Typing animation for search
+  useEffect(() => {
+    if (stage === 'search-typing') {
+      setSearchText('')
+      const fullText = 'project deadline'
+      let index = 0
+      const typeInterval = setInterval(() => {
+        if (index <= fullText.length) {
+          setSearchText(fullText.slice(0, index))
+          index++
+        } else {
+          clearInterval(typeInterval)
+        }
+      }, 80)
+      return () => clearInterval(typeInterval)
+    }
+  }, [stage])
+
+  // Search cursor blinking
+  useEffect(() => {
+    if (stage === 'search-typing') {
       const blink = setInterval(() => setShowTextCursor(prev => !prev), 500)
       return () => clearInterval(blink)
     }
@@ -215,14 +259,15 @@ const CaptureWorkflowDemo = () => {
         )}
 
         {/* Ctrl+Shift+D Search */}
-        {(stage === 'ctrl-d' || stage === 'search' || stage === 'ctrl-d-idle') && (
+        {(stage === 'ctrl-d' || stage === 'search-typing' || stage === 'search-results' || stage === 'ctrl-d-idle') && (
           <div className="w-full flex flex-col items-center gap-6 animate-fade-in">
             <div className="px-4 py-1.5 bg-blue-500/20 border border-blue-400/60 rounded-full">
               <p className="text-xs font-semibold text-blue-300">Press Ctrl + Shift + D</p>
             </div>
             <SearchFlow
-              showSearch={stage === 'search'}
-              searchValue={stage === 'search' || stage === 'ctrl-d-idle' ? 'project deadline' : ''}
+              showSearch={stage === 'search-results'}
+              searchValue={searchText || (stage === 'ctrl-d-idle' ? 'project deadline' : '')}
+              showCursor={showTextCursor && (stage === 'search-typing')}
             />
           </div>
         )}
