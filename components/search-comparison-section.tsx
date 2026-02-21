@@ -456,14 +456,47 @@ const AnimatedPDFCard = () => {
   )
 }
 
+const FileIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+  </svg>
+)
+
 const AnimatedDataCard = () => {
   const [displayedText, setDisplayedText] = useState('')
-  const [showResults, setShowResults] = useState(false)
-  const fullQuery = "Q sales data"
+  const [stage, setStage] = useState<'initial' | 'typing' | 'expanding' | 'table' | 'highlighting'>('initial')
+  const [selectedFile, setSelectedFile] = useState<number | null>(null)
+  const [highlightedRows, setHighlightedRows] = useState<number[]>([])
 
+  const fullQuery = "customers from california with revenue over 5000"
+  const files = [
+    { id: 1, name: 'sales_2024.csv' },
+    { id: 2, name: 'customer_data.csv' },
+    { id: 3, name: 'inventory_export.csv' }
+  ]
+
+  const tableData = [
+    { name: 'Alex Chen', state: 'Texas', revenue: 3200, match: false },
+    { name: 'Maya Singh', state: 'California', revenue: 7800, match: true },
+    { name: 'David Kim', state: 'California', revenue: 5400, match: true },
+    { name: 'John Park', state: 'Nevada', revenue: 2900, match: false }
+  ]
+
+  // Main animation cycle
   useEffect(() => {
-    const interval = setInterval(() => {
-      setShowResults(false)
+    const cycle = setInterval(() => {
+      setStage('initial')
+      setDisplayedText('')
+      setSelectedFile(null)
+      setHighlightedRows([])
+    }, 20000)
+
+    return () => clearInterval(cycle)
+  }, [])
+
+  // Stage 1: Type search query (0-2.5s)
+  useEffect(() => {
+    if (stage === 'initial') {
       let index = 0
       const typeInterval = setInterval(() => {
         if (index <= fullQuery.length) {
@@ -471,26 +504,40 @@ const AnimatedDataCard = () => {
           index++
         } else {
           clearInterval(typeInterval)
-          setShowResults(true)
-          setTimeout(() => {
-            setDisplayedText('')
-            setShowResults(false)
-          }, 3000)
+          setTimeout(() => setStage('expanding'), 300)
         }
-      }, 50)
-    }, 5000)
+      }, 35)
 
-    return () => clearInterval(interval)
-  }, [])
+      return () => clearInterval(typeInterval)
+    }
+  }, [stage])
+
+  // Stage 2: Expand selected file (2.5-3.5s)
+  useEffect(() => {
+    if (stage === 'expanding') {
+      setSelectedFile(1) // customer_data.csv
+      setTimeout(() => setStage('table'), 1000)
+    }
+  }, [stage])
+
+  // Stage 3: Show table and animate highlighting (3.5-5.5s)
+  useEffect(() => {
+    if (stage === 'table') {
+      setTimeout(() => {
+        setHighlightedRows([1, 2]) // Maya Singh and David Kim
+        setStage('highlighting')
+      }, 500)
+    }
+  }, [stage])
 
   return (
     <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
       <div className="p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+            <div className={`w-2 h-2 rounded-full transition-colors ${highlightedRows.length > 0 ? 'bg-emerald-500' : stage === 'typing' || stage === 'initial' ? 'bg-amber-500' : 'bg-slate-500'}`} />
             <span className="text-xs font-medium text-slate-400">
-              {showResults ? 'Rows highlighted' : 'Scanning spreadsheet...'}
+              {highlightedRows.length > 0 ? 'Query matched' : stage === 'expanding' ? 'Opening file...' : 'Ready to search'}
             </span>
           </div>
         </div>
@@ -499,34 +546,116 @@ const AnimatedDataCard = () => {
             type="text"
             value={displayedText}
             readOnly
-            placeholder="Search spreadsheet data..."
+            placeholder="Search inside spreadsheets..."
             className="w-full bg-slate-800/40 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600 transition-all duration-300 group-hover:border-slate-500 group-hover:bg-slate-800/60"
           />
         </div>
       </div>
 
-      <div className="flex-1 p-8 overflow-y-auto">
-        {showResults && (
-          <div className="animate-fade-in space-y-3">
-            <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide mb-4">4 Rows Matched:</div>
-            {[
-              { row: 3, q: 'Q1', data: 'sales data', value: '12,500' },
-              { row: 7, q: 'Q2', data: 'sales data', value: '15,200' },
-              { row: 11, q: 'Q3', data: 'sales data', value: '18,900' },
-              { row: 15, q: 'Q4', data: 'sales data', value: '22,100' }
-            ].map((item, i) => (
-              <div key={i} className="flex items-center gap-3 px-4 py-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg hover:bg-emerald-500/20 hover:border-emerald-500/50 transition-all duration-300">
-                <span className="text-slate-400 text-xs min-w-fit font-medium">Row {item.row}</span>
-                <span className="text-slate-300 text-sm flex-1">
-                  <span className="font-bold text-emerald-400">{item.q}</span>
-                  {' '}{item.data}
-                </span>
-                <span className="text-emerald-400 font-bold text-sm">${item.value}</span>
+      <div className="flex-1 p-8 overflow-y-auto flex items-center justify-center">
+        {/* Initial state: Show 3 file cards */}
+        {(stage === 'initial' || stage === 'typing') && (
+          <div className="flex gap-6 justify-center items-center h-full">
+            {files.map((file, idx) => (
+              <div key={file.id} className="flex flex-col items-center gap-3">
+                <div className="w-24 h-32 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg border border-slate-600 flex flex-col items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300">
+                  <div className="text-slate-400">
+                    <FileIcon />
+                  </div>
+                  <p className="text-xs text-slate-400 font-medium text-center px-2">CSV</p>
+                </div>
+                <p className="text-xs text-slate-300 font-medium text-center max-w-24">{file.name}</p>
               </div>
             ))}
           </div>
         )}
+
+        {/* Expanding and table state: Show selected file with table */}
+        {(stage === 'expanding' || stage === 'table' || stage === 'highlighting') && selectedFile !== null && (
+          <div className="animate-fade-in w-full max-w-2xl">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-16 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg border border-slate-600 flex items-center justify-center ring-2 ring-indigo-500/50">
+                  <div className="text-slate-300 text-sm">
+                    <FileIcon />
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm text-slate-200 font-semibold">{files[selectedFile].name}</p>
+                  {highlightedRows.length > 0 && (
+                    <p className="text-xs text-emerald-400 font-medium mt-1">{highlightedRows.length} matches</p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* CSV Table */}
+            <div className="bg-slate-800/30 rounded-lg border border-slate-700 overflow-hidden">
+              {/* Table Header */}
+              <div className="grid grid-cols-3 gap-4 p-4 bg-slate-800/60 border-b border-slate-700">
+                <p className="text-xs font-semibold text-slate-300">Name</p>
+                <p className="text-xs font-semibold text-slate-300">State</p>
+                <p className="text-xs font-semibold text-slate-300">Revenue</p>
+              </div>
+
+              {/* Table Rows */}
+              <div className="divide-y divide-slate-700">
+                {tableData.map((row, idx) => {
+                  const isHighlighted = highlightedRows.includes(idx)
+                  const isVisible = highlightedRows.length === 0 || isHighlighted
+
+                  return (
+                    <div
+                      key={idx}
+                      className={`grid grid-cols-3 gap-4 p-4 transition-all duration-500 ${
+                        isHighlighted
+                          ? 'bg-indigo-500/15 border-l-2 border-indigo-500'
+                          : isVisible
+                          ? 'opacity-100'
+                          : 'opacity-40'
+                      }`}
+                    >
+                      <p className={`text-sm ${isHighlighted ? 'text-white font-semibold' : 'text-slate-300'}`}>
+                        {row.name}
+                      </p>
+                      <p className={`text-sm ${isHighlighted ? 'text-indigo-200 font-medium' : 'text-slate-400'}`}>
+                        {row.state}
+                      </p>
+                      <p
+                        className={`text-sm font-semibold ${
+                          isHighlighted
+                            ? 'text-emerald-400'
+                            : row.revenue > 5000
+                            ? 'text-emerald-400/60'
+                            : 'text-slate-400'
+                        } ${isHighlighted && row.revenue > 5000 ? 'drop-shadow-lg' : ''}`}
+                      >
+                        ${row.revenue.toLocaleString()}
+                      </p>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(8px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.5s ease-out;
+        }
+      `}</style>
     </div>
   )
 }
