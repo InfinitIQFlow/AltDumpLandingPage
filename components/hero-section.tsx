@@ -43,8 +43,15 @@ export default function HeroSection() {
             </p>
           </div>
 
+          {/* Highlighted Tagline */}
+          <div className="relative fade-in-up" style={{ animationDelay: '0.08s' }}>
+            <p className="text-xl md:text-2xl font-bold text-primary glow-text px-6 py-2 rounded-lg">
+              Offline, private, and instant.
+            </p>
+          </div>
+
           {/* CTA Button */}
-          <div className="flex flex-col items-center gap-3 pt-2 fade-in-up" style={{ animationDelay: '0.1s' }}>
+          <div className="flex flex-col items-center gap-3 pt-2 fade-in-up" style={{ animationDelay: '0.12s' }}>
             <button 
               onClick={handleBuyClick} 
               disabled={isLoading}
