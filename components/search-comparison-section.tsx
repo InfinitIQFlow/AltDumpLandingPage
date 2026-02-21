@@ -990,13 +990,13 @@ export default function SearchComparisonSection() {
 
             {/* Video */}
             <div className="space-y-4">
-              <AnimatedVideoCard />
               <div className="space-y-2">
                 <h3 className="font-bold text-foreground">Video</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   Search your videos by describing what's happening — scenes, objects, moments.
                 </p>
               </div>
+              <AnimatedVideoCard />
             </div>
 
             {/* PDFs & Docs */}
