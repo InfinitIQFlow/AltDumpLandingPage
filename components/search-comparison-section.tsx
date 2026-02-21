@@ -85,7 +85,7 @@ const AnimatedImageCard = () => {
   }, [stage])
 
   return (
-    <div className="relative bg-gradient-to-br from-secondary/60 to-background backdrop-blur-sm rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[600px] flex flex-col shadow-lg hover:shadow-2xl hover:border-accent/40 transition-all duration-300 smooth-glow">
+    <div className="relative bg-gradient-to-br from-secondary/60 to-background backdrop-blur-sm rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[750px] flex flex-col shadow-lg hover:shadow-2xl hover:border-accent/40 transition-all duration-300 smooth-glow">
       {/* Card header with copy */}
       <div className="relative p-6 border-b border-border/50 bg-gradient-to-r from-secondary/40 to-background/40 backdrop-blur-sm">
         <h3 className="text-base font-semibold text-foreground mb-1">Images</h3>
@@ -114,7 +114,7 @@ const AnimatedImageCard = () => {
             {images.map((img, idx) => (
               <div key={img.id} className="flex flex-col items-center gap-3 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
                 {/* Image container - larger */}
-                <div className="relative w-32 h-32 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center text-muted-foreground overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
+                <div className="relative w-40 h-40 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center text-muted-foreground overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
                   <ImageIcon />
                   
                   {/* Realistic glowing scan line - on top, sharp */}
@@ -140,7 +140,7 @@ const AnimatedImageCard = () => {
         {stage === 'expanded' && selectedImage !== null && (
           <div className="w-full h-full flex flex-col items-center justify-center gap-4 animate-expand">
             <div className="relative rounded-xl overflow-hidden" style={{ boxShadow: '0 0 20px rgba(34, 211, 238, 0.4)' }}>
-              <div className="relative w-96 h-96 bg-secondary/40 rounded-xl border border-accent/40 flex items-center justify-center overflow-hidden backdrop-blur-sm">
+              <div className="relative w-[500px] h-[500px] bg-secondary/40 rounded-xl border border-accent/40 flex items-center justify-center overflow-hidden backdrop-blur-sm">
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
                   alt="JavaScript error screenshot"
@@ -272,7 +272,7 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
   }, [stage])
 
   return (
-    <div className="bg-gradient-to-br from-secondary/60 to-background rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[600px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300 smooth-glow hover:shadow-accent/20">
+    <div className="bg-gradient-to-br from-secondary/60 to-background rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[750px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300 smooth-glow hover:shadow-accent/20">
       <div className="p-6 border-b border-border/50 bg-gradient-to-r from-secondary/40 to-background/40 backdrop-blur-sm">
         <div className="space-y-2 mb-4">
           <h3 className="font-bold text-foreground">{title}</h3>
@@ -298,7 +298,7 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
             {videos.map((video, idx) => (
               <div key={video.id} className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
                 {/* Video thumbnail */}
-                <div className="relative w-56 h-40 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
+                <div className="relative w-72 h-52 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
                   {/* Thin horizontal scan clips moving horizontally - scanning video frames */}
                   {stage === 'scanning' && (
                     <div className="absolute inset-0 pointer-events-none">
@@ -341,7 +341,7 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
         {stage === 'expanded' && selectedVideo !== null && (
           <div className="animate-expand flex flex-col items-center justify-center gap-4 h-full w-full">
             <div className="relative rounded-xl overflow-hidden" style={{ boxShadow: '0 0 20px rgba(34, 211, 238, 0.4)' }}>
-              <div className="relative w-96 h-72 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/40 flex items-center justify-center overflow-hidden backdrop-blur-sm">
+              <div className="relative w-[600px] h-[450px] bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/40 flex items-center justify-center overflow-hidden backdrop-blur-sm">
               {/* Video visual background */}
               <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-secondary/50 to-background/80" />
               
@@ -443,7 +443,7 @@ const AnimatedPDFCard = () => {
   }, [])
 
   return (
-    <div className="bg-gradient-to-br from-secondary/60 to-background rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[600px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300 smooth-glow hover:shadow-accent/20">
+    <div className="bg-gradient-to-br from-secondary/60 to-background rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[750px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300 smooth-glow hover:shadow-accent/20">
       <div className="p-6 border-b border-border/50 bg-gradient-to-r from-secondary/40 to-background/40 backdrop-blur-sm">
         <div className="space-y-2 mb-4">
           <h3 className="font-bold text-foreground">PDFs & Docs</h3>
@@ -584,7 +584,7 @@ const AnimatedDataCard = () => {
   }, [stage, highlightedRows])
 
   return (
-    <div className="relative bg-gradient-to-br from-secondary/60 to-background backdrop-blur-sm rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[600px] flex flex-col shadow-lg hover:shadow-2xl hover:border-accent/40 transition-all duration-300 smooth-glow">
+    <div className="relative bg-gradient-to-br from-secondary/60 to-background backdrop-blur-sm rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[750px] flex flex-col shadow-lg hover:shadow-2xl hover:border-accent/40 transition-all duration-300 smooth-glow">
       <div className="p-6 border-b border-border/50 bg-gradient-to-r from-secondary/40 to-background/40 backdrop-blur-sm">
         <div className="space-y-2 mb-4">
           <h3 className="font-bold text-foreground">Data Files</h3>
@@ -609,7 +609,7 @@ const AnimatedDataCard = () => {
           <div className="flex gap-8 justify-center items-center h-full transition-opacity duration-500">
             {files.map((file, idx) => (
               <div key={file.id} className="flex flex-col items-center gap-3 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
-                <div className="w-28 h-36 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex flex-col items-center justify-center gap-2 shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300">
+                <div className="w-36 h-44 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex flex-col items-center justify-center gap-2 shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300">
                   <div className="text-foreground">
                     <FileIcon />
                   </div>
@@ -626,7 +626,7 @@ const AnimatedDataCard = () => {
           <div className="animate-expand w-full max-w-3xl">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-18 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border-2 border-accent/60 flex items-center justify-center shadow-lg backdrop-blur-sm" style={{ boxShadow: '0 0 16px rgba(34, 211, 238, 0.3)' }}>
+                <div className="w-18 h-24 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border-2 border-accent/60 flex items-center justify-center shadow-lg backdrop-blur-sm" style={{ boxShadow: '0 0 16px rgba(34, 211, 238, 0.3)' }}>
                   <div className="text-accent text-lg">
                     <FileIcon />
                   </div>
@@ -739,7 +739,7 @@ const AnimatedNoteCard = () => {
   }, [])
 
   return (
-    <div className="bg-gradient-to-br from-secondary/60 to-background rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[600px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300 smooth-glow hover:shadow-accent/20">
+    <div className="bg-gradient-to-br from-secondary/60 to-background rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[750px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300 smooth-glow hover:shadow-accent/20">
       <div className="p-6 border-b border-border/50 bg-gradient-to-r from-secondary/40 to-background/40 backdrop-blur-sm">
         <div className="space-y-2 mb-4">
           <h3 className="font-bold text-foreground">Notes</h3>
@@ -864,7 +864,7 @@ export default pool`
   }, [stage])
 
   return (
-    <div className="relative bg-gradient-to-br from-secondary/60 to-background backdrop-blur-sm rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[600px] flex flex-col shadow-lg hover:shadow-2xl hover:border-accent/40 transition-all duration-300 smooth-glow">
+    <div className="relative bg-gradient-to-br from-secondary/60 to-background backdrop-blur-sm rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[750px] flex flex-col shadow-lg hover:shadow-2xl hover:border-accent/40 transition-all duration-300 smooth-glow">
       <div className="p-6 border-b border-border/50 bg-gradient-to-r from-secondary/40 to-background/40 backdrop-blur-sm">
         <div className="space-y-2 mb-4">
           <h3 className="font-bold text-foreground">Code</h3>
@@ -889,7 +889,7 @@ export default pool`
           <div className="flex gap-12 justify-center items-center h-full transition-opacity duration-500">
             {codeFiles.map((file, idx) => (
               <div key={file.id} className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
-                <div className="w-32 h-40 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex flex-col items-center justify-center gap-3 shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300">
+                <div className="w-40 h-48 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex flex-col items-center justify-center gap-3 shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300">
                   <div className="w-full h-full flex flex-col items-center justify-center gap-2">
                     <div className="text-foreground">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -910,7 +910,7 @@ export default pool`
           <div className="animate-expand w-full max-w-2xl">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-16 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border-2 border-accent/60 flex items-center justify-center shadow-lg backdrop-blur-sm" style={{ boxShadow: '0 0 16px rgba(34, 211, 238, 0.3)' }}>
+                <div className="w-16 h-20 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border-2 border-accent/60 flex items-center justify-center shadow-lg backdrop-blur-sm" style={{ boxShadow: '0 0 16px rgba(34, 211, 238, 0.3)' }}>
                   <div className="text-accent text-sm">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.321 3.646l2.031 2.031a2 2 0 010 2.828l-8.486 8.486a2 2 0 01-2.828 0l-2.031-2.031a2 2 0 010-2.828l8.486-8.486a2 2 0 012.828 0z" />
