@@ -140,7 +140,7 @@ const AnimatedImageCard = () => {
         {stage === 'expanded' && selectedImage !== null && (
           <div className="w-full h-full flex flex-col items-center justify-center gap-4 animate-expand">
             <div className="relative rounded-xl overflow-hidden">
-              <div className="relative w-[500px] h-[500px] bg-secondary/40 rounded-xl flex items-center justify-center overflow-hidden backdrop-blur-sm">
+              <div className="relative w-[500px] h-[500px] rounded-xl flex items-center justify-center overflow-hidden">
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
                   alt="JavaScript error screenshot"
