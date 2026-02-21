@@ -24,13 +24,13 @@ export default function PricingSection() {
           </div>
 
           {/* Pricing card */}
-          <div className="relative fade-in-up">
-            <div className="bg-gradient-to-br from-secondary/80 to-secondary/40 border border-accent/30 rounded-2xl p-12 text-center space-y-8 smooth-glow transition-all duration-300 hover:border-accent/50 hover:shadow-2xl hover:shadow-accent/20">
+          <div className="relative fade-in-up flex justify-center">
+            <div className="bg-gradient-to-br from-secondary/80 to-secondary/40 border border-accent/30 rounded-2xl p-12 text-center space-y-8 smooth-glow transition-all duration-300 hover:border-accent/50 hover:shadow-2xl hover:shadow-accent/20 max-w-sm">
               {/* Price */}
-              <div className="space-y-4">
+              <div className="space-y-2">
                 <div className="inline-block">
                   <p className="text-5xl md:text-6xl font-bold text-accent">$12</p>
-                  <p className="text-sm text-muted-foreground mt-1">One-time payment</p>
+                  <p className="text-xs text-muted-foreground mt-2">One-time payment, Lifetime access</p>
                 </div>
               </div>
 
@@ -82,20 +82,20 @@ export default function PricingSection() {
                 </ul>
               </div>
 
-              {/* Security note */}
-              <div className="pt-4 border-t border-border/50">
-                <p className="text-xs text-muted-foreground">
-                  Secure payments
-                </p>
-              </div>
-
               <button 
                 onClick={handleBuyClick} 
                 disabled={isLoading}
-                className="w-full px-8 py-3 bg-accent text-accent-foreground rounded-xl font-semibold hover:shadow-lg hover:shadow-accent/30 transition-all duration-300 transform hover:scale-105 disabled:opacity-50"
+                className="px-8 py-3 bg-accent text-accent-foreground rounded-xl font-semibold hover:shadow-lg hover:shadow-accent/30 transition-all duration-300 transform hover:scale-105 disabled:opacity-50"
               >
                 {isLoading ? 'Processing...' : 'Get AltDump'}
               </button>
+
+              {/* Security note */}
+              <div className="pt-2">
+                <p className="text-xs text-muted-foreground">
+                  Secure payments via Dodo Payments
+                </p>
+              </div>
 
               {error && (
                 <p className="text-sm text-destructive" role="alert">
