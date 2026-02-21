@@ -39,7 +39,7 @@ export default function HeroSection() {
               Never lose a file, screenshot, or idea again.
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Search anything instantly across all your files, images, videos, and notes. Powered by AI. Completely offline. 100% private.
+              Save files, screenshots, videos, code, and ideas into your private second brain — and search them instantly with semantic search, not filenames.
             </p>
           </div>
 
