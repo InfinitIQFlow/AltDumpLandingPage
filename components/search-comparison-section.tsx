@@ -299,17 +299,27 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
               <div key={video.id} className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
                 {/* Video thumbnail */}
                 <div className="relative w-56 h-40 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
-                  {/* Realistic glowing scan line - scanning videos */}
+                  {/* Horizontal scan lines moving top to bottom - scanning video frames */}
                   {stage === 'scanning' && (
-                    <div 
-                      className="absolute inset-y-0 w-1 bg-gradient-to-r from-transparent via-accent to-transparent"
-                      style={{
-                        left: `${scanProgress[idx]}%`,
-                        opacity: 0.9,
-                        boxShadow: '0 0 16px rgba(34, 211, 238, 0.8), inset -4px 0 8px rgba(34, 211, 238, 0.5)',
-                        zIndex: 10
-                      }}
-                    />
+                    <>
+                      <div 
+                        className="absolute inset-x-0 h-2 bg-gradient-to-b from-transparent via-accent to-transparent"
+                        style={{
+                          top: `${scanProgress[idx]}%`,
+                          opacity: 0.9,
+                          boxShadow: '0 0 12px rgba(34, 211, 238, 0.8)',
+                          zIndex: 10
+                        }}
+                      />
+                      <div 
+                        className="absolute inset-x-0 h-1 bg-accent"
+                        style={{
+                          top: `${scanProgress[idx]}%`,
+                          opacity: 0.5,
+                          zIndex: 9
+                        }}
+                      />
+                    </>
                   )}
                 </div>
 
