@@ -42,13 +42,19 @@ export default function HeroSection() {
             <button 
               onClick={handleBuyClick} 
               disabled={isLoading}
-              className="px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all disabled:opacity-50 flex items-center gap-3 glow-box"
+              className="relative px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold transition-all disabled:opacity-50 flex items-center gap-3 group overflow-hidden"
             >
-              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" strokeWidth="2"/>
-                <path d="M9 9h6M12 6v6M9 15h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-              Get AltDump
+              {/* Glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute -inset-1 bg-gradient-to-r from-primary/80 to-primary/40 rounded-lg blur opacity-75 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+              
+              <span className="relative flex items-center gap-3">
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" strokeWidth="2"/>
+                  <path d="M9 9h6M12 6v6M9 15h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+                Get AltDump
+              </span>
             </button>
           </div>
         </div>

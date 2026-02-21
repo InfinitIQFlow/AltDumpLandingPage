@@ -239,9 +239,13 @@ const CaptureWorkflowDemo = () => {
           index++
         } else {
           clearInterval(typeInterval)
+          // Keep text visible after typing
         }
       }, 80)
       return () => clearInterval(typeInterval)
+    } else if (stage === 'search-results' || stage === 'ctrl-d-idle') {
+      // Keep search text visible in results stage
+      setSearchText('what was tomorrow')
     }
   }, [stage])
 
