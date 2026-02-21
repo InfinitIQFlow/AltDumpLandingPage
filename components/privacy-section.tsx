@@ -57,14 +57,35 @@ export default function PrivacySection() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Left: Visual element - Lock/Security illustration */}
             <div className="relative h-80 md:h-96 flex items-center justify-center order-last lg:order-first">
+              <style>{`
+                @keyframes orbit-glow {
+                  0% { transform: rotate(0deg); }
+                  100% { transform: rotate(360deg); }
+                }
+                @keyframes pulse-glow {
+                  0%, 100% { opacity: 0.4; }
+                  50% { opacity: 1; }
+                }
+                .protection-glow {
+                  animation: orbit-glow 6s linear infinite;
+                }
+                .pulse-protection {
+                  animation: pulse-glow 3s ease-in-out infinite;
+                }
+              `}</style>
               <div className="relative w-64 h-64 flex items-center justify-center">
-                {/* Animated glow background */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-teal-500/10 via-transparent to-emerald-500/10 blur-2xl animate-pulse" />
+                {/* Rotating orbit glow */}
+                <div className="protection-glow absolute inset-0">
+                  <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-teal-500 border-r-teal-500/70 border-b-transparent border-l-teal-500/30 shadow-2xl shadow-teal-500/40" />
+                </div>
+
+                {/* Animated pulsing glow background */}
+                <div className="pulse-protection absolute inset-0 rounded-full bg-gradient-to-br from-teal-500/15 via-transparent to-emerald-500/15 blur-3xl" />
                 
                 {/* Concentric rings */}
-                <div className="absolute inset-0 rounded-full border border-teal-500/20" />
-                <div className="absolute inset-8 rounded-full border border-teal-500/15" />
-                <div className="absolute inset-16 rounded-full border border-teal-500/10" />
+                <div className="absolute inset-0 rounded-full border border-teal-500/25" />
+                <div className="absolute inset-8 rounded-full border border-teal-500/20" />
+                <div className="absolute inset-16 rounded-full border border-teal-500/15" />
 
                 {/* Center lock icon */}
                 <div className="relative z-10 flex flex-col items-center gap-6">
@@ -111,54 +132,6 @@ export default function PrivacySection() {
                   Offline by default.
                   <span className="block text-teal-400 mt-2 text-xl">That's truly powerful.</span>
                 </p>
-              </div>
-            </div>
-          </div>
-
-          {/* How It Works section */}
-          <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl border border-slate-700/50 backdrop-blur-sm p-8 md:p-12">
-            <div className="space-y-12">
-              <div className="text-center space-y-3">
-                <h3 className="text-3xl md:text-4xl font-bold text-slate-100">How AltDump Works</h3>
-                <p className="text-slate-400 max-w-2xl mx-auto">All operations happen on your device. No external services. No data leaks. Complete transparency.</p>
-              </div>
-
-              {/* Process steps */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
-                {howItWorks.map((item, idx) => (
-                  <div key={idx} className="relative bg-slate-800/40 border border-slate-700/50 rounded-xl p-6 hover:bg-slate-800/60 hover:border-slate-600/70 transition-all duration-300 group">
-                    {/* Step number background */}
-                    <div className="absolute -top-4 -right-4 w-10 h-10 bg-gradient-to-br from-teal-500/20 to-emerald-500/20 rounded-full flex items-center justify-center border border-teal-500/30 group-hover:shadow-lg group-hover:shadow-teal-500/20 transition-all duration-300">
-                      <span className="text-sm font-bold text-teal-400">{idx + 1}</span>
-                    </div>
-
-                    <div className="space-y-3">
-                      <p className="text-slate-200 font-semibold text-lg">{item.step}</p>
-                      <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Connection visualization */}
-              <div className="mt-8 pt-8 border-t border-slate-700/30 flex items-center justify-center">
-                <div className="inline-block">
-                  <p className="text-xs text-slate-500 uppercase tracking-widest font-semibold text-center mb-4">Your Device</p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-lg flex items-center justify-center text-slate-300 border border-slate-600">
-                      <DatabaseIcon />
-                    </div>
-                    <div className="flex gap-1">
-                      {[0, 1, 2].map((i) => (
-                        <div key={i} className="w-1.5 h-1.5 bg-teal-500/50 rounded-full" />
-                      ))}
-                    </div>
-                    <div className="w-12 h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-lg flex items-center justify-center text-slate-300 border border-slate-600 opacity-50 line-through">
-                      <ServerIcon />
-                    </div>
-                    <p className="ml-2 text-xs text-slate-500 uppercase tracking-wider">Not Connected</p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
