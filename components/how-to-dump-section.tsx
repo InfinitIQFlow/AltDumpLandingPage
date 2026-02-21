@@ -138,8 +138,8 @@ const SearchFlow = ({ showSearch = false, searchValue = '', showCursor = false }
         </div>
       </div>
 
-      {/* Results */}
-      {showSearch && searchValue && (
+      {/* Results - Show when search-results stage or search text present */}
+      {(showSearch || searchValue) && (
         <div className="space-y-3 animate-fade-in">
           <div className="flex items-start gap-3 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
             <div className="w-8 h-8 bg-slate-700/50 rounded flex-shrink-0" />
@@ -190,8 +190,11 @@ const CaptureWorkflowDemo = () => {
     const interval = setInterval(() => {
       const newStage = timeline[currentIndex % timeline.length].stage
       setStage(newStage)
-      setCaptureText('')
-      setSearchText('')
+      // Only reset text when starting a new cycle
+      if (newStage === 'alt-d') {
+        setCaptureText('')
+        setSearchText('')
+      }
       currentIndex++
     }, totalDuration / timeline.length)
 
