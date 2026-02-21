@@ -544,68 +544,6 @@ const AnimatedCodeCard = () => {
     </div>
   )
 }
-      }, 50)
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  return (
-    <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden border border-slate-700/50 h-96 flex flex-col shadow-2xl">
-      <div className="p-6 border-b border-slate-700/50 bg-slate-800/50 backdrop-blur">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-green-500' : 'bg-amber-500 animate-pulse'}`} />
-            <span className="text-xs font-medium text-slate-400">
-              {showResults ? 'Matches Found' : 'Scanning codebase...'}
-            </span>
-          </div>
-        </div>
-        <input
-          type="text"
-          value={displayedText}
-          readOnly
-          placeholder="Search code snippets..."
-          className="w-full bg-slate-700/50 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600"
-        />
-      </div>
-
-      <div className="flex-1 p-6 space-y-2 overflow-y-auto font-mono text-xs">
-        {showResults && (
-          <div className="animate-fade-in space-y-3">
-            <div className="text-slate-400 text-xs font-medium mb-2">Found 2 matches:</div>
-
-            <div className="bg-slate-700/40 border border-slate-600/50 rounded-lg p-3">
-              <div className="text-slate-400 text-xs mb-2">hooks/useAuth.ts:32</div>
-              <div className="space-y-1">
-                <span className="text-slate-400">const AuthComponent = () =&gt; {'{'}</span>
-                <div className="px-2 py-1 bg-red-500/20 border-l-2 border-red-500">
-                  <span className="text-red-300 font-bold">useEffect hook</span>
-                  <span className="text-slate-400"> (() =&gt; {'{'}</span>
-                </div>
-                <span className="text-slate-400">  initAuth()</span>
-                <span className="text-slate-400">{'}'})</span>
-              </div>
-            </div>
-
-            <div className="bg-slate-700/40 border border-slate-600/50 rounded-lg p-3">
-              <div className="text-slate-400 text-xs mb-2">components/Dashboard.tsx:89</div>
-              <div className="space-y-1">
-                <span className="text-slate-400">export function Dashboard() {'{'}</span>
-                <div className="px-2 py-1 bg-red-500/20 border-l-2 border-red-500">
-                  <span className="text-red-300 font-bold">useEffect hook</span>
-                  <span className="text-slate-400"> (() =&gt; {'{'}</span>
-                </div>
-                <span className="text-slate-400">  loadData()</span>
-                <span className="text-slate-400">{'}'},</span>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  )
-}
 
 export default function SearchComparisonSection() {
   return (
