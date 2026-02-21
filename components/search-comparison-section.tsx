@@ -397,6 +397,19 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
       </div>
 
       <style jsx>{`
+        @keyframes expand {
+          from {
+            opacity: 0;
+            transform: scale(0.85);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        .animate-expand {
+          animation: expand 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
         @keyframes fadeIn {
           from {
             opacity: 0;
