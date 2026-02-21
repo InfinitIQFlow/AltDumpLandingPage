@@ -174,16 +174,16 @@ export default function DemoUI() {
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
         <div className="space-y-8">
           {/* Section Header */}
-          <div className="text-center space-y-3">
+          <div className="text-center space-y-3 fade-in-down">
             <p className="text-lg md:text-xl font-semibold text-primary glow-text">
               Search naturally. Find instantly. No file names needed.
             </p>
           </div>
 
           {/* Demo App - Windows Style */}
-          <div ref={containerRef} className="flex justify-center">
+          <div ref={containerRef} className="flex justify-center fade-in-up">
             <div className="w-full max-w-4xl">
-              <div className="bg-background rounded-xl border border-border shadow-2xl overflow-hidden">
+              <div className="bg-background rounded-xl border border-border shadow-2xl overflow-hidden hover:shadow-2xl hover:shadow-accent/20 transition-all duration-300 smooth-glow">
                 {/* Windows Title Bar */}
                 <div className="bg-secondary border-b border-border px-4 py-3 flex items-center justify-between">
                   <div className="text-sm font-medium text-foreground">AltDump - Your Second Brain</div>
@@ -276,7 +276,7 @@ export default function DemoUI() {
 
           {/* Features Highlight */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
-            <div className="text-center space-y-2">
+            <div className="text-center space-y-2 fade-in-up" style={{ animationDelay: '0.1s' }}>
               <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto">
                 <svg className="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
@@ -286,7 +286,7 @@ export default function DemoUI() {
               <h3 className="font-semibold text-foreground">Semantic Search</h3>
               <p className="text-sm text-muted-foreground">Find files by meaning, not keywords</p>
             </div>
-            <div className="text-center space-y-2">
+            <div className="text-center space-y-2 fade-in-up" style={{ animationDelay: '0.15s' }}>
               <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto">
                 <svg className="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
@@ -295,7 +295,7 @@ export default function DemoUI() {
               <h3 className="font-semibold text-foreground">All File Types</h3>
               <p className="text-sm text-muted-foreground">PDFs, images, code, videos, and more</p>
             </div>
-            <div className="text-center space-y-2">
+            <div className="text-center space-y-2 fade-in-up" style={{ animationDelay: '0.2s' }}>
               <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto">
                 <svg className="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />

@@ -74,15 +74,15 @@ export default function MemorySection() {
         <div className="container px-4 md:px-6 max-w-6xl mx-auto">
           <div className="space-y-12">
             {/* Heading */}
-            <div className="text-center">
+            <div className="text-center fade-in-down">
               <h2 className="text-3xl md:text-4xl font-bold text-foreground text-balance">
                 Build a memory you can search.
               </h2>
             </div>
 
             {/* Large Demo Image */}
-            <div className="flex justify-center">
-              <div className="w-full max-w-5xl rounded-2xl overflow-hidden border border-border shadow-2xl">
+            <div className="flex justify-center fade-in-up">
+              <div className="w-full max-w-5xl rounded-2xl overflow-hidden border border-border shadow-2xl hover:shadow-2xl hover:shadow-accent/20 transition-all duration-300">
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-14%20141929-WNrI9r3RotEmWHD5iFKaBd5iOd3zfH.png"
                   alt="AltDump interface showing vault of organized files"
@@ -99,7 +99,7 @@ export default function MemorySection() {
         <div className="container px-4 md:px-6 max-w-4xl mx-auto">
           <div className="space-y-8">
             {/* What Is AltDump */}
-            <div className="space-y-6">
+            <div className="space-y-6 fade-in-up">
               <h2 className="text-4xl md:text-5xl font-bold text-foreground text-balance">
                 What Is AltDump?
               </h2>
@@ -120,7 +120,7 @@ export default function MemorySection() {
             <div className="h-px bg-border my-8" />
 
             {/* What Can You Dump */}
-            <div className="space-y-8">
+            <div className="space-y-8 fade-in-up">
               <h3 className="text-3xl md:text-4xl font-bold text-foreground">
                 What Can You Dump?
               </h3>
@@ -137,7 +137,8 @@ export default function MemorySection() {
                     {dumpItems.map((item, index) => (
                       <div
                         key={index}
-                        className="flex items-center gap-3 group cursor-pointer transition-all"
+                        className="flex items-center gap-3 group cursor-pointer transition-all fade-in-up"
+                        style={{ animationDelay: `${index * 0.05}s` }}
                       >
                         <div className={`text-foreground group-hover:text-accent transition-colors group-hover:scale-110 transition-transform`}>
                           {item.icon}

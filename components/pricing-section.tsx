@@ -24,8 +24,8 @@ export default function PricingSection() {
           </div>
 
           {/* Pricing card */}
-          <div className="relative">
-            <div className="bg-gradient-to-br from-secondary/80 to-secondary/40 border border-accent/30 rounded-2xl p-12 text-center space-y-8 smooth-glow transition-all duration-300 hover:border-accent/50">
+          <div className="relative fade-in-up">
+            <div className="bg-gradient-to-br from-secondary/80 to-secondary/40 border border-accent/30 rounded-2xl p-12 text-center space-y-8 smooth-glow transition-all duration-300 hover:border-accent/50 hover:shadow-2xl hover:shadow-accent/20">
               {/* Price */}
               <div className="space-y-4">
                 <div className="inline-block">
@@ -37,43 +37,43 @@ export default function PricingSection() {
               {/* What you get */}
               <div className="space-y-6">
                 <ul className="space-y-4 max-w-md mx-auto text-left">
-                  <li className="flex items-start gap-3">
+                  <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.1s' }}>
                     <svg className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                     <span className="text-foreground">Windows 10/11</span>
                   </li>
-                  <li className="flex items-start gap-3">
+                  <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.15s' }}>
                     <svg className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                     <span className="text-foreground">Lifetime license</span>
                   </li>
-                  <li className="flex items-start gap-3">
+                  <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.2s' }}>
                     <svg className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                     <span className="text-foreground">One-time payment</span>
                   </li>
-                  <li className="flex items-start gap-3">
+                  <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.25s' }}>
                     <svg className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                     <span className="text-foreground">All future updates included</span>
                   </li>
-                  <li className="flex items-start gap-3">
+                  <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.3s' }}>
                     <svg className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                     <span className="text-foreground">Unlimited storage</span>
                   </li>
-                  <li className="flex items-start gap-3">
+                  <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.35s' }}>
                     <svg className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                     <span className="text-foreground">Offline AI processing</span>
                   </li>
-                  <li className="flex items-start gap-3">
+                  <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.4s' }}>
                     <svg className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>

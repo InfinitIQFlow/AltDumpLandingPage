@@ -21,7 +21,7 @@ export default function HeroSection() {
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
         <div className="flex flex-col items-center justify-center text-center space-y-6">
           {/* Content */}
-          <div className="space-y-4 max-w-3xl">
+          <div className="space-y-4 max-w-3xl fade-in-up">
             <h1 className="text-6xl md:text-7xl font-bold text-foreground leading-tight text-balance">
               A focused second brain for your important files.
             </h1>
@@ -31,18 +31,18 @@ export default function HeroSection() {
           </div>
 
           {/* Highlighted Tagline */}
-          <div className="relative">
+          <div className="relative fade-in-up" style={{ animationDelay: '0.1s' }}>
             <p className="text-xl md:text-2xl font-bold text-primary glow-text px-6 py-2 rounded-lg">
               Offline, private, and instant.
             </p>
           </div>
 
           {/* Download Button */}
-          <div className="flex flex-col items-center gap-2 pt-2">
+          <div className="flex flex-col items-center gap-2 pt-2 fade-in-up" style={{ animationDelay: '0.2s' }}>
             <button 
               onClick={handleBuyClick} 
               disabled={isLoading}
-              className="relative px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold transition-all disabled:opacity-50 flex items-center gap-3 group overflow-hidden"
+              className="relative px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold transition-all disabled:opacity-50 flex items-center gap-3 group overflow-hidden hover:shadow-lg hover:shadow-accent/30 hover:scale-105"
             >
               {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
