@@ -930,15 +930,30 @@ export default function SearchComparisonSection() {
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
         <div className="space-y-20">
           {/* Main heading */}
-          <div className="text-center space-y-6">
-            <h2 className="text-5xl md:text-6xl font-bold text-foreground text-balance leading-tight">
-              Windows Search looks at filenames.
-              <br />
-              <span className="bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent font-black">AltDump looks inside your files.</span>
-            </h2>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Even if you forgot the filename, if it's buried in a PDF, if it's inside an image, if it's hidden in a document — results appear instantly.
-            </p>
+          <div className="text-center space-y-8 fade-in-down">
+            <div className="space-y-4">
+              <h2 className="text-5xl md:text-6xl font-bold text-foreground text-balance leading-tight">
+                Windows Search looks at filenames.
+                <br />
+                <span className="bg-gradient-to-r from-accent to-cyan-400 bg-clip-text text-transparent font-black">AltDump looks inside your files.</span>
+              </h2>
+            </div>
+            
+            {/* Enhanced description with visual highlighting */}
+            <div className="max-w-3xl mx-auto">
+              <div className="relative rounded-2xl overflow-hidden">
+                {/* Glow background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-accent/10 via-cyan-400/10 to-accent/10 blur-xl"></div>
+                
+                {/* Content with border */}
+                <div className="relative bg-secondary/30 border border-accent/30 rounded-2xl p-8 backdrop-blur-sm">
+                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                    Even if you forgot the filename, if it's buried in a PDF, if it's inside an image, if it's hidden in a document — 
+                    <span className="block mt-4 text-lg font-semibold text-accent">results appear instantly.</span>
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* 6 Animated Feature Cards - 2 per row - longer cards */}
