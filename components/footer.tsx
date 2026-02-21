@@ -10,7 +10,7 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-start gap-2">
             <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
               <img 
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/android-chrome-512x512-Aq3NsCwi10DW2kAHDltlutLLBU0GF5.png"
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Feb%2020%2C%202026%2C%2011_48_05%20PM-nuexSP1ovLNsklqwZbI3I8LH7jOQxS.png"
                 alt="AltDump logo"
                 className="w-6 h-6"
               />
