@@ -3,78 +3,183 @@
 import { useEffect, useState } from 'react'
 
 const AnimatedImageCard = () => {
-  const [displayedText, setDisplayedText] = useState('')
-  const [showResults, setShowResults] = useState(false)
-  const fullQuery = "warranty card"
+  const [animationCycle, setAnimationCycle] = useState(0)
+  const [scanProgress, setScanProgress] = useState(0)
+  const [showQuery, setShowQuery] = useState(false)
+  const [displayedQuery, setDisplayedQuery] = useState('')
+  const [highlightedText, setHighlightedText] = useState<string[]>([])
+  const [isHovered, setIsHovered] = useState(false)
 
+  const fullQuery = "2 year warranty"
+  const textElements = [
+    { text: "2 Year Limited Warranty", type: "title", x: 15, y: 20 },
+    { text: "Covers manufacturing defects", type: "body", x: 15, y: 45 },
+    { text: "Valid from purchase date", type: "body", x: 15, y: 65 },
+    { text: "Serial: 8XK2E4591D", type: "serial", x: 15, y: 85 }
+  ]
+
+  // Main animation loop
   useEffect(() => {
-    const interval = setInterval(() => {
-      setShowResults(false)
+    const mainCycle = setInterval(() => {
+      setAnimationCycle(c => c + 1)
+      setScanProgress(0)
+      setShowQuery(false)
+      setDisplayedQuery('')
+      setHighlightedText([])
+    }, 8000)
+
+    return () => clearInterval(mainCycle)
+  }, [])
+
+  // Scanning line animation
+  useEffect(() => {
+    const scanInterval = setInterval(() => {
+      setScanProgress(p => {
+        if (p >= 100) {
+          clearInterval(scanInterval)
+          return 100
+        }
+        return p + 2
+      })
+    }, 30)
+
+    return () => clearInterval(scanInterval)
+  }, [animationCycle])
+
+  // Query typing animation
+  useEffect(() => {
+    if (scanProgress >= 100) {
+      const typeInterval = setTimeout(() => {
+        setShowQuery(true)
+      }, 300)
+
+      return () => clearTimeout(typeInterval)
+    }
+  }, [scanProgress])
+
+  // Type query
+  useEffect(() => {
+    if (showQuery) {
       let index = 0
       const typeInterval = setInterval(() => {
         if (index <= fullQuery.length) {
-          setDisplayedText(fullQuery.slice(0, index))
+          setDisplayedQuery(fullQuery.slice(0, index))
           index++
         } else {
           clearInterval(typeInterval)
-          setShowResults(true)
+          // Highlight matching text
           setTimeout(() => {
-            setDisplayedText('')
-            setShowResults(false)
-          }, 3000)
+            setHighlightedText(['2 Year Limited Warranty'])
+          }, 300)
         }
-      }, 60)
-    }, 5000)
+      }, 50)
 
-    return () => clearInterval(interval)
-  }, [])
+      return () => clearInterval(typeInterval)
+    }
+  }, [showQuery])
 
   return (
-    <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden border border-slate-700/50 h-96 flex flex-col shadow-2xl">
-      {/* Header with status */}
-      <div className="p-6 border-b border-slate-700/50 bg-slate-800/50 backdrop-blur">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-green-500' : 'bg-amber-500'}`} />
-            <span className="text-xs font-medium text-slate-400">
-              {showResults ? 'Results Found' : 'Scanning image...'}
-            </span>
+    <div
+      className="group relative bg-gradient-to-br from-slate-800 via-slate-800/95 to-slate-900 rounded-2xl overflow-hidden border border-indigo-500/20 h-96 flex flex-col shadow-2xl transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10 hover:scale-102"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Soft glow background */}
+      <div className={`absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-transparent to-indigo-500/5 pointer-events-none transition-opacity duration-500 ${isHovered ? 'opacity-100' : 'opacity-50'}`} />
+
+      {/* Top section: Headline and description */}
+      <div className="relative p-6 border-b border-indigo-500/10 bg-slate-800/30 backdrop-blur-sm">
+        <h3 className="text-lg font-semibold text-white mb-1">Search Inside Images.</h3>
+        <p className="text-xs text-slate-400">AltDump scans, understands, and indexes the actual text inside your photos.</p>
+      </div>
+
+      {/* Main visual area */}
+      <div className="relative flex-1 p-6 flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-800/50 to-slate-900/50">
+        {/* Mock image with text and scanning line */}
+        <div className="relative w-full max-w-xs h-56 bg-gradient-to-br from-indigo-950/40 to-slate-900/60 rounded-xl border border-indigo-500/20 overflow-hidden shadow-inner">
+          {/* Image content */}
+          <div className="absolute inset-0 p-4 text-left">
+            {textElements.map((el, idx) => {
+              const isHighlighted = highlightedText.includes(el.text)
+              return (
+                <div
+                  key={idx}
+                  className={`absolute text-xs transition-all duration-300 ${
+                    isHighlighted
+                      ? 'text-indigo-300 font-semibold'
+                      : displayedQuery && el.text.toLowerCase().includes(displayedQuery.toLowerCase())
+                      ? 'text-indigo-400 font-medium'
+                      : 'text-slate-400'
+                  }`}
+                  style={{ top: `${el.y}%`, left: `${el.x}%` }}
+                >
+                  <div className={`${isHighlighted ? 'bg-indigo-500/40 px-2 py-1 rounded' : ''}`}>
+                    {el.text}
+                  </div>
+                </div>
+              )
+            })}
+
+            {/* OCR bounding boxes appear during scan */}
+            {scanProgress > 20 && scanProgress < 100 && textElements.map((el, idx) => (
+              <div
+                key={`box-${idx}`}
+                className="absolute border border-indigo-500/40 rounded pointer-events-none transition-all duration-200"
+                style={{
+                  top: `${el.y - 5}%`,
+                  left: `${el.x - 2}%`,
+                  width: '70px',
+                  height: '16px',
+                  opacity: Math.max(0, 1 - Math.abs(scanProgress - (el.y + 10)) / 30)
+                }}
+              />
+            ))}
+
+            {/* Scanning line animation */}
+            {scanProgress < 100 && (
+              <div
+                className="absolute inset-x-0 h-1 bg-gradient-to-b from-transparent via-indigo-400/60 to-transparent blur-sm transition-all duration-75"
+                style={{
+                  top: `${scanProgress}%`,
+                  boxShadow: '0 0 20px rgba(99, 102, 241, 0.5)'
+                }}
+              />
+            )}
           </div>
+
+          {/* Search input overlay - appears after scan */}
+          {showQuery && (
+            <div className="absolute top-3 right-3 left-3 animate-fade-in">
+              <input
+                type="text"
+                value={displayedQuery}
+                readOnly
+                placeholder="Search..."
+                className="w-full bg-slate-900/80 backdrop-blur-sm text-white placeholder-slate-500 px-2 py-1 rounded text-xs border border-indigo-500/40 focus:outline-none focus:border-indigo-500/60"
+              />
+            </div>
+          )}
         </div>
-        <input
-          type="text"
-          value={displayedText}
-          readOnly
-          placeholder="Search inside images..."
-          className="w-full bg-slate-700/50 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600"
-        />
       </div>
 
-      {/* Content area */}
-      <div className="flex-1 p-6 flex items-center justify-center">
-        {showResults && (
-          <div className="animate-fade-in space-y-4 w-full">
-            {/* Image preview */}
-            <div className="bg-amber-900/20 rounded-lg p-4 border border-amber-700/40 text-center">
-              <div className="text-6xl mb-2">📸</div>
-              <span className="text-sm text-amber-200">Photo found: Warranty Card</span>
-            </div>
+      {/* Bottom section: Micro copy and status */}
+      {highlightedText.length > 0 && (
+        <div className="relative px-6 py-4 border-t border-indigo-500/10 bg-slate-800/30 backdrop-blur-sm animate-fade-in">
+          <p className="text-xs text-indigo-300">
+            Found: <span className="font-semibold">{highlightedText[0]}</span>
+          </p>
+        </div>
+      )}
 
-            {/* Extracted text with highlighted search term */}
-            <div className="space-y-3">
-              <div className="text-xs text-slate-400 font-medium">Extracted Text (OCR):</div>
-              <div className="bg-slate-700/40 border border-slate-600/50 rounded-lg p-4 space-y-2">
-                <p className="text-white text-sm leading-relaxed">
-                  2 Year Limited <span className="font-bold bg-cyan-500/30 px-1 py-1 rounded text-cyan-300">Warranty Card</span>
-                </p>
-                <p className="text-slate-400 text-xs">
-                  Serial: 8XK2E4591D | Valid from purchase date
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+      <style jsx>{`
+        @keyframes glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+          50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.5); }
+        }
+        .group:hover {
+          animation: glow 2s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   )
 }
