@@ -978,7 +978,7 @@ export default pool`
 export default function SearchComparisonSection() {
   return (
     <section className="w-full py-24 md:py-32 bg-background border-b border-border">
-      <div className="container px-4 md:px-6 max-w-6xl mx-auto">
+      <div className="container px-4 md:px-6 max-w-7xl mx-auto">
         <div className="space-y-20">
           {/* Main heading */}
           <div className="text-center space-y-6 fade-in-down">
@@ -1027,7 +1027,7 @@ export default function SearchComparisonSection() {
           </div>
 
           {/* 6 Animated Feature Cards - 2 per row - longer cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-14">
             {/* Images */}
             <div>
               <AnimatedImageCard />
