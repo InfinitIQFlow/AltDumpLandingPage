@@ -182,9 +182,9 @@ const VideoIcon = () => (
   </svg>
 )
 
-const AnimatedVideoCard = () => {
+const AnimatedVideoCard = ({ title, description }: { title: string; description: string }) => {
   const [displayedText, setDisplayedText] = useState('')
-  const [stage, setStage] = useState<'initial' | 'typing' | 'scanning' | 'expanded'>('initial')
+  const [stage, setStage] = useState<'initial' | 'typing' | 'expanded'>('initial')
   const [selectedVideo, setSelectedVideo] = useState<number | null>(null)
   const [scanProgress, setScanProgress] = useState([0, 0])
   const [fadeOpacity, setFadeOpacity] = useState([1, 1])
@@ -251,13 +251,11 @@ const AnimatedVideoCard = () => {
   return (
     <div className="bg-gradient-to-br from-secondary/60 to-background rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300 smooth-glow hover:shadow-accent/20">
       <div className="p-6 border-b border-border/50 bg-gradient-to-r from-secondary/40 to-background/40 backdrop-blur-sm">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full transition-colors ${stage === 'showing-text' ? 'bg-accent' : stage === 'scanning' ? 'bg-yellow-500' : 'bg-muted'}`} />
-            <span className="text-xs font-medium text-muted-foreground">
-              {stage === 'showing-text' ? 'Match found' : stage === 'scanning' ? 'Scanning videos...' : 'Ready to search'}
-            </span>
-          </div>
+        <div className="space-y-2 mb-4">
+          <h3 className="font-bold text-foreground">{title}</h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {description}
+          </p>
         </div>
         <div className="relative group">
           <input
@@ -271,30 +269,13 @@ const AnimatedVideoCard = () => {
       </div>
 
       <div className="flex-1 p-8 flex items-center justify-center overflow-hidden">
-        {/* Initial + Scanning: Show 2 videos */}
-        {(stage === 'initial' || stage === 'typing' || stage === 'scanning') && (
+        {/* Initial + Typing: Show 2 videos */}
+        {(stage === 'initial' || stage === 'typing') && (
           <div className="flex gap-12 justify-center items-center h-full transition-opacity duration-500">
             {videos.map((video, idx) => (
               <div key={video.id} className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
                 {/* Video thumbnail */}
                 <div className="relative w-56 h-40 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
-                  {/* Frame strip flicker animation */}
-                  {stage === 'scanning' && (
-                    <>
-                      <div className="absolute inset-0 opacity-40">
-                        {[0, 1, 2, 3].map((i) => (
-                          <div
-                            key={i}
-                            className="absolute h-full w-12 bg-accent/20"
-                            style={{
-                              left: `${(scanProgress[idx] + i * 20) % 100}%`,
-                            }}
-                          />
-                        ))}
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent" />
-                    </>
-                  )}
                 </div>
 
                 {/* Video name */}
@@ -989,14 +970,11 @@ export default function SearchComparisonSection() {
             </div>
 
             {/* Video */}
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <h3 className="font-bold text-foreground">Video</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Search your videos by describing what's happening — scenes, objects, moments.
-                </p>
-              </div>
-              <AnimatedVideoCard />
+            <div className="relative">
+              <AnimatedVideoCard 
+                title="Video"
+                description="Search your videos by describing what's happening — scenes, objects, moments."
+              />
             </div>
 
             {/* PDFs & Docs */}
