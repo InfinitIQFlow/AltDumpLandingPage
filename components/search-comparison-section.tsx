@@ -79,7 +79,7 @@ const AnimatedImageCard = () => {
   }, [stage])
 
   return (
-    <div className="relative bg-gradient-to-br from-secondary/60 to-background backdrop-blur-sm rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[500px] flex flex-col shadow-lg hover:shadow-2xl hover:border-accent/40 transition-all duration-300 smooth-glow">
+    <div className="relative bg-gradient-to-br from-secondary/60 to-background backdrop-blur-sm rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[600px] flex flex-col shadow-lg hover:shadow-2xl hover:border-accent/40 transition-all duration-300 smooth-glow">
       {/* Card header with copy */}
       <div className="relative p-6 border-b border-border/50 bg-gradient-to-r from-secondary/40 to-background/40 backdrop-blur-sm">
         <h3 className="text-base font-semibold text-foreground mb-1">Images</h3>
@@ -124,7 +124,7 @@ const AnimatedImageCard = () => {
                     />
                   )}
                 </div>
-                <p className="text-xs text-slate-400 font-medium">{img.name}</p>
+                <p className="text-xs text-foreground font-medium">{img.name}</p>
               </div>
             ))}
           </div>
@@ -133,7 +133,7 @@ const AnimatedImageCard = () => {
         {/* Stage 3: Expanded image - zoomed and animated */}
         {stage === 'expanded' && selectedImage !== null && (
           <div className="w-full h-full flex flex-col items-center justify-center gap-4 animate-expand">
-            <div className="relative w-96 h-96 bg-slate-700/30 rounded-xl border-2 border-emerald-500/60 flex items-center justify-center overflow-hidden shadow-2xl backdrop-blur-sm" style={{ boxShadow: '0 0 32px rgba(16, 185, 129, 0.3)' }}>
+            <div className="relative w-96 h-96 bg-secondary/40 rounded-xl border-2 border-accent/60 flex items-center justify-center overflow-hidden shadow-2xl backdrop-blur-sm" style={{ boxShadow: '0 0 32px rgba(34, 211, 238, 0.3)' }}>
               <img
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
                 alt="JavaScript error screenshot"
@@ -141,10 +141,10 @@ const AnimatedImageCard = () => {
               />
             </div>
             <div className="flex flex-col items-center gap-3">
-              <div className="px-3 py-2 bg-emerald-500/20 border border-emerald-400/60 rounded-lg backdrop-blur-sm">
-                <p className="text-xs font-semibold text-emerald-300">✓ Match found: javascript error</p>
+              <div className="px-3 py-2 bg-accent/20 border border-accent/60 rounded-lg backdrop-blur-sm">
+                <p className="text-xs font-semibold text-accent">✓ Match found: javascript error</p>
               </div>
-              <p className="text-sm text-slate-300 font-medium">{images[selectedImage].name}</p>
+              <p className="text-sm text-foreground font-medium">{images[selectedImage].name}</p>
             </div>
           </div>
         )}
@@ -249,7 +249,7 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
   }, [stage])
 
   return (
-    <div className="bg-gradient-to-br from-secondary/60 to-background rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300 smooth-glow hover:shadow-accent/20">
+    <div className="bg-gradient-to-br from-secondary/60 to-background rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[600px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300 smooth-glow hover:shadow-accent/20">
       <div className="p-6 border-b border-border/50 bg-gradient-to-r from-secondary/40 to-background/40 backdrop-blur-sm">
         <div className="space-y-2 mb-4">
           <h3 className="font-bold text-foreground">{title}</h3>
@@ -279,7 +279,7 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
                 </div>
 
                 {/* Video name */}
-                <p className="text-sm text-slate-300 font-medium">{video.name}</p>
+                <p className="text-sm text-foreground font-medium">{video.name}</p>
               </div>
             ))}
           </div>
@@ -323,22 +323,22 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
         )}
         {stage === 'showing-text' && selectedVideo !== null && (
           <div className="animate-fade-in flex flex-col items-center justify-center gap-8 h-full w-full">
-            <div className="relative w-96 h-64 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg border-2 border-slate-600 flex items-center justify-center overflow-hidden shadow-2xl">
-              {/* Soft indigo glow background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-transparent to-indigo-500/10" />
+            <div className="relative w-96 h-64 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border-2 border-accent/60 flex items-center justify-center overflow-hidden shadow-2xl">
+              {/* Soft accent glow background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/5" />
               
               {/* Text with highlight */}
               <div className="relative z-10 text-center px-8">
-                <p className="text-lg text-white font-semibold leading-relaxed">
+                <p className="text-lg text-foreground font-semibold leading-relaxed">
                   <span className="block mb-3">We'll test the</span>
-                  <span className="inline-block px-4 py-2 bg-indigo-500/30 rounded-lg border border-indigo-400/60 text-indigo-200 font-bold">
+                  <span className="inline-block px-4 py-2 bg-accent/20 rounded-lg border border-accent/60 text-accent font-bold">
                     new pricing
                   </span>
                   <span className="block mt-3">next quarter.</span>
                 </p>
               </div>
             </div>
-            <p className="text-lg text-slate-200 font-semibold">{videos[selectedVideo].name}</p>
+            <p className="text-lg text-foreground font-semibold">{videos[selectedVideo].name}</p>
           </div>
         )}
       </div>
@@ -390,15 +390,13 @@ const AnimatedPDFCard = () => {
   }, [])
 
   return (
-    <div className="bg-gradient-to-br from-secondary/60 to-background rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300 smooth-glow hover:shadow-accent/20">
+    <div className="bg-gradient-to-br from-secondary/60 to-background rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[600px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300 smooth-glow hover:shadow-accent/20">
       <div className="p-6 border-b border-border/50 bg-gradient-to-r from-secondary/40 to-background/40 backdrop-blur-sm">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full transition-colors ${showResults ? 'bg-accent' : 'bg-yellow-500'}`} />
-            <span className="text-xs font-medium text-muted-foreground">
-              {showResults ? 'Matches found' : 'Scanning document...'}
-            </span>
-          </div>
+        <div className="space-y-2 mb-4">
+          <h3 className="font-bold text-foreground">PDFs & Docs</h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Get pinpoint matches inside PDFs and docs — every paragraph is searchable.
+          </p>
         </div>
         <div className="relative group">
           <input
@@ -518,8 +516,8 @@ const AnimatedDataCard = () => {
   }, [stage])
 
   return (
-    <div className="relative bg-slate-900/60 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/30 h-screen md:h-[500px] flex flex-col shadow-lg hover:shadow-2xl hover:border-slate-600/50 transition-all duration-300">
-      <div className="p-6 border-b border-slate-700/20 bg-gradient-to-r from-slate-800/20 to-slate-900/20 backdrop-blur-sm">
+    <div className="relative bg-gradient-to-br from-secondary/60 to-background backdrop-blur-sm rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[600px] flex flex-col shadow-lg hover:shadow-2xl hover:border-accent/40 transition-all duration-300 smooth-glow">
+      <div className="p-6 border-b border-border/50 bg-gradient-to-r from-secondary/40 to-background/40 backdrop-blur-sm">
         <div className="space-y-2 mb-4">
           <h3 className="font-bold text-foreground">Data Files</h3>
           <p className="text-sm text-muted-foreground leading-relaxed">
@@ -532,7 +530,7 @@ const AnimatedDataCard = () => {
             value={displayedText}
             readOnly
             placeholder="Search inside spreadsheets..."
-            className="w-full bg-slate-800/30 text-slate-100 placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600/30 transition-all duration-300 group-hover:border-slate-500/50 group-hover:bg-slate-800/50 backdrop-blur-sm"
+            className="w-full bg-input text-foreground placeholder-muted-foreground px-4 py-3 rounded-lg text-sm focus:outline-none border border-border/50 transition-all duration-300 group-hover:border-accent/50 group-hover:bg-input/80 backdrop-blur-sm"
           />
         </div>
       </div>
@@ -543,13 +541,13 @@ const AnimatedDataCard = () => {
           <div className="flex gap-8 justify-center items-center h-full transition-opacity duration-500">
             {files.map((file, idx) => (
               <div key={file.id} className="flex flex-col items-center gap-3 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
-                <div className="w-28 h-36 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl border border-slate-600/40 flex flex-col items-center justify-center gap-2 shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300">
-                  <div className="text-slate-300">
+                <div className="w-28 h-36 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex flex-col items-center justify-center gap-2 shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300">
+                  <div className="text-foreground">
                     <FileIcon />
                   </div>
-                  <p className="text-xs text-slate-400 font-medium text-center px-2">CSV</p>
+                  <p className="text-xs text-muted-foreground font-medium text-center px-2">CSV</p>
                 </div>
-                <p className="text-xs text-slate-300 font-medium text-center max-w-24">{file.name}</p>
+                <p className="text-xs text-foreground font-medium text-center max-w-24">{file.name}</p>
               </div>
             ))}
           </div>
@@ -560,31 +558,31 @@ const AnimatedDataCard = () => {
           <div className="animate-expand w-full max-w-3xl">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-18 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-lg border-2 border-emerald-500/60 flex items-center justify-center shadow-lg backdrop-blur-sm" style={{ boxShadow: '0 0 16px rgba(16, 185, 129, 0.2)' }}>
-                  <div className="text-emerald-400 text-lg">
+                <div className="w-14 h-18 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border-2 border-accent/60 flex items-center justify-center shadow-lg backdrop-blur-sm" style={{ boxShadow: '0 0 16px rgba(34, 211, 238, 0.3)' }}>
+                  <div className="text-accent text-lg">
                     <FileIcon />
                   </div>
                 </div>
                 <div>
-                  <p className="text-base text-slate-100 font-semibold">{files[selectedFile].name}</p>
+                  <p className="text-base text-foreground font-semibold">{files[selectedFile].name}</p>
                   {highlightedRows.length > 0 && (
-                    <p className="text-xs text-emerald-400 font-medium mt-1">{highlightedRows.length} rows matched</p>
+                    <p className="text-xs text-accent font-medium mt-1">{highlightedRows.length} rows matched</p>
                   )}
                 </div>
               </div>
             </div>
 
             {/* CSV Table */}
-            <div className="bg-slate-800/30 backdrop-blur-sm rounded-lg border border-slate-700/50 overflow-hidden">
+            <div className="bg-secondary/40 backdrop-blur-sm rounded-lg border border-border/50 overflow-hidden">
               {/* Table Header */}
-              <div className="grid grid-cols-3 gap-4 p-4 bg-slate-800/40 border-b border-slate-700/30">
-                <p className="text-xs font-semibold text-slate-300">Name</p>
-                <p className="text-xs font-semibold text-slate-300">State</p>
-                <p className="text-xs font-semibold text-slate-300">Revenue</p>
+              <div className="grid grid-cols-3 gap-4 p-4 bg-secondary/60 border-b border-border/50">
+                <p className="text-xs font-semibold text-foreground">Name</p>
+                <p className="text-xs font-semibold text-foreground">State</p>
+                <p className="text-xs font-semibold text-foreground">Revenue</p>
               </div>
 
               {/* Table Rows */}
-              <div className="divide-y divide-slate-700/20">
+              <div className="divide-y divide-border/50">
                 {tableData.map((row, idx) => {
                   const isHighlighted = highlightedRows.includes(idx)
                   const isVisible = highlightedRows.length === 0 || isHighlighted
@@ -594,25 +592,25 @@ const AnimatedDataCard = () => {
                       key={idx}
                       className={`grid grid-cols-3 gap-4 p-4 transition-all duration-500 ${
                         isHighlighted
-                          ? 'bg-emerald-500/15 border-l-2 border-emerald-500'
+                          ? 'bg-accent/15 border-l-2 border-accent'
                           : isVisible
                           ? 'opacity-100'
                           : 'opacity-40'
                       }`}
                     >
-                      <p className={`text-sm ${isHighlighted ? 'text-slate-100 font-semibold' : 'text-slate-300'}`}>
+                      <p className={`text-sm ${isHighlighted ? 'text-foreground font-semibold' : 'text-foreground'}`}>
                         {row.name}
                       </p>
-                      <p className={`text-sm ${isHighlighted ? 'text-emerald-200 font-medium' : 'text-slate-400'}`}>
+                      <p className={`text-sm ${isHighlighted ? 'text-accent font-medium' : 'text-muted-foreground'}`}>
                         {row.state}
                       </p>
                       <p
                         className={`text-sm font-semibold ${
                           isHighlighted
-                            ? 'text-emerald-400'
+                            ? 'text-accent'
                             : row.revenue > 5000
-                            ? 'text-emerald-400/60'
-                            : 'text-slate-400'
+                            ? 'text-accent/60'
+                            : 'text-muted-foreground'
                         } ${isHighlighted && row.revenue > 5000 ? 'drop-shadow-lg' : ''}`}
                       >
                         ${row.revenue.toLocaleString()}
@@ -673,8 +671,8 @@ const AnimatedNoteCard = () => {
   }, [])
 
   return (
-    <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-slate-700 h-screen md:h-[500px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300">
-      <div className="p-6 border-b border-slate-700 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
+    <div className="bg-gradient-to-br from-secondary/60 to-background rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[600px] flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300 smooth-glow hover:shadow-accent/20">
+      <div className="p-6 border-b border-border/50 bg-gradient-to-r from-secondary/40 to-background/40 backdrop-blur-sm">
         <div className="space-y-2 mb-4">
           <h3 className="font-bold text-foreground">Notes</h3>
           <p className="text-sm text-muted-foreground leading-relaxed">
@@ -687,7 +685,7 @@ const AnimatedNoteCard = () => {
             value={displayedText}
             readOnly
             placeholder="Search across your notes..."
-            className="w-full bg-slate-800/40 text-white placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600 transition-all duration-300 group-hover:border-slate-500 group-hover:bg-slate-800/60"
+            className="w-full bg-input text-foreground placeholder-muted-foreground px-4 py-3 rounded-lg text-sm focus:outline-none border border-border/50 transition-all duration-300 group-hover:border-accent/50 group-hover:bg-input/80 backdrop-blur-sm"
           />
         </div>
       </div>
@@ -695,18 +693,18 @@ const AnimatedNoteCard = () => {
       <div className="flex-1 p-8 space-y-3 overflow-y-auto">
         {showResults && (
           <div className="animate-fade-in space-y-3">
-            <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide mb-3">2 Notes Matched:</div>
-            <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-4 hover:bg-purple-500/15 hover:border-purple-500/50 transition-all duration-300">
-              <div className="text-xs text-purple-300 font-semibold mb-2">Research Notes</div>
-              <p className="text-white text-sm leading-relaxed">
-                Building a <span className="font-bold bg-purple-500/30 px-2 py-1 rounded text-purple-200">machine learning model</span> for image classification using CNN architecture.
+            <div className="text-xs text-muted-foreground font-semibold uppercase tracking-wide mb-3">2 Notes Matched:</div>
+            <div className="bg-secondary/40 border border-border/50 rounded-lg p-4 hover:bg-secondary/60 hover:border-accent/50 transition-all duration-300">
+              <div className="text-xs text-foreground font-semibold mb-2">Research Notes</div>
+              <p className="text-foreground text-sm leading-relaxed">
+                Building a <span className="font-bold bg-accent/20 px-2 py-1 rounded text-accent">machine learning model</span> for image classification using CNN architecture.
               </p>
             </div>
 
-            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 hover:bg-blue-500/15 hover:border-blue-500/50 transition-all duration-300">
-              <div className="text-xs text-blue-300 font-semibold mb-2">Project Ideas</div>
-              <p className="text-white text-sm leading-relaxed">
-                Create an intelligent system with a <span className="font-bold bg-blue-500/30 px-2 py-1 rounded text-blue-200">machine learning model</span> to optimize data processing.
+            <div className="bg-secondary/40 border border-border/50 rounded-lg p-4 hover:bg-secondary/60 hover:border-accent/50 transition-all duration-300">
+              <div className="text-xs text-foreground font-semibold mb-2">Project Ideas</div>
+              <p className="text-foreground text-sm leading-relaxed">
+                Create an intelligent system with a <span className="font-bold bg-accent/20 px-2 py-1 rounded text-accent">machine learning model</span> to optimize data processing.
               </p>
             </div>
           </div>
@@ -784,8 +782,8 @@ export default pool`
   }, [stage])
 
   return (
-    <div className="relative bg-slate-900/60 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/30 h-screen md:h-[500px] flex flex-col shadow-lg hover:shadow-2xl hover:border-slate-600/50 transition-all duration-300">
-      <div className="p-6 border-b border-slate-700/20 bg-gradient-to-r from-slate-800/20 to-slate-900/20 backdrop-blur-sm">
+    <div className="relative bg-gradient-to-br from-secondary/60 to-background backdrop-blur-sm rounded-2xl overflow-hidden border border-accent/20 h-screen md:h-[600px] flex flex-col shadow-lg hover:shadow-2xl hover:border-accent/40 transition-all duration-300 smooth-glow">
+      <div className="p-6 border-b border-border/50 bg-gradient-to-r from-secondary/40 to-background/40 backdrop-blur-sm">
         <div className="space-y-2 mb-4">
           <h3 className="font-bold text-foreground">Code</h3>
           <p className="text-sm text-muted-foreground leading-relaxed">
@@ -798,7 +796,7 @@ export default pool`
             value={displayedText}
             readOnly
             placeholder="Search code..."
-            className="w-full bg-slate-800/30 text-slate-100 placeholder-slate-500 px-4 py-3 rounded-lg text-sm focus:outline-none border border-slate-600/30 transition-all duration-300 group-hover:border-slate-500/50 group-hover:bg-slate-800/50 backdrop-blur-sm"
+            className="w-full bg-input text-foreground placeholder-muted-foreground px-4 py-3 rounded-lg text-sm focus:outline-none border border-border/50 transition-all duration-300 group-hover:border-accent/50 group-hover:bg-input/80 backdrop-blur-sm"
           />
         </div>
       </div>
@@ -809,17 +807,17 @@ export default pool`
           <div className="flex gap-12 justify-center items-center h-full transition-opacity duration-500">
             {codeFiles.map((file, idx) => (
               <div key={file.id} className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
-                <div className="w-32 h-40 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl border border-slate-600/40 flex flex-col items-center justify-center gap-3 shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300">
+                <div className="w-32 h-40 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex flex-col items-center justify-center gap-3 shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300">
                   <div className="w-full h-full flex flex-col items-center justify-center gap-2">
-                    <div className="text-slate-300">
+                    <div className="text-foreground">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.321 3.646l2.031 2.031a2 2 0 010 2.828l-8.486 8.486a2 2 0 01-2.828 0l-2.031-2.031a2 2 0 010-2.828l8.486-8.486a2 2 0 012.828 0z" />
                       </svg>
                     </div>
-                    <p className="text-xs text-slate-400 font-mono text-center">{file.name.split('.')[1]}</p>
+                    <p className="text-xs text-muted-foreground font-mono text-center">{file.name.split('.')[1]}</p>
                   </div>
                 </div>
-                <p className="text-xs text-slate-300 font-mono text-center">{file.name}</p>
+                <p className="text-xs text-foreground font-mono text-center">{file.name}</p>
               </div>
             ))}
           </div>
@@ -830,30 +828,30 @@ export default pool`
           <div className="animate-expand w-full max-w-2xl">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-16 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-lg border-2 border-emerald-500/60 flex items-center justify-center shadow-lg backdrop-blur-sm" style={{ boxShadow: '0 0 16px rgba(16, 185, 129, 0.2)' }}>
-                  <div className="text-emerald-400 text-sm">
+                <div className="w-12 h-16 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border-2 border-accent/60 flex items-center justify-center shadow-lg backdrop-blur-sm" style={{ boxShadow: '0 0 16px rgba(34, 211, 238, 0.3)' }}>
+                  <div className="text-accent text-sm">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.321 3.646l2.031 2.031a2 2 0 010 2.828l-8.486 8.486a2 2 0 01-2.828 0l-2.031-2.031a2 2 0 010-2.828l8.486-8.486a2 2 0 012.828 0z" />
                     </svg>
                   </div>
                 </div>
                 <div>
-                  <p className="text-base text-slate-100 font-semibold font-mono">{codeFiles[selectedFile].name}</p>
-                  <p className="text-xs text-emerald-400 font-medium mt-1">1 match found</p>
+                  <p className="text-base text-foreground font-semibold font-mono">{codeFiles[selectedFile].name}</p>
+                  <p className="text-xs text-accent font-medium mt-1">1 match found</p>
                 </div>
               </div>
             </div>
 
             {/* Code snippet */}
-            <div className="bg-slate-800/30 backdrop-blur-sm rounded-lg border border-slate-700/50 overflow-hidden">
-              <div className="bg-slate-800/40 border-b border-slate-700/30 px-4 py-3">
-                <p className="text-xs text-slate-400 font-mono">database connection pool</p>
+            <div className="bg-secondary/40 backdrop-blur-sm rounded-lg border border-border/50 overflow-hidden">
+              <div className="bg-secondary/60 border-b border-border/50 px-4 py-3">
+                <p className="text-xs text-muted-foreground font-mono">database connection pool</p>
               </div>
               <pre className="p-4 overflow-x-auto">
-                <code className="text-xs font-mono text-slate-300 leading-relaxed">
-                  <span className="text-emerald-400">{`const`}</span>
+                <code className="text-xs font-mono text-foreground leading-relaxed">
+                  <span className="text-accent">{`const`}</span>
                   {` pool = `}
-                  <span className="text-blue-400">{`new`}</span>
+                  <span className="text-blue-500">{`new`}</span>
                   {` Pool({`}
                   <br />
                   {`  host: `}
