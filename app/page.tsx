@@ -9,6 +9,7 @@ import MemorySection from '@/components/memory-section'
 import PrivacySection from '@/components/privacy-section'
 import BeforeAfterSection from '@/components/before-after-section'
 import HowItWorks from '@/components/how-it-works'
+import StoryDemoSection from '@/components/story-demo-section'
 import PricingSection from '@/components/pricing-section'
 import FAQSection from '@/components/faq-section'
 import Footer from '@/components/footer'
@@ -26,6 +27,7 @@ export default function Page() {
         <PrivacySection />
         <BeforeAfterSection />
         <HowItWorks />
+        <StoryDemoSection />
         <PricingSection />
         <FAQSection />
       </main>

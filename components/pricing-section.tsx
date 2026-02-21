@@ -80,12 +80,9 @@ export default function PricingSection() {
               </button>
 
               {/* Footer text */}
-              <div className="pt-2 space-y-2 text-center">
+              <div className="pt-2 text-center">
                 <p className="text-xs text-muted-foreground">
                   Secure payments via Dodo Payments
-                </p>
-                <p className="text-xs text-muted-foreground/70">
-                  We're a small team. Reach out anytime.
                 </p>
               </div>
 
