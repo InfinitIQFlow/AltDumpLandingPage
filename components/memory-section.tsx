@@ -158,38 +158,71 @@ export default function MemorySection() {
                   {/* Right: Visual showcase with floating elements */}
                   <div className="relative h-96 md:h-auto flex items-center justify-center">
                     {/* Floating visual cards */}
-                    <div className="absolute top-0 right-0 w-32 h-40 bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 transform -rotate-12 flex items-center justify-center backdrop-blur-sm">
-                      <div className="text-blue-500">
+                    <style>{`
+                      @keyframes float-1 {
+                        0%, 100% { transform: translateY(0px) rotateZ(-12deg); }
+                        50% { transform: translateY(-20px) rotateZ(-12deg); }
+                      }
+                      @keyframes float-2 {
+                        0%, 100% { transform: translateY(0px) rotateZ(12deg); }
+                        50% { transform: translateY(-15px) rotateZ(12deg); }
+                      }
+                      @keyframes float-3 {
+                        0%, 100% { transform: translateY(0px) rotateZ(-6deg); }
+                        50% { transform: translateY(-25px) rotateZ(-6deg); }
+                      }
+                      @keyframes float-4 {
+                        0%, 100% { transform: translateY(0px) rotateZ(6deg); }
+                        50% { transform: translateY(-18px) rotateZ(6deg); }
+                      }
+                      @keyframes float-5 {
+                        0%, 100% { transform: translateY(0px); }
+                        50% { transform: translateY(-22px); }
+                      }
+                      @keyframes float-6 {
+                        0%, 100% { transform: translateY(0px) rotateZ(45deg); }
+                        50% { transform: translateY(-16px) rotateZ(45deg); }
+                      }
+                      .card-float-1 { animation: float-1 4s ease-in-out infinite; }
+                      .card-float-2 { animation: float-2 4.5s ease-in-out infinite 0.5s; }
+                      .card-float-3 { animation: float-3 5s ease-in-out infinite 1s; }
+                      .card-float-4 { animation: float-4 4.8s ease-in-out infinite 0.3s; }
+                      .card-float-5 { animation: float-5 5.2s ease-in-out infinite 0.8s; }
+                      .card-float-6 { animation: float-6 4.3s ease-in-out infinite 0.2s; }
+                    `}</style>
+
+                    <div className="card-float-1 absolute top-0 right-0 w-32 h-40 bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 flex items-center justify-center backdrop-blur-sm shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition-shadow">
+                      <div className="text-blue-500 text-4xl">
                         <PDFIcon />
                       </div>
                     </div>
 
-                    <div className="absolute top-20 left-0 w-32 h-32 bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4 transform rotate-12 flex items-center justify-center backdrop-blur-sm">
-                      <div className="text-cyan-500">
+                    <div className="card-float-2 absolute top-20 left-0 w-32 h-32 bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4 flex items-center justify-center backdrop-blur-sm shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-shadow">
+                      <div className="text-cyan-500 text-4xl">
                         <ImageIcon />
                       </div>
                     </div>
 
-                    <div className="absolute bottom-10 left-12 w-36 h-36 bg-slate-500/10 border border-slate-500/30 rounded-lg p-4 transform -rotate-6 flex items-center justify-center backdrop-blur-sm">
-                      <div className="text-slate-400 scale-150">
+                    <div className="card-float-3 absolute bottom-10 left-12 w-36 h-36 bg-slate-500/10 border border-slate-500/30 rounded-lg p-4 flex items-center justify-center backdrop-blur-sm shadow-lg shadow-slate-500/20 hover:shadow-slate-500/40 transition-shadow">
+                      <div className="text-slate-400 scale-150 text-4xl">
                         <CodeIcon />
                       </div>
                     </div>
 
-                    <div className="absolute bottom-0 right-10 w-32 h-40 bg-purple-500/10 border border-purple-500/30 rounded-lg p-4 transform rotate-6 flex items-center justify-center backdrop-blur-sm">
-                      <div className="text-purple-500 scale-150">
+                    <div className="card-float-4 absolute bottom-0 right-10 w-32 h-40 bg-purple-500/10 border border-purple-500/30 rounded-lg p-4 flex items-center justify-center backdrop-blur-sm shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 transition-shadow">
+                      <div className="text-purple-500 scale-150 text-4xl">
                         <VideoIcon />
                       </div>
                     </div>
 
-                    <div className="absolute top-32 right-20 w-28 h-28 bg-yellow-500/10 border border-yellow-500/30 rounded-full p-3 flex items-center justify-center backdrop-blur-sm">
-                      <div className="text-yellow-500 scale-125">
+                    <div className="card-float-5 absolute top-32 right-20 w-28 h-28 bg-yellow-500/10 border border-yellow-500/30 rounded-full p-3 flex items-center justify-center backdrop-blur-sm shadow-lg shadow-yellow-500/20 hover:shadow-yellow-500/40 transition-shadow">
+                      <div className="text-yellow-500 scale-125 text-4xl">
                         <BulbIcon />
                       </div>
                     </div>
 
-                    <div className="absolute bottom-20 right-32 w-24 h-24 bg-amber-500/10 border border-amber-500/30 rounded-lg p-2 transform rotate-45 flex items-center justify-center backdrop-blur-sm">
-                      <div className="text-amber-500 scale-125">
+                    <div className="card-float-6 absolute bottom-20 right-32 w-24 h-24 bg-amber-500/10 border border-amber-500/30 rounded-lg p-2 flex items-center justify-center backdrop-blur-sm shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 transition-shadow">
+                      <div className="text-amber-500 scale-125 text-4xl">
                         <NoteIcon />
                       </div>
                     </div>
