@@ -140,11 +140,11 @@ const AnimatedImageCard = () => {
         {stage === 'expanded' && selectedImage !== null && (
           <div className="w-full h-full flex flex-col items-center justify-center gap-4 animate-expand">
             <div className="relative rounded-xl overflow-hidden" style={{ boxShadow: '0 0 20px rgba(34, 211, 238, 0.4)' }}>
-              <div className="relative w-80 h-80 bg-secondary/40 rounded-xl border border-accent/40 flex items-center justify-center overflow-hidden backdrop-blur-sm">
+              <div className="relative w-96 h-96 bg-secondary/40 rounded-xl border border-accent/40 flex items-center justify-center overflow-hidden backdrop-blur-sm">
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
                   alt="JavaScript error screenshot"
-                  className="w-full h-full object-cover rounded-lg"
+                  className="w-full h-full object-contain"
                 />
               </div>
             </div>
@@ -299,27 +299,34 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
               <div key={video.id} className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
                 {/* Video thumbnail */}
                 <div className="relative w-56 h-40 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
-                  {/* Horizontal scan lines moving top to bottom - scanning video frames */}
+                  {/* Thin horizontal scan clips moving horizontally - scanning video frames */}
                   {stage === 'scanning' && (
-                    <>
-                      <div 
-                        className="absolute inset-x-0 h-2 bg-gradient-to-b from-transparent via-accent to-transparent"
+                    <div className="absolute inset-0 pointer-events-none">
+                      {/* Multiple thin scan lines creating clip effect */}
+                      {[...Array(8)].map((_, i) => (
+                        <div
+                          key={i}
+                          className="absolute inset-y-0 h-full border-b border-accent/60"
+                          style={{
+                            left: `${scanProgress[idx] - 15 + i * 5}%`,
+                            opacity: Math.max(0, 1 - Math.abs(scanProgress[idx] - 50 - i * 5) / 50),
+                            boxShadow: `inset 0 0 8px rgba(34, 211, 238, 0.6)`,
+                            zIndex: 10
+                          }}
+                        />
+                      ))}
+                      {/* Main bright scan line */}
+                      <div
+                        className="absolute inset-y-0 w-12 bg-gradient-to-r from-transparent via-accent to-transparent"
                         style={{
-                          top: `${scanProgress[idx]}%`,
-                          opacity: 0.9,
-                          boxShadow: '0 0 12px rgba(34, 211, 238, 0.8)',
-                          zIndex: 10
+                          left: `${scanProgress[idx]}%`,
+                          transform: 'translateX(-50%)',
+                          opacity: 0.8,
+                          boxShadow: '0 0 20px rgba(34, 211, 238, 0.9)',
+                          zIndex: 11
                         }}
                       />
-                      <div 
-                        className="absolute inset-x-0 h-1 bg-accent"
-                        style={{
-                          top: `${scanProgress[idx]}%`,
-                          opacity: 0.5,
-                          zIndex: 9
-                        }}
-                      />
-                    </>
+                    </div>
                   )}
                 </div>
 
@@ -333,7 +340,8 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
         {/* Expanded: Show selected video zoomed */}
         {stage === 'expanded' && selectedVideo !== null && (
           <div className="animate-expand flex flex-col items-center justify-center gap-4 h-full w-full">
-            <div className="relative w-96 h-72 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border-2 border-accent/60 flex items-center justify-center overflow-hidden shadow-2xl backdrop-blur-sm" style={{ boxShadow: '0 0 32px rgba(34, 211, 238, 0.3)' }}>
+            <div className="relative rounded-xl overflow-hidden" style={{ boxShadow: '0 0 20px rgba(34, 211, 238, 0.4)' }}>
+              <div className="relative w-96 h-72 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/40 flex items-center justify-center overflow-hidden backdrop-blur-sm">
               {/* Video visual background */}
               <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-secondary/50 to-background/80" />
               
@@ -358,9 +366,9 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
                 <PlayIcon />
               </div>
 
-              {/* Caption at bottom */}
               <div className="absolute bottom-4 left-4 right-4 px-3 py-2 bg-accent/20 border border-accent/60 rounded-lg backdrop-blur-sm z-20">
                 <p className="text-xs font-semibold text-accent">We'll test the new pricing next quarter.</p>
+              </div>
               </div>
             </div>
             <p className="text-sm text-muted-foreground font-medium">{videos[selectedVideo].name}</p>
