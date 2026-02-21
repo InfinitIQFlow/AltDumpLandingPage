@@ -930,20 +930,51 @@ export default function SearchComparisonSection() {
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
         <div className="space-y-20">
           {/* Main heading */}
-          <div className="text-center space-y-6 fade-in-down">
-            <h2 className="text-5xl md:text-6xl font-bold text-foreground text-balance leading-tight">
-              Windows Search looks at filenames.
-              <br />
-              <span className="bg-gradient-to-r from-accent to-cyan-400 bg-clip-text text-transparent font-black">AltDump looks inside your files.</span>
-            </h2>
+          <div className="text-center space-y-8 fade-in-down">
+            {/* First line - Windows Search */}
+            <div>
+              <h2 className="text-5xl md:text-6xl font-bold text-foreground inline-block">
+                Windows Search looks at filenames.
+              </h2>
+            </div>
             
-            <div className="space-y-3 max-w-3xl mx-auto">
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                Even if you forgot the filename, if it's buried in a PDF, if it's inside an image, if it's hidden in a document —
-              </p>
-              <p className="text-lg md:text-xl font-semibold text-accent">
-                results appear instantly.
-              </p>
+            {/* Second line - AltDump */}
+            <div>
+              <h2 className="text-5xl md:text-6xl font-black">
+                <span className="bg-gradient-to-r from-accent via-cyan-300 to-accent bg-clip-text text-transparent">
+                  AltDump looks inside your files.
+                </span>
+              </h2>
+            </div>
+            
+            {/* Descriptive text with visual hierarchy */}
+            <div className="space-y-6 max-w-4xl mx-auto fade-in-up" style={{ animationDelay: '0.1s' }}>
+              <div className="space-y-4">
+                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                  Even if you forgot the filename—
+                </p>
+                
+                <div className="flex flex-col gap-3 text-lg md:text-xl">
+                  <div className="flex items-start gap-3">
+                    <span className="text-accent font-bold text-2xl">•</span>
+                    <span className="text-muted-foreground">if it's buried in a <span className="text-foreground font-semibold">PDF</span>,</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="text-accent font-bold text-2xl">•</span>
+                    <span className="text-muted-foreground">if it's inside an <span className="text-foreground font-semibold">image</span>,</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="text-accent font-bold text-2xl">•</span>
+                    <span className="text-muted-foreground">if it's hidden in a <span className="text-foreground font-semibold">document</span> —</span>
+                  </div>
+                </div>
+                
+                <div className="pt-4 border-t border-border/50">
+                  <p className="text-xl md:text-2xl font-bold bg-gradient-to-r from-accent to-cyan-300 bg-clip-text text-transparent">
+                    results appear instantly.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
