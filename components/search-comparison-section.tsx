@@ -132,20 +132,20 @@ const AnimatedImageCard = () => {
 
         {/* Stage 3: Expanded image - zoomed and animated */}
         {stage === 'expanded' && selectedImage !== null && (
-          <div className="w-full h-full flex flex-col items-center justify-center gap-6 animate-expand">
+          <div className="w-full h-full flex flex-col items-center justify-center gap-4 animate-expand">
             <div className="relative w-96 h-96 bg-slate-700/30 rounded-xl border-2 border-emerald-500/60 flex items-center justify-center overflow-hidden shadow-2xl backdrop-blur-sm" style={{ boxShadow: '0 0 32px rgba(16, 185, 129, 0.3)' }}>
               <img
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
                 alt="JavaScript error screenshot"
                 className="w-full h-full object-cover"
               />
-              
-              {/* Highlight the match */}
-              <div className="absolute top-4 left-4 right-4 px-3 py-2 bg-emerald-500/20 border border-emerald-400/60 rounded-lg backdrop-blur-sm">
+            </div>
+            <div className="flex flex-col items-center gap-3">
+              <div className="px-3 py-2 bg-emerald-500/20 border border-emerald-400/60 rounded-lg backdrop-blur-sm">
                 <p className="text-xs font-semibold text-emerald-300">✓ Match found: javascript error</p>
               </div>
+              <p className="text-sm text-slate-300 font-medium">{images[selectedImage].name}</p>
             </div>
-            <p className="text-sm text-slate-300 font-medium">{images[selectedImage].name}</p>
           </div>
         )}
       </div>
@@ -273,31 +273,73 @@ const AnimatedVideoCard = () => {
       <div className="flex-1 p-8 flex items-center justify-center overflow-hidden">
         {/* Initial + Scanning: Show 2 videos */}
         {(stage === 'initial' || stage === 'typing' || stage === 'scanning') && (
-          <div className="flex gap-8 justify-center items-center h-full">
+          <div className="flex gap-12 justify-center items-center h-full transition-opacity duration-500">
             {videos.map((video, idx) => (
-              <div key={video.id} className="flex flex-col items-center gap-4">
+              <div key={video.id} className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
                 {/* Video thumbnail */}
-                <div className="relative w-48 h-32 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
-                  {/* Frame strip flicker animation during scanning */}
+                <div className="relative w-56 h-40 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl border border-slate-600/40 flex items-center justify-center overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300">
+                  {/* Frame strip flicker animation */}
                   {stage === 'scanning' && (
                     <>
-                      {/* Horizontal flickering frames */}
-                      <div className="absolute inset-0 opacity-30">
-                        {[0, 1, 2, 3, 4].map((i) => (
+                      <div className="absolute inset-0 opacity-40">
+                        {[0, 1, 2, 3].map((i) => (
                           <div
                             key={i}
-                            className="absolute h-full w-8 bg-white/20"
+                            className="absolute h-full w-12 bg-emerald-400/20"
                             style={{
-                              left: `${(scanProgress[idx] + i * 15) % 100}%`,
-                              animation: 'none'
+                              left: `${(scanProgress[idx] + i * 20) % 100}%`,
                             }}
                           />
                         ))}
                       </div>
-                      {/* Soft pulsing overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-300/5 to-transparent" />
                     </>
                   )}
+                </div>
+
+                {/* Video name */}
+                <p className="text-sm text-slate-300 font-medium">{video.name}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Expanded: Show selected video zoomed */}
+        {stage === 'expanded' && selectedVideo !== null && (
+          <div className="animate-expand flex flex-col items-center justify-center gap-4 h-full w-full">
+            <div className="relative w-96 h-72 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl border-2 border-emerald-500/60 flex items-center justify-center overflow-hidden shadow-2xl backdrop-blur-sm" style={{ boxShadow: '0 0 32px rgba(16, 185, 129, 0.3)' }}>
+              {/* Video visual background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/10 via-slate-800 to-slate-900" />
+              
+              {/* Animated waveform pattern (represents video content) */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-20">
+                <div className="flex gap-1">
+                  {[...Array(8)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="w-1 bg-emerald-400 rounded-full"
+                      style={{
+                        height: `${30 + (i % 3) * 20}px`,
+                        animation: `wave 0.8s ease-in-out ${i * 0.1}s infinite`
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Play button */}
+              <div className="relative z-10 p-5 bg-emerald-500/30 rounded-full border border-emerald-400/60">
+                <PlayIcon />
+              </div>
+
+              {/* Caption at bottom */}
+              <div className="absolute bottom-4 left-4 right-4 px-3 py-2 bg-emerald-500/20 border border-emerald-400/60 rounded-lg backdrop-blur-sm z-20">
+                <p className="text-xs font-semibold text-emerald-300">We'll test the new pricing next quarter.</p>
+              </div>
+            </div>
+            <p className="text-sm text-slate-300 font-medium">{videos[selectedVideo].name}</p>
+          </div>
+        )}
 
                   {/* Play button and icon */}
                   <div className="relative z-10 flex flex-col items-center gap-3">
