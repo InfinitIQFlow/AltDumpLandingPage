@@ -930,7 +930,7 @@ export default function SearchComparisonSection() {
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
         <div className="space-y-20">
           {/* Main heading */}
-          <div className="text-center space-y-6 fade-in-down font-serif">
+          <div className="text-center space-y-6 fade-in-down">
             {/* First line - Windows Search */}
             <div>
               <h2 className="text-4xl md:text-5xl font-bold text-foreground inline-block">
@@ -941,7 +941,7 @@ export default function SearchComparisonSection() {
             {/* Second line - AltDump */}
             <div>
               <h2 className="text-4xl md:text-5xl font-bold">
-                <span className="bg-gradient-to-r from-purple-500 via-accent to-indigo-500 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-accent to-cyan-400 bg-clip-text text-transparent">
                   AltDump looks inside your files.
                 </span>
               </h2>
@@ -950,24 +950,24 @@ export default function SearchComparisonSection() {
             {/* Descriptive text with visual hierarchy */}
             <div className="space-y-4 max-w-3xl mx-auto fade-in-up" style={{ animationDelay: '0.1s' }}>
               <div className="space-y-3">
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-serif">
+                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                   Even if you forgot the filename—
                 </p>
                 
                 <div className="flex flex-col gap-2 text-center">
-                  <p className="text-lg md:text-xl text-muted-foreground italic font-serif text-purple-400">
+                  <p className="text-lg md:text-xl text-accent/80 italic">
                     if it's buried in a PDF,
                   </p>
-                  <p className="text-lg md:text-xl text-muted-foreground italic font-serif text-purple-300">
+                  <p className="text-lg md:text-xl text-accent/70 italic">
                     if it's inside an image,
                   </p>
-                  <p className="text-lg md:text-xl text-muted-foreground italic font-serif text-purple-500">
+                  <p className="text-lg md:text-xl text-accent/90 italic">
                     if it's hidden in a document —
                   </p>
                 </div>
                 
                 <div className="pt-2">
-                  <p className="text-xl md:text-2xl font-bold font-serif bg-gradient-to-r from-purple-500 to-indigo-500 bg-clip-text text-transparent">
+                  <p className="text-xl md:text-2xl font-bold text-accent">
                     results appear instantly.
                   </p>
                 </div>
