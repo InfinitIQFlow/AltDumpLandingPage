@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import { Geist, Geist_Mono } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next';
+import { Analytics } from '@vercel/analytics/next'
+import { PostHogProviderWrapper } from './providers'
 
 import './globals.css'
 
@@ -42,7 +43,12 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className="font-sans antialiased bg-background text-foreground">{children}<Analytics /></body>
+      <body className="font-sans antialiased bg-background text-foreground">
+        <PostHogProviderWrapper>
+          {children}
+        </PostHogProviderWrapper>
+        <Analytics />
+      </body>
     </html>
   )
 }
