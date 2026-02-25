@@ -138,16 +138,12 @@ const AnimatedImageCard = () => {
 
         {/* Stage 3: Expanded image - zoomed and animated */}
         {stage === 'expanded' && selectedImage !== null && (
-          <div className="w-full h-full flex flex-col items-center justify-center gap-2 animate-expand px-4">
-            <div className="relative rounded-xl overflow-hidden max-w-3xl" style={{ boxShadow: '0 0 40px rgba(34, 211, 238, 0.6), 0 0 20px rgba(34, 211, 238, 0.8)', maxHeight: '90%', aspectRatio: '1' }}>
-              <div className="relative w-full h-full rounded-xl flex items-center justify-center overflow-hidden border-2 border-accent/60">
-                <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
-                  alt="JavaScript error screenshot"
-                  className="w-full h-full object-contain bg-background"
-                />
-              </div>
-            </div>
+          <div className="w-full h-full flex flex-col items-center justify-center gap-4 animate-expand px-4">
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
+              alt="JavaScript error screenshot"
+              className="max-w-3xl max-h-[80vh] w-auto h-auto object-contain"
+            />
             <div className="flex flex-col items-center gap-2 flex-shrink-0">
               <div className="px-3 py-2 bg-accent/20 border border-accent/60 rounded-lg backdrop-blur-sm">
                 <p className="text-xs font-semibold text-accent">✓ Match found: javascript error</p>
