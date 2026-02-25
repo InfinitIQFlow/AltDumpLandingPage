@@ -16,14 +16,12 @@ export default function PricingSection() {
               {/* Title and Badge */}
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold text-foreground">Available on Microsoft Store</h2>
-                <p className="text-sm font-semibold text-blue-500">Official Microsoft Partner</p>
               </div>
 
               {/* Price Section */}
               <div className="space-y-2">
                 <div className="flex items-baseline gap-3">
-                  <p className="text-4xl font-bold text-foreground">Free Trial</p>
-                  <p className="text-sm text-muted-foreground">Then affordable plans</p>
+                  <p className="text-4xl font-bold text-blue-500">Free Trial — $12 Lifetime License</p>
                 </div>
               </div>
 
@@ -33,10 +31,7 @@ export default function PricingSection() {
                   <span className="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0 mt-2"></span>
                   <span className="text-sm text-muted-foreground">Windows 10/11</span>
                 </li>
-                <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.1s' }}>
-                  <span className="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0 mt-2"></span>
-                  <span className="text-sm text-muted-foreground">Try free for 14 days</span>
-                </li>
+
                 <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.15s' }}>
                   <span className="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0 mt-2"></span>
                   <span className="text-sm text-muted-foreground">No payment needed to start</span>
@@ -47,7 +42,7 @@ export default function PricingSection() {
                 </li>
                 <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.25s' }}>
                   <span className="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0 mt-2"></span>
-                  <span className="text-sm text-muted-foreground">Unlimited storage</span>
+                  <span className="text-sm text-muted-foreground">Stores everything locally on your device</span>
                 </li>
                 <li className="flex items-start gap-3 fade-in-up" style={{ animationDelay: '0.3s' }}>
                   <span className="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0 mt-2"></span>
