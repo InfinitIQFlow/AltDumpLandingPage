@@ -110,11 +110,11 @@ const AnimatedImageCard = () => {
         
         {/* Stage 1 & 2: 3 Images */}
         {(stage === 'initial' || stage === 'typing' || stage === 'scanning') && (
-          <div className="w-full flex gap-8 justify-center items-center h-full">
+          <div className="w-full flex gap-6 justify-center items-center h-full overflow-hidden">
             {images.map((img, idx) => (
-              <div key={img.id} className="flex flex-col items-center gap-3 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
+              <div key={img.id} className="flex flex-col items-center gap-3 transition-opacity duration-500 shrink-0" style={{ opacity: fadeOpacity[idx] }}>
                 {/* Image container - larger */}
-                <div className="relative w-40 h-40 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center text-muted-foreground overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
+                <div className="relative w-32 h-32 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center text-muted-foreground overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
                   <ImageIcon />
                   
                   {/* Realistic glowing scan line - on top, sharp */}
@@ -294,11 +294,11 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
       <div className="flex-1 p-8 flex items-center justify-center overflow-hidden">
         {/* Initial + Typing + Scanning: Show 2 videos */}
         {(stage === 'initial' || stage === 'typing' || stage === 'scanning') && (
-          <div className="flex gap-8 justify-center items-center h-full transition-opacity duration-500">
+          <div className="flex gap-6 justify-center items-center h-full transition-opacity duration-500 overflow-hidden">
             {videos.map((video, idx) => (
-              <div key={video.id} className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
+              <div key={video.id} className="flex flex-col items-center gap-4 transition-opacity duration-500 shrink-0" style={{ opacity: fadeOpacity[idx] }}>
                 {/* Video thumbnail */}
-                <div className="relative w-64 h-44 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
+                <div className="relative w-48 h-32 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
                   {/* Thin horizontal scan clips moving horizontally - scanning video frames */}
                   {stage === 'scanning' && (
                     <div className="absolute inset-0 pointer-events-none">
@@ -619,16 +619,16 @@ const AnimatedDataCard = () => {
       <div className="flex-1 p-8 overflow-y-auto flex items-center justify-center">
         {/* Initial state: Show 3 file cards */}
         {(stage === 'initial' || stage === 'typing') && (
-          <div className="flex gap-8 justify-center items-center h-full transition-opacity duration-500">
+          <div className="flex gap-6 justify-center items-center h-full transition-opacity duration-500 overflow-hidden">
             {files.map((file, idx) => (
-              <div key={file.id} className="flex flex-col items-center gap-3 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
-                <div className="w-36 h-44 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex flex-col items-center justify-center gap-2 shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300">
-                  <div className="text-foreground">
+              <div key={file.id} className="flex flex-col items-center gap-3 transition-opacity duration-500 shrink-0" style={{ opacity: fadeOpacity[idx] }}>
+                <div className="w-32 h-40 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border border-accent/30 flex flex-col items-center justify-center gap-2 shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300">
+                  <div className="w-10 h-10 bg-accent/20 rounded-md flex items-center justify-center text-accent">
                     <FileIcon />
                   </div>
                   <p className="text-xs text-muted-foreground font-medium text-center px-2">CSV</p>
                 </div>
-                <p className="text-xs text-foreground font-medium text-center max-w-24">{file.name}</p>
+                <p className="text-xs text-foreground font-medium text-center max-w-20 line-clamp-2">{file.name}</p>
               </div>
             ))}
           </div>
@@ -639,8 +639,8 @@ const AnimatedDataCard = () => {
           <div className="animate-expand w-full max-w-3xl">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-4">
-                <div className="w-18 h-24 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border-2 border-accent/60 flex items-center justify-center shadow-lg backdrop-blur-sm" style={{ boxShadow: '0 0 16px rgba(34, 211, 238, 0.3)' }}>
-                  <div className="text-accent text-lg">
+                <div className="w-16 h-20 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border border-accent/60 flex items-center justify-center shadow-lg backdrop-blur-sm hover:border-accent/80 transition-all" style={{ boxShadow: '0 0 16px rgba(34, 211, 238, 0.3)' }}>
+                  <div className="w-10 h-10 bg-accent/20 rounded flex items-center justify-center text-accent">
                     <FileIcon />
                   </div>
                 </div>
