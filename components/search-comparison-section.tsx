@@ -142,7 +142,7 @@ const AnimatedImageCard = () => {
             <img
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
               alt="JavaScript error screenshot"
-              className="max-w-3xl max-h-[80vh] w-auto h-auto object-contain"
+              className="w-full h-full object-contain object-center"
             />
             <div className="flex flex-col items-center gap-2 flex-shrink-0">
               <div className="px-3 py-2 bg-accent/20 border border-accent/60 rounded-lg backdrop-blur-sm">
