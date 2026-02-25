@@ -110,11 +110,11 @@ const AnimatedImageCard = () => {
         
         {/* Stage 1 & 2: 3 Images */}
         {(stage === 'initial' || stage === 'typing' || stage === 'scanning') && (
-          <div className="w-full flex gap-4 justify-center items-center h-full overflow-hidden px-4">
+          <div className="w-full flex gap-3 justify-center items-center h-full overflow-hidden px-2 max-w-full">
             {images.map((img, idx) => (
-              <div key={img.id} className="flex flex-col items-center gap-3 transition-opacity duration-500 shrink-0" style={{ opacity: fadeOpacity[idx] }}>
+              <div key={img.id} className="flex flex-col items-center gap-2 transition-opacity duration-500 shrink-0" style={{ opacity: fadeOpacity[idx] }}>
                 {/* Image container - responsive and larger */}
-                <div className="relative w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center text-muted-foreground overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
+                <div className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center text-muted-foreground overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20 flex-shrink-0">
                   <ImageIcon />
                   
                   {/* Realistic glowing scan line - on top, sharp */}
@@ -130,7 +130,7 @@ const AnimatedImageCard = () => {
                     />
                   )}
                 </div>
-                <p className="text-xs text-foreground font-medium text-center max-w-24">{img.name}</p>
+                <p className="text-xs text-foreground font-medium text-center max-w-20 line-clamp-1">{img.name}</p>
               </div>
             ))}
           </div>
@@ -138,9 +138,9 @@ const AnimatedImageCard = () => {
 
         {/* Stage 3: Expanded image - zoomed and animated */}
         {stage === 'expanded' && selectedImage !== null && (
-          <div className="w-full h-full flex flex-col items-center justify-center gap-4 animate-expand px-4">
-            <div className="relative rounded-xl overflow-hidden" style={{ boxShadow: '0 0 40px rgba(34, 211, 238, 0.6), 0 0 20px rgba(34, 211, 238, 0.8)' }}>
-              <div className="relative w-96 h-96 sm:w-[500px] sm:h-[500px] lg:w-[600px] lg:h-[600px] rounded-xl flex items-center justify-center overflow-hidden border-2 border-accent/60">
+          <div className="w-full h-full flex flex-col items-center justify-center gap-2 animate-expand px-4">
+            <div className="relative rounded-xl overflow-hidden flex-shrink-0" style={{ boxShadow: '0 0 40px rgba(34, 211, 238, 0.6), 0 0 20px rgba(34, 211, 238, 0.8)' }}>
+              <div className="relative w-72 h-72 sm:w-80 sm:h-80 rounded-xl flex items-center justify-center overflow-hidden border-2 border-accent/60 flex-shrink-0">
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
                   alt="JavaScript error screenshot"
@@ -148,11 +148,11 @@ const AnimatedImageCard = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-col items-center gap-3">
+            <div className="flex flex-col items-center gap-2 flex-shrink-0">
               <div className="px-3 py-2 bg-accent/20 border border-accent/60 rounded-lg backdrop-blur-sm">
                 <p className="text-xs font-semibold text-accent">✓ Match found: javascript error</p>
               </div>
-              <p className="text-sm text-foreground font-medium">{images[selectedImage].name}</p>
+              <p className="text-xs text-foreground font-medium line-clamp-1">{images[selectedImage].name}</p>
             </div>
           </div>
         )}
@@ -294,11 +294,11 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
       <div className="flex-1 p-8 flex items-center justify-center overflow-hidden">
         {/* Initial + Typing + Scanning: Show 2 videos */}
         {(stage === 'initial' || stage === 'typing' || stage === 'scanning') && (
-          <div className="flex gap-4 justify-center items-center h-full transition-opacity duration-500 overflow-hidden px-4">
+          <div className="flex gap-3 justify-center items-center h-full transition-opacity duration-500 overflow-hidden px-2 max-w-full">
             {videos.map((video, idx) => (
-              <div key={video.id} className="flex flex-col items-center gap-4 transition-opacity duration-500 shrink-0" style={{ opacity: fadeOpacity[idx] }}>
+              <div key={video.id} className="flex flex-col items-center gap-2 transition-opacity duration-500 shrink-0" style={{ opacity: fadeOpacity[idx] }}>
                 {/* Video thumbnail - responsive and larger */}
-                <div className="relative w-56 h-40 sm:w-64 sm:h-48 lg:w-72 lg:h-56 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
+                <div className="relative w-40 h-28 sm:w-48 sm:h-32 md:w-56 md:h-40 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20 flex-shrink-0">
                   {/* Thin horizontal scan clips moving horizontally - scanning video frames */}
                   {stage === 'scanning' && (
                     <div className="absolute inset-0 pointer-events-none">
@@ -331,7 +331,7 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
                 </div>
 
                 {/* Video name */}
-                <p className="text-sm text-foreground font-medium">{video.name}</p>
+                <p className="text-xs text-foreground font-medium text-center max-w-20 line-clamp-1">{video.name}</p>
               </div>
             ))}
           </div>
@@ -339,9 +339,9 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
 
         {/* Expanded: Show selected video zoomed */}
         {stage === 'expanded' && selectedVideo !== null && (
-          <div className="animate-expand flex flex-col items-center justify-center gap-2 h-full w-full px-4">
-            <div className="relative rounded-xl overflow-hidden" style={{ boxShadow: '0 0 40px rgba(34, 211, 238, 0.6), 0 0 20px rgba(34, 211, 238, 0.8)' }}>
-              <div className="relative w-96 h-64 sm:w-[500px] sm:h-[400px] lg:w-[600px] lg:h-[480px] bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border-2 border-accent/60 flex items-center justify-center overflow-hidden backdrop-blur-sm">
+          <div className="animate-expand flex flex-col items-center justify-center gap-2 h-full w-full px-4 max-h-[700px]">
+            <div className="relative rounded-xl overflow-hidden flex-shrink-0" style={{ boxShadow: '0 0 40px rgba(34, 211, 238, 0.6), 0 0 20px rgba(34, 211, 238, 0.8)' }}>
+              <div className="relative w-64 h-48 sm:w-72 sm:h-56 rounded-xl border-2 border-accent/60 flex items-center justify-center overflow-hidden backdrop-blur-sm bg-gradient-to-br from-secondary/60 to-secondary/30 flex-shrink-0">
               {/* Video visual background */}
               <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-secondary/50 to-background/80" />
               
@@ -371,7 +371,7 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
               </div>
               </div>
             </div>
-            <p className="text-sm text-foreground font-medium">{videos[selectedVideo].name}</p>
+            <p className="text-xs text-foreground font-medium line-clamp-1 flex-shrink-0">{videos[selectedVideo].name}</p>
           </div>
         )}
         {stage === 'showing-text' && selectedVideo !== null && (
