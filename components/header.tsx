@@ -7,6 +7,14 @@ export default function Header() {
     window.open('https://apps.microsoft.com/detail/9NH5C9V4D2MM?hl=en-us&gl=IN&ocid=pdpshare', '_blank')
   }
 
+  const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault()
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
     <header className="border-b border-border/50 bg-background/80 backdrop-blur-md sticky top-0 z-50 transition-all duration-300">
       <div className="container px-4 md:px-6 max-w-6xl mx-auto py-4 flex items-center justify-between">
@@ -23,18 +31,18 @@ export default function Header() {
         </Link>
         
         <nav className="flex items-center gap-6">
-          <Link href="/#features" className="text-sm text-muted-foreground hover:text-accent transition-colors duration-300 relative group">
+          <a href="#features" onClick={(e) => handleScrollToSection(e, 'features')} className="text-sm text-muted-foreground hover:text-accent transition-colors duration-300 relative group cursor-pointer">
             Features
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full rounded-full"></span>
-          </Link>
-          <Link href="/#pricing" className="text-sm text-muted-foreground hover:text-accent transition-colors duration-300 relative group">
+          </a>
+          <a href="#pricing" onClick={(e) => handleScrollToSection(e, 'pricing')} className="text-sm text-muted-foreground hover:text-accent transition-colors duration-300 relative group cursor-pointer">
             Pricing
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full rounded-full"></span>
-          </Link>
-          <Link href="/#faq" className="text-sm text-muted-foreground hover:text-accent transition-colors duration-300 relative group">
+          </a>
+          <a href="#faq" onClick={(e) => handleScrollToSection(e, 'faq')} className="text-sm text-muted-foreground hover:text-accent transition-colors duration-300 relative group cursor-pointer">
             FAQ
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full rounded-full"></span>
-          </Link>
+          </a>
           <button 
             onClick={handleMicrosoftStoreClick}
             className="relative px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105 overflow-hidden group flex items-center gap-1"
