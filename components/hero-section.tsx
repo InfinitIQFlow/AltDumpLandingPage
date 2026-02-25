@@ -1,19 +1,8 @@
 'use client'
 
-import { useCheckout } from '@/hooks/use-checkout'
-
 export default function HeroSection() {
-  const { createCheckout, isLoading } = useCheckout()
-
-  const handleBuyClick = () => {
-    createCheckout()
-  }
-
-  const scrollToBeforeAfter = () => {
-    const element = document.getElementById('watch-how-it-works')
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
+  const handleMicrosoftStoreClick = () => {
+    window.open('https://apps.microsoft.com/', '_blank')
   }
 
   return (
@@ -29,7 +18,7 @@ export default function HeroSection() {
           {/* Eyebrow text */}
           <div className="fade-in-up">
             <span className="inline-block px-4 py-2 rounded-full bg-accent/10 border border-accent/30 text-sm font-semibold text-accent mb-6">
-              Your Private Vault, Instantly Searchable
+              Now Available on Microsoft Store
             </span>
           </div>
 
@@ -50,23 +39,25 @@ export default function HeroSection() {
             </p>
           </div>
 
-          {/* CTA Button */}
+          {/* CTA Button - Microsoft Store Badge */}
           <div className="flex flex-col items-center gap-3 pt-2 fade-in-up" style={{ animationDelay: '0.12s' }}>
             <button 
-              onClick={handleBuyClick} 
-              disabled={isLoading}
-              className="relative px-10 py-4 bg-gradient-to-r from-accent to-cyan-400 text-background rounded-xl font-bold text-lg transition-all disabled:opacity-50 group overflow-hidden"
+              onClick={handleMicrosoftStoreClick}
+              className="relative px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg font-bold text-base transition-all hover:shadow-lg hover:shadow-blue-500/50 group overflow-hidden flex items-center gap-2"
             >
               {/* Animated glow background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-accent via-cyan-300 to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></div>
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-accent to-cyan-400 rounded-xl blur opacity-50 group-hover:opacity-75 transition-opacity duration-300 -z-10"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-blue-400 to-blue-600 opacity-0 group-hover:opacity-30 transition-opacity duration-300 animate-pulse"></div>
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-blue-500 rounded-lg blur opacity-40 group-hover:opacity-60 transition-opacity duration-300 -z-10"></div>
               
               <span className="relative flex items-center justify-center gap-2">
-                Get AltDump Now
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z" />
+                </svg>
+                Get it from Microsoft Store
               </span>
             </button>
             <p className="text-xs text-muted-foreground">
-              One-time payment • Lifetime access • $12
+              Free Trial Available • Try Before You Buy
             </p>
           </div>
         </div>

@@ -1,12 +1,8 @@
 'use client'
 
-import { useCheckout } from '@/hooks/use-checkout'
-
 export default function FinalCTA() {
-  const { createCheckout, isLoading } = useCheckout()
-
-  const handleBuyClick = () => {
-    createCheckout()
+  const handleMicrosoftStoreClick = () => {
+    window.open('https://apps.microsoft.com/', '_blank')
   }
 
   return (
@@ -17,15 +13,17 @@ export default function FinalCTA() {
         </h2>
         
         <button 
-          onClick={handleBuyClick} 
-          disabled={isLoading}
-          className="px-10 py-4 bg-accent text-accent-foreground rounded-lg font-semibold hover:bg-accent/90 transition-colors mb-6 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          onClick={handleMicrosoftStoreClick}
+          className="px-10 py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 mb-6 text-lg hover:scale-105 flex items-center justify-center gap-2 mx-auto group"
         >
-          {isLoading ? 'Loading...' : 'Get Alt Dump — $12 Lifetime'}
+          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z" />
+          </svg>
+          Get AltDump on Microsoft Store
         </button>
         
         <p className="text-muted-foreground">
-          Windows only. Early Access price available for limited time.
+          Try free for 14 days. Windows 10/11. No payment needed to start.
         </p>
       </div>
     </section>
