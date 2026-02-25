@@ -615,10 +615,10 @@ const AnimatedDataCard = () => {
       <div className="flex-1 p-8 overflow-y-auto flex items-center justify-center">
         {/* Initial state: Show 3 file cards */}
         {(stage === 'initial' || stage === 'typing') && (
-          <div className="flex gap-6 justify-center items-center h-full transition-opacity duration-500 overflow-hidden">
+          <div className="flex gap-6 justify-center items-center h-full w-full transition-opacity duration-500 overflow-hidden px-8">
             {files.map((file, idx) => (
-              <div key={file.id} className="flex flex-col items-center gap-3 transition-opacity duration-500 shrink-0" style={{ opacity: fadeOpacity[idx] }}>
-                <div className="w-32 h-40 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border border-accent/30 flex flex-col items-center justify-center gap-2 shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300">
+              <div key={file.id} className="flex flex-col items-center gap-3 transition-opacity duration-500 flex-1 min-w-0" style={{ opacity: fadeOpacity[idx] }}>
+                <div className="w-full aspect-square max-w-32 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border border-accent/30 flex flex-col items-center justify-center gap-2 shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300">
                   <div className="w-10 h-10 bg-accent/20 rounded-md flex items-center justify-center text-accent">
                     <FileIcon />
                   </div>
