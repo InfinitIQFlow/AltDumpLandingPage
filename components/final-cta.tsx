@@ -2,7 +2,7 @@
 
 export default function FinalCTA() {
   const handleMicrosoftStoreClick = () => {
-    window.open('https://apps.microsoft.com/', '_blank')
+    window.open('https://apps.microsoft.com/detail/9NH5C9V4D2MM?hl=en-us&gl=IN&ocid=pdpshare', '_blank')
   }
 
   return (
