@@ -291,12 +291,12 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
         </div>
       </div>
 
-      <div className="flex-1 p-8 flex items-center justify-center overflow-hidden">
+      <div className="flex-1 p-4 md:p-6 lg:p-8 flex items-center justify-center overflow-hidden">
         {/* Initial + Typing + Scanning: Show 2 videos */}
         {(stage === 'initial' || stage === 'typing' || stage === 'scanning') && (
-          <div className="flex gap-3 justify-center items-center h-full transition-opacity duration-500 overflow-hidden px-2 max-w-full">
+          <div className="flex gap-4 justify-center items-center h-full w-full transition-opacity duration-500 overflow-hidden">
             {videos.map((video, idx) => (
-              <div key={video.id} className="flex flex-col items-center gap-2 transition-opacity duration-500 flex-1 min-w-0" style={{ opacity: fadeOpacity[idx] }}>
+              <div key={video.id} className="flex flex-col items-center gap-3 transition-opacity duration-500 flex-1 min-w-0" style={{ opacity: fadeOpacity[idx] }}>
                 {/* Video thumbnail - responsive and fills width */}
                 <div className="relative w-full aspect-video bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border border-accent/30 flex items-center justify-center overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
                   {/* Thin horizontal scan clips moving horizontally - scanning video frames */}
@@ -990,7 +990,7 @@ export default pool`
 
 export default function SearchComparisonSection() {
   return (
-    <section className="w-full py-24 md:py-32 bg-background border-b border-border">
+    <section id="features" className="w-full py-24 md:py-32 bg-background border-b border-border">
       <div className="container px-4 md:px-6 max-w-7xl mx-auto">
         <div className="space-y-20">
           {/* Main heading */}

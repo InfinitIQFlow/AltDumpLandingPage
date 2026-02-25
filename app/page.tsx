@@ -9,7 +9,6 @@ import MemorySection from '@/components/memory-section'
 import PrivacySection from '@/components/privacy-section'
 import BeforeAfterSection from '@/components/before-after-section'
 import StoryDemoSection from '@/components/story-demo-section'
-import FeaturesSection from '@/components/features-section'
 import PricingSection from '@/components/pricing-section'
 import FAQSection from '@/components/faq-section'
 import Footer from '@/components/footer'
@@ -21,7 +20,6 @@ export default function Page() {
       <main>
         <HeroSection />
         <DemoUI />
-        <FeaturesSection />
         <SearchComparisonSection />
         <HowToDumpSection />
         <MemorySection />
