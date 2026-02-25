@@ -23,8 +23,12 @@ export default function FAQSection() {
       answer: 'Yes. Full backup and restore are supported. You always own your data.',
     },
     {
-      question: 'Will updates be free?',
-      answer: 'Yes. All future updates are included with your Early Access purchase. No subscription ever.',
+      question: 'Is there a free trial?',
+      answer: 'Yes. You can download AltDump from the Microsoft Store and try it before purchasing.',
+    },
+    {
+      question: 'How do I upgrade?',
+      answer: 'Purchase the lifetime license directly inside the Microsoft Store listing.',
     },
     {
       question: 'Is it Windows only?',

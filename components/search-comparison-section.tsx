@@ -110,11 +110,11 @@ const AnimatedImageCard = () => {
         
         {/* Stage 1 & 2: 3 Images */}
         {(stage === 'initial' || stage === 'typing' || stage === 'scanning') && (
-          <div className="w-full flex gap-8 justify-center items-center h-full">
+          <div className="w-full flex gap-3 justify-center items-center h-full overflow-hidden px-2 max-w-full">
             {images.map((img, idx) => (
-              <div key={img.id} className="flex flex-col items-center gap-3 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
-                {/* Image container - larger */}
-                <div className="relative w-40 h-40 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center text-muted-foreground overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
+              <div key={img.id} className="flex flex-col items-center gap-2 transition-opacity duration-500 flex-1 min-w-0" style={{ opacity: fadeOpacity[idx] }}>
+                {/* Image container - responsive and fills width */}
+                <div className="relative w-full aspect-square bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border border-accent/30 flex items-center justify-center text-muted-foreground overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20 text-xs">
                   <ImageIcon />
                   
                   {/* Realistic glowing scan line - on top, sharp */}
@@ -130,7 +130,7 @@ const AnimatedImageCard = () => {
                     />
                   )}
                 </div>
-                <p className="text-xs text-foreground font-medium">{img.name}</p>
+                <p className="text-xs text-foreground font-medium text-center line-clamp-1">{img.name}</p>
               </div>
             ))}
           </div>
@@ -138,21 +138,17 @@ const AnimatedImageCard = () => {
 
         {/* Stage 3: Expanded image - zoomed and animated */}
         {stage === 'expanded' && selectedImage !== null && (
-          <div className="w-full h-full flex flex-col items-center justify-center gap-4 animate-expand">
-            <div className="relative rounded-xl overflow-hidden">
-              <div className="relative w-[500px] h-[500px] rounded-xl flex items-center justify-center overflow-hidden">
-                <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
-                  alt="JavaScript error screenshot"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col items-center gap-3">
+          <div className="w-full h-full flex flex-col items-center justify-center gap-4 animate-expand px-4">
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-10%20234755-1X0I4sbNHjndxVD0EHbA2StS4wHhKL.png"
+              alt="JavaScript error screenshot"
+              className="w-full h-full object-contain object-center"
+            />
+            <div className="flex flex-col items-center gap-2 flex-shrink-0">
               <div className="px-3 py-2 bg-accent/20 border border-accent/60 rounded-lg backdrop-blur-sm">
                 <p className="text-xs font-semibold text-accent">✓ Match found: javascript error</p>
               </div>
-              <p className="text-sm text-foreground font-medium">{images[selectedImage].name}</p>
+              <p className="text-xs text-foreground font-medium line-clamp-1">{images[selectedImage].name}</p>
             </div>
           </div>
         )}
@@ -291,14 +287,14 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
         </div>
       </div>
 
-      <div className="flex-1 p-8 flex items-center justify-center overflow-hidden">
+      <div className="flex-1 p-4 md:p-6 lg:p-8 flex items-center justify-center overflow-hidden">
         {/* Initial + Typing + Scanning: Show 2 videos */}
         {(stage === 'initial' || stage === 'typing' || stage === 'scanning') && (
-          <div className="flex gap-8 justify-center items-center h-full transition-opacity duration-500">
+          <div className="flex gap-4 justify-center items-center h-full w-full transition-opacity duration-500 overflow-hidden">
             {videos.map((video, idx) => (
-              <div key={video.id} className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
-                {/* Video thumbnail */}
-                <div className="relative w-64 h-44 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex items-center justify-center overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
+              <div key={video.id} className="flex flex-col items-center gap-3 transition-opacity duration-500 flex-1 min-w-0" style={{ opacity: fadeOpacity[idx] }}>
+                {/* Video thumbnail - responsive and fills width */}
+                <div className="relative w-full aspect-video bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border border-accent/30 flex items-center justify-center overflow-hidden shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300 hover:shadow-accent/20">
                   {/* Thin horizontal scan clips moving horizontally - scanning video frames */}
                   {stage === 'scanning' && (
                     <div className="absolute inset-0 pointer-events-none">
@@ -331,7 +327,7 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
                 </div>
 
                 {/* Video name */}
-                <p className="text-sm text-foreground font-medium">{video.name}</p>
+                <p className="text-xs text-foreground font-medium text-center line-clamp-1">{video.name}</p>
               </div>
             ))}
           </div>
@@ -339,9 +335,9 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
 
         {/* Expanded: Show selected video zoomed */}
         {stage === 'expanded' && selectedVideo !== null && (
-          <div className="animate-expand flex flex-col items-center justify-center gap-2 h-full w-full">
-            <div className="relative rounded-xl overflow-hidden" style={{ boxShadow: '0 0 20px rgba(34, 211, 238, 0.4)' }}>
-              <div className="relative w-[550px] h-[400px] bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/40 flex items-center justify-center overflow-hidden backdrop-blur-sm">
+          <div className="animate-expand flex flex-col items-center justify-center gap-2 h-full w-full px-4">
+            <div className="relative rounded-xl overflow-hidden w-full max-w-3xl aspect-video" style={{ boxShadow: '0 0 40px rgba(34, 211, 238, 0.6), 0 0 20px rgba(34, 211, 238, 0.8)' }}>
+              <div className="relative w-full h-full rounded-xl border-2 border-accent/60 flex items-center justify-center overflow-hidden backdrop-blur-sm bg-gradient-to-br from-secondary/60 to-secondary/30">
               {/* Video visual background */}
               <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-secondary/50 to-background/80" />
               
@@ -361,17 +357,17 @@ const AnimatedVideoCard = ({ title, description }: { title: string; description:
                 </div>
               </div>
 
-              {/* Play button */}
-              <div className="relative z-10 p-3 bg-accent/30 rounded-full border border-accent/60 hover:border-accent transition-colors">
+                {/* Play button */}
+              <div className="relative z-10 p-4 bg-accent/30 rounded-full border border-accent/60 hover:border-accent transition-colors shadow-lg" style={{ boxShadow: '0 0 20px rgba(34, 211, 238, 0.5)' }}>
                 <PlayIcon />
               </div>
 
-              <div className="absolute bottom-2 left-3 right-3 px-2 py-1 bg-accent/20 border border-accent/60 rounded-lg backdrop-blur-sm z-20">
+              <div className="absolute bottom-3 left-3 right-3 px-3 py-2 bg-accent/20 border border-accent/60 rounded-lg backdrop-blur-sm z-20">
                 <p className="text-xs font-semibold text-accent">We'll test the new pricing next quarter.</p>
               </div>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground font-medium">{videos[selectedVideo].name}</p>
+            <p className="text-xs text-foreground font-medium line-clamp-1 flex-shrink-0">{videos[selectedVideo].name}</p>
           </div>
         )}
         {stage === 'showing-text' && selectedVideo !== null && (
@@ -619,16 +615,16 @@ const AnimatedDataCard = () => {
       <div className="flex-1 p-8 overflow-y-auto flex items-center justify-center">
         {/* Initial state: Show 3 file cards */}
         {(stage === 'initial' || stage === 'typing') && (
-          <div className="flex gap-8 justify-center items-center h-full transition-opacity duration-500">
+          <div className="flex gap-6 justify-center items-center h-full w-full transition-opacity duration-500 overflow-hidden px-8">
             {files.map((file, idx) => (
-              <div key={file.id} className="flex flex-col items-center gap-3 transition-opacity duration-500" style={{ opacity: fadeOpacity[idx] }}>
-                <div className="w-36 h-44 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-xl border border-accent/30 flex flex-col items-center justify-center gap-2 shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300">
-                  <div className="text-foreground">
+              <div key={file.id} className="flex flex-col items-center gap-3 transition-opacity duration-500 flex-1 min-w-0" style={{ opacity: fadeOpacity[idx] }}>
+                <div className="w-full aspect-square max-w-32 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border border-accent/30 flex flex-col items-center justify-center gap-2 shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-accent/50 transition-all duration-300">
+                  <div className="w-10 h-10 bg-accent/20 rounded-md flex items-center justify-center text-accent">
                     <FileIcon />
                   </div>
                   <p className="text-xs text-muted-foreground font-medium text-center px-2">CSV</p>
                 </div>
-                <p className="text-xs text-foreground font-medium text-center max-w-24">{file.name}</p>
+                <p className="text-xs text-foreground font-medium text-center max-w-20 line-clamp-2">{file.name}</p>
               </div>
             ))}
           </div>
@@ -639,8 +635,8 @@ const AnimatedDataCard = () => {
           <div className="animate-expand w-full max-w-3xl">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-4">
-                <div className="w-18 h-24 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border-2 border-accent/60 flex items-center justify-center shadow-lg backdrop-blur-sm" style={{ boxShadow: '0 0 16px rgba(34, 211, 238, 0.3)' }}>
-                  <div className="text-accent text-lg">
+                <div className="w-16 h-20 bg-gradient-to-br from-secondary/60 to-secondary/30 rounded-lg border border-accent/60 flex items-center justify-center shadow-lg backdrop-blur-sm hover:border-accent/80 transition-all" style={{ boxShadow: '0 0 16px rgba(34, 211, 238, 0.3)' }}>
+                  <div className="w-10 h-10 bg-accent/20 rounded flex items-center justify-center text-accent">
                     <FileIcon />
                   </div>
                 </div>
@@ -990,7 +986,7 @@ export default pool`
 
 export default function SearchComparisonSection() {
   return (
-    <section className="w-full py-24 md:py-32 bg-background border-b border-border">
+    <section id="features" className="w-full py-24 md:py-32 bg-background border-b border-border">
       <div className="container px-4 md:px-6 max-w-7xl mx-auto">
         <div className="space-y-20">
           {/* Main heading */}
