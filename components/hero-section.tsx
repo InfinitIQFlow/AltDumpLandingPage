@@ -19,8 +19,8 @@ export default function HeroSection() {
       <div className="container px-4 md:px-6 max-w-6xl mx-auto relative z-10">
         <div className="flex flex-col md:flex-row items-center md:items-center gap-10 md:gap-16">
           {/* Left: Folder chaos image */}
-          <div className="w-full md:w-1/2 flex justify-center fade-in-up">
-            <div className="relative w-full max-w-xl rounded-2xl overflow-hidden border border-border/70 bg-secondary/40 shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
+          <div className="w-full md:w-7/12 lg:w-3/5 flex justify-center fade-in-up">
+            <div className="relative w-full max-w-2xl rounded-2xl overflow-hidden border border-border/70 bg-secondary/40 shadow-[0_24px_80px_rgba(0,0,0,0.75)]">
               <img
                 src="/hero-folder.png"
                 alt="A chaotic folder full of similar filenames and screenshots"
@@ -32,7 +32,7 @@ export default function HeroSection() {
 
           {/* Right: Hero text */}
           <div
-            className="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left space-y-6 fade-in-up"
+            className="w-full md:w-5/12 lg:w-2/5 flex flex-col items-center md:items-start text-center md:text-left space-y-6 fade-in-up"
             style={{ animationDelay: '0.05s' }}
           >
             {/* Eyebrow */}
@@ -41,7 +41,7 @@ export default function HeroSection() {
             </span>
 
             {/* Main copy */}
-            <div className="space-y-3 max-w-xl">
+            <div className="space-y-4 max-w-xl">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight">
                 Does your folder look like this?
               </h1>
@@ -52,30 +52,27 @@ export default function HeroSection() {
                 Or that one screenshot you saved last week?
               </p>
 
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                Then this is made just for you.
+              <p className="text-base md:text-lg leading-relaxed">
+                <span className="inline-block px-2 py-1 rounded-md bg-accent/20 text-foreground font-semibold shadow-sm">
+                  Then this is made just for you!
+                </span>
               </p>
-
-              {/* Big, bold, can’t-miss line */}
-              <div className="mt-4">
-                <p className="inline-block text-lg md:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-300 via-amber-200 to-accent bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(56,189,248,0.55)]">
-                  This isn’t filename search. Search any sentence from any file — and find it instantly.
-                </p>
-              </div>
 
               {/* Supporting copy from original hero */}
               <p className="text-base md:text-lg text-muted-foreground leading-relaxed mt-4">
                 Save files, screenshots, videos, code, and ideas into your private second brain — and search them
-                instantly with semantic search, not filenames.
-              </p>
-
-              <p className="text-lg md:text-xl font-bold text-primary glow-text">
-                Offline, private, and instant.
+                instantly{' '}
+                <span className="font-semibold text-cyan-300">with semantic search</span>,{' '}
+                <span className="font-semibold text-rose-400">not filenames.</span>
               </p>
             </div>
 
-            {/* CTA - Microsoft Store badge */}
-            <div className="pt-2">
+            {/* Tagline + CTA centered */}
+            <div className="pt-4 flex flex-col items-center text-center space-y-3">
+              <p className="text-lg md:text-xl font-bold text-primary glow-text">
+                Offline, private, and instant.
+              </p>
+
               <button
                 onClick={handleMicrosoftStoreClick}
                 className="relative px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg font-bold text-base transition-all hover:shadow-lg hover:shadow-blue-500/50 group overflow-hidden flex items-center gap-2"
@@ -90,7 +87,8 @@ export default function HeroSection() {
                   Get it from Microsoft Store
                 </span>
               </button>
-              <p className="mt-2 text-xs text-muted-foreground">
+
+              <p className="text-xs text-muted-foreground">
                 Free Trial Available • Try Before You Buy
               </p>
             </div>
