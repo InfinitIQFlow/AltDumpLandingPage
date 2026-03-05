@@ -9,7 +9,7 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="w-full py-16 md:py-24 bg-gradient-to-b from-background via-secondary/10 to-background border-b border-border/50 overflow-hidden relative">
+    <section className="w-full min-h-[70vh] flex items-center py-14 md:py-20 bg-gradient-to-b from-background via-secondary/10 to-background border-b border-border/50 overflow-hidden relative">
       {/* Background gradient accent */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">
         <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
@@ -17,9 +17,9 @@ export default function HeroSection() {
       </div>
 
       <div className="container px-4 md:px-6 max-w-6xl mx-auto relative z-10">
-        <div className="flex flex-col md:flex-row items-center md:items-center gap-10 md:gap-20">
+        <div className="flex flex-col md:flex-row items-center md:items-center justify-between gap-10 md:gap-16">
           {/* Left: Folder chaos image */}
-          <div className="w-full md:w-8/12 lg:w-7/12 flex justify-start md:justify-center fade-in-up">
+          <div className="w-full md:w-7/12 lg:w-3/4 flex justify-start md:justify-start fade-in-up md:-ml-4 lg:-ml-10">
             <div className="relative w-full max-w-3xl rounded-3xl overflow-hidden border border-border/70 bg-secondary/40 shadow-[0_30px_90px_rgba(0,0,0,0.9)] transition-transform duration-500 ease-out hover:scale-[1.04] hover:-translate-y-1.5 hover:shadow-[0_40px_110px_rgba(0,0,0,1)] hover:border-accent/60">
               <img
                 src="/hero-folder.png"
@@ -33,7 +33,7 @@ export default function HeroSection() {
 
           {/* Right: Hero text */}
           <div
-            className="w-full md:w-4/12 lg:w-5/12 flex flex-col items-center md:items-start text-center md:text-left space-y-7 fade-in-up"
+            className="w-full md:w-5/12 lg:w-1/3 max-w-xl flex flex-col items-center md:items-start text-center md:text-left space-y-6 fade-in-up md:pr-2"
             style={{ animationDelay: '0.05s' }}
           >
             {/* Eyebrow */}
@@ -43,29 +43,29 @@ export default function HeroSection() {
 
             {/* Main copy */}
             <div className="space-y-4 max-w-xl">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-tight tracking-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-foreground leading-tight tracking-tight drop-shadow-[0_0_25px_rgba(0,0,0,0.35)]">
                 Does your folder look like this?
               </h1>
 
               <div className="space-y-2 text-muted-foreground">
-                <p className="text-base md:text-lg leading-relaxed">
+                <p className="text-sm sm:text-base md:text-lg leading-relaxed">
                   And you can’t find that one line in the PDF you saved{' '}
                   <span className="font-medium text-foreground">yesterday</span>?
                 </p>
-                <p className="text-base md:text-lg leading-relaxed">
+                <p className="text-sm sm:text-base md:text-lg leading-relaxed">
                   Or that one screenshot you saved{' '}
                   <span className="font-medium text-foreground">last week</span>?
                 </p>
               </div>
 
-              <p className="text-base md:text-lg leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg leading-relaxed">
                 <span className="inline-block px-3 py-1.5 rounded-lg bg-gradient-to-r from-accent/25 via-cyan-500/20 to-amber-400/20 text-foreground font-semibold shadow-[0_0_35px_rgba(56,189,248,0.55)] border border-accent/40">
                   Then this is made just for you!
                 </span>
               </p>
 
               {/* Supporting copy from original hero */}
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed mt-4">
+              <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed mt-2">
                 Save files, screenshots, videos, code, and ideas into your private second brain — and search them
                 instantly{' '}
                 <span className="font-semibold text-cyan-300">with semantic search</span>,{' '}
@@ -74,8 +74,8 @@ export default function HeroSection() {
             </div>
 
             {/* Tagline + CTA centered */}
-            <div className="pt-4 flex flex-col items-center text-center space-y-3">
-              <p className="text-lg md:text-xl font-bold text-primary glow-text">
+            <div className="pt-3 flex flex-col items-center text-center space-y-3">
+              <p className="text-base sm:text-lg md:text-xl font-bold text-primary glow-text">
                 Offline, private, and instant.
               </p>
 
