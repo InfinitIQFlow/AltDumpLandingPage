@@ -1,16 +1,19 @@
-'use client'
+ 'use client'
 
 export default function HeroSection() {
   const handleMicrosoftStoreClick = () => {
-    window.open('https://apps.microsoft.com/detail/9NH5C9V4D2MM?hl=en-us&gl=IN&ocid=pdpshare', '_blank')
+    window.open(
+      'https://apps.microsoft.com/detail/9NH5C9V4D2MM?hl=en-us&gl=IN&ocid=pdpshare',
+      '_blank'
+    )
   }
 
   return (
     <section className="w-full py-16 md:py-24 bg-gradient-to-b from-background via-secondary/10 to-background border-b border-border/50 overflow-hidden relative">
       {/* Background gradient accent */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute inset-0 opacity-30 pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
       </div>
 
       <div className="container px-4 md:px-6 max-w-7xl mx-auto relative z-10">
