@@ -18,8 +18,8 @@ export default function HeroSection() {
           {/* Left side - Image */}
           <div className="order-2 md:order-1 fade-in-up flex justify-center">
             <img 
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hero-folder-iuV9dKlJGGcLkJ4m0iSYw1I6UN4nwM.png"
-              alt="Disorganized folder with various files"
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-K0nncaMmgb05aRUXAnmzoLJvE4aVVh.png"
+              alt="Disorganized folder with various files and document types"
               className="w-full max-w-md md:max-w-full h-auto rounded-lg shadow-2xl"
             />
           </div>
