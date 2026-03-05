@@ -40,7 +40,7 @@ export default function VaultShowcase() {
             <img 
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-02-14%20141929-bQxOA5L9znCvMBemhAO7KUmXHFlb6a.png"
               alt="AltDump vault interface showing organized items in grid layout"
-              className="w-full h-auto"
+              className="w-full h-auto block object-cover"
             />
           </div>
 

@@ -1,13 +1,18 @@
 'use client'
 
 import Link from 'next/link'
-import { useCheckout } from '@/hooks/use-checkout'
 
 export default function Header() {
-  const { createCheckout, isLoading } = useCheckout()
+  const handleMicrosoftStoreClick = () => {
+    window.open('https://apps.microsoft.com/detail/9NH5C9V4D2MM?hl=en-us&gl=IN&ocid=pdpshare', '_blank')
+  }
 
-  const handleBuyClick = () => {
-    createCheckout()
+  const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault()
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   return (
@@ -26,25 +31,27 @@ export default function Header() {
         </Link>
         
         <nav className="flex items-center gap-6">
-          <Link href="/#features" className="text-sm text-muted-foreground hover:text-accent transition-colors duration-300 relative group">
+          <a href="#features" onClick={(e) => handleScrollToSection(e, 'features')} className="text-sm text-muted-foreground hover:text-accent transition-colors duration-300 relative group cursor-pointer">
             Features
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full rounded-full"></span>
-          </Link>
-          <Link href="/#pricing" className="text-sm text-muted-foreground hover:text-accent transition-colors duration-300 relative group">
+          </a>
+          <a href="#pricing" onClick={(e) => handleScrollToSection(e, 'pricing')} className="text-sm text-muted-foreground hover:text-accent transition-colors duration-300 relative group cursor-pointer">
             Pricing
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full rounded-full"></span>
-          </Link>
-          <Link href="/#faq" className="text-sm text-muted-foreground hover:text-accent transition-colors duration-300 relative group">
+          </a>
+          <a href="#faq" onClick={(e) => handleScrollToSection(e, 'faq')} className="text-sm text-muted-foreground hover:text-accent transition-colors duration-300 relative group cursor-pointer">
             FAQ
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full rounded-full"></span>
-          </Link>
+          </a>
           <button 
-            onClick={handleBuyClick}
-            disabled={isLoading}
-            className="relative px-6 py-2 bg-gradient-to-r from-accent to-cyan-400 text-background font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-accent/50 hover:scale-105 disabled:opacity-50 overflow-hidden group"
+            onClick={handleMicrosoftStoreClick}
+            className="relative px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105 overflow-hidden group flex items-center gap-1"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-accent via-cyan-300 to-accent opacity-0 group-hover:opacity-40 transition-opacity duration-300 animate-pulse"></div>
-            <span className="relative">Get AltDump</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-blue-400 to-blue-600 opacity-0 group-hover:opacity-30 transition-opacity duration-300 animate-pulse"></div>
+            <svg className="relative w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z" />
+            </svg>
+            <span className="relative">Get it Now</span>
           </button>
         </nav>
       </div>
