@@ -44,7 +44,7 @@ export default function HeroSection() {
             {/* Main copy */}
             <div className="space-y-4 max-w-xl">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-foreground leading-tight tracking-tight drop-shadow-[0_0_25px_rgba(0,0,0,0.35)]">
-                Does your folder look like this?
+                Searching for something when your files are named like this?
               </h1>
 
               <div className="space-y-2 text-muted-foreground">
